@@ -1,0 +1,214 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Buttons
+//  `.btn` carries the shape; a `.btn--*` modifier only overrides four custom
+//  properties. A brand-new variant is therefore four lines, not a new block.
+//
+//  `.btn-primary` is V5's old name (and a Bootstrap class). It is grouped in
+//  as an alias for `.btn.btn--light` so existing markup still renders.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.btn,
+.btn-primary {
+  --btn-bg: var(--color-brand);
+  --btn-color: var(--white);
+  --btn-border: var(--color-brand);
+  --btn-bg-hover: transparent;
+  --btn-color-hover: var(--color-brand);
+  --btn-border-hover: var(--color-brand);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding: 14px 32px;
+  min-height: 48px; // comfortable touch target
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0;
+  text-transform: none; // sentence case throughout this design
+  text-align: center;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  overflow: hidden;
+  @include transEase((background-color, color, border-color, transform));
+  @include focus-ring;
+
+  @include hover {
+    background: var(--btn-bg-hover);
+    color: var(--btn-color-hover);
+    border-color: var(--btn-border-hover);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  // Icons ride along with the label and nudge forward on hover.
+  i,
+  svg {
+    font-size: 1.1em;
+    @include transEase(transform);
+  }
+
+  @include hover {
+    i,
+    svg {
+      transform: translateX(3px);
+    }
+  }
+}
+
+// ─── Colour variants ───────────────────────────────────────────────────────
+.btn--light,
+.btn-primary {
+  --btn-bg: var(--white);
+  --btn-color: var(--color-brand);
+  --btn-border: var(--white);
+  --btn-bg-hover: transparent;
+  --btn-color-hover: var(--white);
+  --btn-border-hover: var(--white);
+}
+
+.btn--outline {
+  --btn-bg: transparent;
+  --btn-color: var(--color-brand);
+  --btn-border: var(--color-brand);
+  --btn-bg-hover: var(--color-brand);
+  --btn-color-hover: var(--white);
+}
+
+.btn--outline-light {
+  --btn-bg: transparent;
+  --btn-color: var(--white);
+  --btn-border: rgb(255 255 255 / 60%);
+  --btn-bg-hover: var(--white);
+  --btn-color-hover: var(--color-brand);
+  --btn-border-hover: var(--white);
+}
+
+.btn--accent {
+  --btn-bg: var(--color-accent);
+  --btn-color: var(--color-brand);
+  --btn-border: var(--color-accent);
+  --btn-bg-hover: transparent;
+  --btn-color-hover: var(--color-accent);
+  --btn-border-hover: var(--color-accent);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-border: transparent;
+  --btn-color: var(--color-brand);
+  --btn-bg-hover: var(--color-surface);
+  --btn-color-hover: var(--color-brand);
+  --btn-border-hover: transparent;
+}
+
+// Black pill that turns brand navy on hover ("Submit" on Contact).
+.btn--dark {
+  --btn-bg: var(--dark-950);
+  --btn-color: var(--white);
+  --btn-border: var(--dark-950);
+  --btn-bg-hover: var(--color-brand);
+  --btn-color-hover: var(--white);
+  --btn-border-hover: var(--color-brand);
+}
+
+// ─── Sizes and shapes ──────────────────────────────────────────────────────
+.btn--sm {
+  padding: 10px 20px;
+  min-height: 40px;
+  font-size: var(--fs-xs);
+}
+.btn--lg {
+  padding: 18px 40px;
+  min-height: 56px;
+  font-size: var(--fs-base);
+}
+.btn--block {
+  display: flex;
+  width: 100%;
+}
+.btn--pill {
+  border-radius: var(--radius-pill);
+}
+
+.btn--icon {
+  padding: 0;
+  width: 48px;
+  min-height: 48px;
+  border-radius: var(--radius-circle);
+}
+
+// ─── Shine sweep ───────────────────────────────────────────────────────────
+// Add `.btn--shine` for a diagonal gloss pass on hover.
+.btn--shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    rgb(255 255 255 / 0%) 0%,
+    rgb(255 255 255 / 35%) 50%,
+    rgb(255 255 255 / 0%) 100%
+  );
+  transform: skewX(-25deg);
+}
+
+@media (hover: hover) {
+  .btn--shine:hover::before {
+    animation: btnShine 0.85s var(--ease-out);
+  }
+}
+
+// ─── Text link with an arrow ───────────────────────────────────────────────
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+
+  i,
+  svg {
+    @include transEase(transform);
+  }
+
+  @include hover {
+    i,
+    svg {
+      transform: translateX(4px);
+    }
+  }
+
+  // Sentence-case, untracked, body-sized — "Explore more →" as the design
+  // draws it. Colour comes from the context (white on the hero/about).
+  &--plain {
+    font-size: var(--fs-base);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0;
+    text-transform: none;
+
+    i,
+    svg {
+      font-size: 1.4em;
+    }
+  }
+}

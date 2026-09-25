@@ -1,0 +1,507 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Navigation
+//
+//  A transparent bar over the hero with a hairline rule under it; once the
+//  page scrolls (main.js adds .navbar-fixed past 10px) it collapses to a
+//  solid brand-navy strip. The logo is white-on-transparent, which is why the
+//  scrolled state is navy and not white.
+//
+//  Below `lg` the link lists move into an off-canvas drawer (.navbar-nav),
+//  driven by the hamburger. main.js handles focus trapping, Escape, `inert`
+//  and body scroll-lock; the CSS here is only the visual state.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.navbar-main {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: var(--z-header);
+  padding: var(--space-sm) var(--space-sm) 0;
+  color: var(--white);
+  background: transparent;
+  @include transEase((padding, background-color, box-shadow, transform));
+
+  // Not a .container-fluid: the kit caps that at --container-max on wide
+  // screens, and the bar has to run edge to edge at every width.
+  .navbar-inner {
+    @include flex-between(var(--space-md));
+    width: 100%;
+    padding-inline: var(--space-xs);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid rgb(255 255 255 / 25%);
+    @include transEase((padding, border-color));
+  }
+
+  // main.js adds this past 10px of scroll.
+  &.navbar-fixed {
+    padding: 0 var(--space-sm);
+    background: var(--color-brand);
+    box-shadow: var(--shadow-header);
+
+    .navbar-inner {
+      padding-block: var(--space-2xs);
+      border-color: transparent;
+    }
+
+    .navbar-brand img {
+      height: 52px;
+    }
+  }
+
+  // Optional: add `data-nav-hide` to the element to auto-hide on scroll down
+  // and reveal on scroll up. main.js drives the class.
+  &.navbar-hidden {
+    transform: translateY(-100%);
+  }
+}
+
+// ─── Brand ─────────────────────────────────────────────────────────────────
+// Logo and the 65th-anniversary badge sit side by side in one link.
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+  @include focus-ring(var(--white));
+
+  img {
+    height: 72px;
+    width: auto;
+    @include transEase(height);
+  }
+
+  @include mq-down("sm") {
+    gap: var(--space-2xs);
+
+    img {
+      height: 56px;
+    }
+  }
+}
+
+// ─── Links ─────────────────────────────────────────────────────────────────
+// .navbar-nav is the drawer below `lg` (see the bottom of this file); on
+// desktop it's just a flex row holding the two lists.
+// Bootstrap also styles .navbar-nav (as a column), so the row direction is
+// set explicitly rather than relied on.
+.navbar-nav {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3xs);
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  color: var(--white);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+  @include transEase(color);
+  @include focus-ring(var(--white));
+
+  // The trailing chevron on items that will open a sub-menu.
+  .bi-chevron-right {
+    font-size: 0.7em;
+    margin-inline-start: 4px;
+    @include transEase(transform);
+  }
+
+  @include hover {
+    color: var(--color-accent);
+
+    .bi-chevron-right {
+      transform: translateX(3px);
+    }
+  }
+
+  // Icon-only variant (the home link).
+  &.nav-link--icon {
+    padding-inline: 12px;
+    font-size: var(--fs-md);
+  }
+}
+
+// ─── Dropdown (Our Businesses) ─────────────────────────────────────────────
+// The parent link navigates; the chevron button beside it opens the list
+// (main.js toggles .is-open). On desktop hovering the item opens it too.
+// Below `lg` it becomes an in-place accordion inside the drawer — see the
+// mobile block at the bottom of this file.
+.has-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  > .nav-link {
+    padding-inline-end: 2px;
+  }
+}
+
+.nav-dropdown-toggle {
+  @include flex-center;
+  width: 28px;
+  height: 40px;
+  padding: 0;
+  color: var(--white);
+  font-size: 0.7rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  @include transEase(color);
+  @include focus-ring(var(--white));
+
+  i {
+    @include transEase(transform);
+  }
+
+  @include hover {
+    color: var(--color-accent);
+  }
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 0;
+  z-index: 1;
+  min-width: 290px;
+  margin: 0;
+  padding: var(--space-2xs) 0;
+  list-style: none;
+  background: var(--white);
+  border-top: 3px solid var(--color-accent);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  @include transEase((opacity, visibility, transform));
+
+  // Bridges the gap between the link and the panel so the hover doesn't
+  // drop while the pointer crosses it.
+  &::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 100%;
+    height: 12px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px var(--space-md);
+    color: var(--dark-950);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    white-space: nowrap;
+    border-inline-start: 3px solid transparent;
+    @include transEase((color, background-color, border-color, padding));
+    @include focus-ring(var(--color-brand), -3px);
+
+    @include hover {
+      color: var(--color-brand);
+      background: rgba(var(--color-brand-rgb), 0.05);
+      border-inline-start-color: var(--color-accent);
+      padding-inline-start: calc(var(--space-md) + 4px);
+
+      .bi {
+        color: var(--color-accent);
+        background: var(--color-brand);
+      }
+    }
+
+    &[aria-current="page"] {
+      color: var(--color-brand);
+      font-weight: var(--fw-semibold);
+      border-inline-start-color: var(--color-accent);
+
+      .bi {
+        color: var(--color-accent);
+        background: var(--color-brand);
+      }
+    }
+  }
+
+  // Each business's icon, in a small tinted tile.
+  .bi {
+    @include flex-center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    color: var(--color-brand);
+    background: rgba(var(--color-brand-rgb), 0.07);
+    border-radius: var(--radius-md);
+    @include transEase((color, background-color));
+  }
+}
+
+@include mq-up("lg") {
+  .has-dropdown:hover,
+  .has-dropdown.is-open {
+    .nav-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-dropdown-toggle i {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// Search and language, right of the menu.
+.navbar-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3xs);
+}
+
+.nav-tool {
+  @include flex-center;
+  width: 44px;
+  height: 44px;
+  color: var(--white);
+  font-size: var(--fs-lg);
+  background: transparent;
+  border: 0;
+  @include transEase(color);
+  @include focus-ring(var(--white));
+
+  @include hover {
+    color: var(--color-accent);
+  }
+}
+
+// ─── Hamburger ─────────────────────────────────────────────────────────────
+.navbar-toggler {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px; // 44px is the minimum comfortable touch target
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  @include focus-ring(var(--white));
+
+  span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin-inline: auto;
+    background: currentcolor;
+    @include transEase((transform, opacity));
+  }
+
+  &[aria-expanded="true"] span {
+    &:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    &:nth-child(2) {
+      opacity: 0;
+    }
+    &:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}
+
+// Close button inside the drawer — the hamburger sits under the open panel,
+// so this is the visible way out (besides Escape and the backdrop).
+.navbar-close {
+  position: absolute;
+  top: var(--space-sm);
+  inset-inline-end: var(--space-sm);
+  @include flex-center;
+  display: none; // after the mixin — it sets display: flex
+  width: 44px;
+  height: 44px;
+  color: var(--white);
+  font-size: var(--fs-xl);
+  @include focus-ring(var(--white));
+}
+
+// Dimmed backdrop behind the mobile drawer. The drawer lives inside
+// .navbar-main's stacking context (--z-header), so the backdrop has to sit
+// just under that — anything higher would dim the drawer too.
+.navbar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-header) - 1);
+  background: rgb(0 0 0 / 45%);
+  opacity: 0;
+  visibility: hidden;
+  @include transEase((opacity, visibility));
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// ─── Mobile drawer ─────────────────────────────────────────────────────────
+@include mq-down("lg") {
+  .navbar-toggler {
+    display: flex;
+  }
+
+  .navbar-close {
+    display: flex;
+  }
+
+  .navbar-nav {
+    position: fixed;
+    top: 0;
+    inset-inline-end: 0;
+    z-index: var(--z-drawer);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: var(--space-lg);
+    width: min(80vw, 320px);
+    height: 100svh;
+    padding: calc(var(--space-sm) + 44px + var(--space-md)) var(--space-md)
+      var(--space-lg);
+    background: var(--color-brand);
+    box-shadow: -2px 0 12px rgb(0 0 0 / 30%);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateX(100%);
+    @include transEase(transform);
+
+    // Off-screen links must not be reachable by Tab. main.js also flips
+    // `inert` on the drawer, this is the CSS-only safety net.
+    visibility: hidden;
+
+    &.is-open {
+      visibility: visible;
+      transform: translateX(0);
+    }
+  }
+
+  .navbar-menu {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .nav-link {
+    display: flex; // full width, so the divider spans the drawer
+    justify-content: space-between;
+    padding: 12px 0;
+    font-size: var(--fs-md);
+    border-bottom: 1px solid rgb(255 255 255 / 15%);
+
+    &.nav-link--icon {
+      justify-content: flex-start;
+      padding-inline: 0;
+    }
+  }
+
+  // Dropdown as an accordion: link and chevron share a row (and the row's
+  // divider), the list opens underneath.
+  .has-dropdown {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+
+    > .nav-link {
+      padding-inline-end: 0;
+    }
+  }
+
+  .nav-dropdown-toggle {
+    width: 44px;
+    height: auto;
+    font-size: var(--fs-sm);
+    border-bottom: 1px solid rgb(255 255 255 / 15%);
+  }
+
+  .has-dropdown.is-open .nav-dropdown-toggle i {
+    transform: rotate(180deg);
+  }
+
+  .nav-dropdown {
+    position: static;
+    grid-column: 1 / -1;
+    display: none;
+    min-width: 0;
+    padding: var(--space-2xs) 0 var(--space-xs);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 15%);
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+
+    &::before {
+      content: none;
+    }
+
+    a {
+      padding: 8px var(--space-sm);
+      color: rgb(255 255 255 / 80%);
+      white-space: normal;
+      @include focus-ring(var(--white), -2px);
+
+      @include hover {
+        color: var(--color-accent);
+        background: transparent;
+        padding-inline-start: var(--space-sm);
+      }
+
+      &[aria-current="page"] {
+        color: var(--color-accent);
+      }
+    }
+
+    // In the drawer the icons sit bare, tinted like the text.
+    .bi,
+    a:hover .bi,
+    a[aria-current="page"] .bi {
+      width: 20px;
+      height: auto;
+      color: inherit;
+      background: transparent;
+    }
+  }
+
+  .has-dropdown.is-open .nav-dropdown {
+    display: block;
+  }
+
+  .navbar-tools {
+    gap: var(--space-2xs);
+    margin-top: auto;
+  }
+
+  // RTL: the drawer slides in from the left instead.
+  [dir="rtl"] .navbar-nav {
+    transform: translateX(-100%);
+
+    &.is-open {
+      transform: translateX(0);
+    }
+  }
+}

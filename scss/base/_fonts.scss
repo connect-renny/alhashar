@@ -1,0 +1,59 @@
+// ═══════════════════════════════════════════════════════════════════════════
+//  @font-face declarations
+//
+//  Poppins — the body and heading face. It has no variable version, so the
+//  five weights the design uses are shipped as separate files (~8KB each).
+//  Anything outside 300–700 falls back to the nearest one.
+//
+//  Abril Display SB (SemiBold) — the serif accent inside display headings
+//  ("Decades of *Trust.*"). Two faces: upright and italic, both weight 600.
+//  It's a licensed TypeTogether font: the woff2s were converted by hand from
+//  the client's OTFs and are NOT managed by `npm run vendor`. Don't delete
+//  them from assets/fonts.
+//
+//  `font-display: swap` renders fallback text immediately, so a slow font
+//  never blocks first paint. index.html preloads Poppins 400 and the Abril
+//  italic — the two faces on screen at first paint. Keep the
+//  <link rel="preload"> tags in sync with the file names here.
+//
+//  Poppins is vendored by `npm run vendor` from @fontsource/poppins. To
+//  change it: install another @fontsource package, add it to
+//  scripts/vendor.mjs, and update --primary-font in _root.scss.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// The latin unicode-range is repeated inline below rather than held in a
+// Sass variable: stylelint reads `U+0000-00FF` in a variable as arithmetic.
+
+@each $weight in 300, 400, 500, 600, 700 {
+  @font-face {
+    font-family: poppins;
+    src: url("../fonts/poppins-latin-#{$weight}-normal.woff2") format("woff2");
+    font-weight: $weight;
+    font-style: normal;
+    font-display: swap;
+    unicode-range:
+      U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+      U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+      U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+}
+
+@font-face {
+  font-family: "Abril Display";
+  src: url("../fonts/AbrilDisplay-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Abril Display";
+  src: url("../fonts/AbrilDisplay-SemiBoldItalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}

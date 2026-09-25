@@ -1,0 +1,656 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Inner-page hero
+//  Full-viewport picture, breadcrumb, a two-line display title with a serif
+//  second line, a short paragraph, a vertical "scroll" cue at the left edge
+//  and a tab bar along the bottom. The tabs swap the title/paragraph panel
+//  (main.js › initHeroTabs) — on the About page: Vision / Mission / Values.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.page-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  background: var(--color-brand);
+  color: var(--white);
+  overflow: hidden;
+}
+
+.page-hero-media {
+  @include cover;
+  z-index: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // The artwork is already dark; this only steadies the top edge for the
+  // nav and the bottom edge for the tab bar.
+  &::after {
+    content: "";
+    @include cover;
+    background: linear-gradient(
+      180deg,
+      rgb(0 0 0 / 35%) 0%,
+      rgb(0 0 0 / 0%) 30%,
+      rgb(0 0 0 / 0%) 70%,
+      rgb(0 0 0 / 35%) 100%
+    );
+  }
+}
+
+.page-hero-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding-block: calc(var(--header-height) + var(--space-xl)) var(--space-2xl);
+}
+
+.page-hero-content {
+  max-width: 30rem;
+}
+
+// ─── Breadcrumb ────────────────────────────────────────────────────────────
+.breadcrumb-nav {
+  margin-bottom: var(--space-xl);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+
+  ol {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  // Chevron between crumbs.
+  li + li::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-top: 1.5px solid currentcolor;
+    border-inline-end: 1.5px solid currentcolor;
+    transform: rotate(45deg);
+    opacity: 0.8;
+  }
+
+  a {
+    color: var(--white);
+
+    @include hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+// ─── Panels (one per tab) ──────────────────────────────────────────────────
+.page-hero-panel {
+  display: none;
+
+  &.is-active {
+    display: block;
+
+    @include motion-ok {
+      animation: heroPanelIn 0.6s var(--ease-out) both;
+    }
+  }
+}
+
+.page-hero-title {
+  margin: 0 0 var(--space-md);
+  font-size: #{fluid(44, 80)};
+  font-weight: var(--fw-normal);
+  line-height: 1.05;
+  letter-spacing: var(--ls-tight);
+  color: var(--white);
+
+  em {
+    display: block;
+    font-family: var(--serif-font);
+    font-style: italic;
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0;
+  }
+}
+
+.page-hero-text {
+  max-width: 26rem;
+  margin: 0;
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+}
+
+// A short bold line above the paragraph ("Building on a legacy of trust.").
+.page-hero-lead {
+  margin: 0 0 var(--space-md);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+}
+
+// A lead that runs to a full paragraph (Automotive) — medium, not semibold.
+.page-hero-lead--medium {
+  font-weight: var(--fw-medium);
+}
+
+// A company logo standing in for the title (Construction: Oasis Grace).
+.page-hero-logo {
+  margin: 0 0 #{fluid(32, 64)};
+
+  img {
+    width: #{fluid(240, 372)};
+    height: auto;
+  }
+}
+
+// A stacked mark rather than a wide lockup (Hospitality: Sheraton).
+.page-hero-logo--compact img {
+  width: #{fluid(130, 172)};
+}
+
+// News hero: title with the serif word on the same line, and a large
+// headline in place of the paragraph, in a much wider column.
+.page-hero-content--xwide {
+  max-width: 66rem;
+}
+
+.page-hero-title--inline em {
+  display: inline;
+}
+
+.page-hero-headline {
+  max-width: 22em;
+  margin: #{fluid(16, 40)} 0 0;
+  font-size: #{fluid(24, 48)};
+  font-weight: var(--fw-medium);
+  line-height: 1.22;
+  letter-spacing: var(--ls-tight);
+  text-wrap: balance;
+}
+
+// Shorter measure for a headline the design breaks over three lines
+// (Contact).
+.page-hero-headline--narrow {
+  max-width: 16.5em;
+  // Greedy wrapping keeps "and" on the first line, as drawn.
+  text-wrap: wrap;
+}
+
+// Paragraph that runs the full width of the content column.
+.page-hero-text--full {
+  max-width: none;
+}
+
+// Wider content column, for pages whose hero copy runs past 30rem.
+.page-hero-content--wide {
+  max-width: 44rem;
+
+  .page-hero-text {
+    max-width: 38rem;
+  }
+}
+
+// The Management hero sets its title in the sans face with the serif only
+// on the second line, both heavier than the About page's. A step smaller
+// than the About hero so the second line stays unbroken.
+.page-hero-title--bold {
+  font-size: #{fluid(34, 66)};
+  font-weight: var(--fw-semibold);
+  line-height: 1.12;
+
+  em {
+    white-space: nowrap;
+  }
+}
+
+// Keeps the serif second line whole ("Electronics LLC") at the default
+// title size; the Electronics hero has no third line to wrap onto.
+.page-hero-title--nowrap em {
+  white-space: nowrap;
+}
+
+// ─── Scroll cue ────────────────────────────────────────────────────────────
+// Reads bottom-to-top down the left edge, with a short rule beneath it.
+.page-hero-scroll {
+  position: absolute;
+  bottom: calc(var(--page-hero-tabs-height, 100px) + var(--space-3xl));
+  inset-inline-start: var(--space-lg);
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--white);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+
+  span {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  &::after {
+    content: "";
+    width: 1px;
+    height: 60px;
+    background: currentcolor;
+  }
+
+  @include mq-up("xl") {
+    display: flex;
+  }
+}
+
+// ─── Tab bar ───────────────────────────────────────────────────────────────
+.page-hero-tabs {
+  position: relative;
+  z-index: 1;
+  background: rgb(10 8 10 / 72%);
+  border-top: 1px solid rgb(255 255 255 / 12%);
+
+  ul {
+    display: flex;
+    // The three tabs share the container width, edge to edge.
+    margin-inline: calc(var(--container-gutter) * -1);
+
+    @include mq-up("lg") {
+      margin-inline: 0;
+    }
+  }
+
+  li {
+    flex: 1;
+    min-width: 0;
+
+    & + li {
+      border-inline-start: 1px solid rgb(255 255 255 / 15%);
+    }
+  }
+
+  // Label + chevron. The chevron points down on a closed tab (dim), lifts on
+  // hover, and flips to point up — full white — on the selected tab, which
+  // also draws a gold line along its top edge. Everything rides the same
+  // spring curve so the tab feels like it answers the cursor.
+  // Links (`a.is-active`) take the same look, for bars that jump to sections
+  // further down the page instead of swapping hero panels.
+  button,
+  a {
+    --tab-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: clamp(18px, 3vw, 36px) var(--space-sm);
+    font-size: #{fluid(15, 22)};
+    font-weight: var(--fw-semibold);
+    line-height: 1.2;
+    color: var(--color-accent);
+    overflow: hidden;
+    transition: color 0.4s var(--tab-ease);
+    @include focus-ring(var(--white), -4px);
+
+    // Three tabs across a phone leave ~100px each: chevron under the label,
+    // and wrap only between words ("Manage-ment" otherwise).
+    @include mq-down("sm") {
+      flex-direction: column;
+      gap: 4px;
+      padding-inline: var(--space-3xs);
+      font-size: clamp(13px, 3.8vw, 15px);
+      overflow-wrap: normal;
+      hyphens: none;
+    }
+
+    i {
+      font-size: 0.8em;
+      opacity: 0.6;
+      transform: translateY(0) rotate(0deg);
+      transition:
+        opacity 0.4s var(--tab-ease),
+        transform 0.6s var(--tab-ease);
+    }
+
+    // Indicator line along the top.
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      inset-inline: 0;
+      height: 2px;
+      background: var(--color-accent);
+      transform: scaleX(0);
+      transition: transform 0.6s var(--tab-ease);
+    }
+
+    // Closed tab, hovered: brighten and lift the chevron a touch.
+    @include hover {
+      color: var(--white);
+
+      i {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
+
+    // Selected: chevron flips up, line drawn.
+    &[aria-selected="true"],
+    &.is-active {
+      color: var(--white);
+
+      i {
+        opacity: 1;
+        transform: translateY(0) rotate(180deg);
+      }
+      &::before {
+        transform: scaleX(1);
+      }
+    }
+
+    // The selected tab's chevron still acknowledges the cursor.
+    &[aria-selected="true"]:hover i {
+      transform: translateY(-3px) rotate(180deg);
+    }
+
+    &:active i {
+      transform: translateY(2px) rotate(0deg);
+      transition-duration: 0.15s;
+    }
+    &[aria-selected="true"]:active i {
+      transform: translateY(2px) rotate(180deg);
+    }
+  }
+}
+
+// Lighter bar that lets the hero picture show through (Automotive).
+.page-hero-tabs--clear {
+  background: linear-gradient(180deg, rgb(10 8 10 / 10%), rgb(10 8 10 / 35%));
+  border-top-color: rgb(255 255 255 / 25%);
+  backdrop-filter: blur(4px);
+
+  li + li {
+    border-inline-start-color: rgb(255 255 255 / 25%);
+  }
+}
+
+// ─── About intro ───────────────────────────────────────────────────────────
+// Copy on the left with a bold opening paragraph, the illustration on the
+// right, then a closing paragraph that runs the full width under both.
+.about-intro-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
+
+  // Even split at lg — a fixed 600px image there leaves the copy a ~270px
+  // sliver. The drawn 600px column comes back once there's room for it.
+  @include mq-up("lg") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2xl);
+  }
+
+  @include mq-up("xl") {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 600px);
+    gap: var(--space-3xl);
+  }
+}
+
+.about-intro-text {
+  color: var(--dark-950);
+
+  .section-head {
+    margin-bottom: var(--space-lg);
+  }
+
+  p {
+    margin-bottom: var(--space-md);
+  }
+
+  // The opening paragraph carries more weight, as drawn.
+  .about-intro-lead {
+    font-weight: var(--fw-semibold);
+  }
+}
+
+.about-intro-media {
+  order: -1;
+
+  @include mq-up("lg") {
+    order: 0;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 600 / 575;
+    object-fit: cover;
+  }
+}
+
+.about-intro-outro {
+  margin: var(--space-xl) 0 0;
+  color: var(--dark-950);
+}
+
+// ─── Values ────────────────────────────────────────────────────────────────
+// Six full-bleed bands, one per value. At rest the first is open (tall,
+// description showing) and the rest are collapsed to their titles; hovering
+// or focusing a band opens it and closes the first. Pure CSS: the rules at
+// the bottom pick the "open" band (via the value-band-open mixin), and
+// everything animates on one long ease-out so the height, picture, title
+// and copy move as a single gesture.
+// Below `md` there's no hover, so every band is open.
+// The open state of a value band: taller, picture settles in and brightens,
+// title nudges right, description grows in. Shared by `.is-open` and the
+// hover/focus/first-child rules below.
+@mixin value-band-open {
+  min-height: 400px;
+
+  .value-band-media img {
+    transform: scale(1);
+    filter: brightness(0.7);
+  }
+
+  .value-band-title {
+    transform: translateX(12px);
+  }
+
+  .value-band-text {
+    grid-template-rows: 1fr;
+
+    > p {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.15s;
+    }
+  }
+}
+
+.values-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.value-band {
+  --band-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --band-duration: 0.9s;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 188px;
+  color: var(--white);
+  background: var(--dark-900);
+  overflow: hidden;
+  isolation: isolate;
+  transition: min-height var(--band-duration) var(--band-ease);
+  @include focus-ring(var(--white), -4px);
+
+  // Picture, with a tint that lifts slightly when the band opens.
+  &-media {
+    @include cover;
+    z-index: -1;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      transition:
+        transform calc(var(--band-duration) * 1.4) var(--band-ease),
+        filter var(--band-duration) var(--band-ease);
+      filter: brightness(0.55);
+    }
+  }
+
+  &-body {
+    width: 100%;
+    padding-block: var(--space-lg);
+  }
+
+  &-title {
+    margin: 0;
+    font-size: #{fluid(26, 44)};
+    font-weight: var(--fw-normal);
+    line-height: 1.15;
+    letter-spacing: var(--ls-tight);
+    color: var(--white);
+    transform: translateX(0);
+    transition: transform var(--band-duration) var(--band-ease);
+
+    em {
+      font-family: var(--serif-font);
+      font-style: italic;
+      font-weight: var(--fw-semibold);
+      letter-spacing: 0;
+    }
+  }
+
+  // The description sits in a grid row that grows from 0 to its content,
+  // which is what lets height animate without a fixed value.
+  &-text {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--band-duration) var(--band-ease);
+
+    > p {
+      max-width: 40rem;
+      margin: 0;
+      padding-top: var(--space-2xl);
+      font-size: var(--fs-base);
+      font-weight: var(--fw-semibold);
+      line-height: var(--lh-normal);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(12px);
+      transition:
+        opacity calc(var(--band-duration) * 0.6) var(--band-ease),
+        transform var(--band-duration) var(--band-ease);
+    }
+  }
+}
+
+// Which band is open: the hovered/focused one, or — when none is — the
+// first. The .is-open class above carries the styles; these selectors just
+// decide who gets them.
+@include mq-up("md") {
+  .value-band:hover,
+  .value-band:focus-within,
+  .values-list:not(:hover):not(:focus-within) .value-band:first-child {
+    @include value-band-open;
+  }
+}
+
+// No hover on small screens: everything open, tighter.
+@include mq-down("md") {
+  .value-band {
+    min-height: 0;
+
+    .value-band-media img {
+      transform: none;
+      filter: brightness(0.6);
+    }
+
+    .value-band-text {
+      grid-template-rows: 1fr;
+
+      > p {
+        padding-top: var(--space-md);
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .value-band,
+  .value-band *,
+  .value-band *::before {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// ─── Group management ──────────────────────────────────────────────────────
+// Centred heading over a row of portraits with a name and role beneath each.
+// The grid wraps on its own, so adding a third or fourth person needs no
+// breakpoint — they simply flow onto the next row.
+.management-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: var(--space-2xl) var(--space-xl);
+  max-width: 1120px;
+  margin-inline: auto;
+
+  @include mq-up("lg") {
+    gap: var(--space-2xl) var(--space-3xl);
+  }
+}
+
+.management-card {
+  text-align: center;
+
+  &-media {
+    overflow: hidden;
+    margin-bottom: var(--space-md);
+    background: var(--color-surface);
+    @include ratio(580, 620);
+
+    img {
+      @include transEase(transform, $duration: var(--transition-slow));
+    }
+  }
+
+  &-name {
+    margin: 0 0 var(--space-3xs);
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-semibold);
+    color: var(--dark-950);
+  }
+
+  &-role {
+    display: block;
+    font-size: var(--fs-base);
+    color: var(--dark-950);
+  }
+
+  @include hover {
+    .management-card-media img {
+      transform: scale(1.04);
+    }
+  }
+}

@@ -1,0 +1,225 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Card
+//  The whole card is clickable via a stretched pseudo-element on the title
+//  link, so the markup keeps one real anchor — screen readers announce one
+//  link, not three.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.card-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-none);
+  overflow: hidden;
+  @include transEase((transform, box-shadow, border-color));
+
+  @include hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-brand);
+  }
+}
+
+.card-media {
+  @include ratio(16, 9);
+
+  img {
+    @include transEase(transform, $duration: var(--transition-slow));
+  }
+
+  .card-item:hover & img {
+    transform: scale(1.05);
+  }
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+}
+
+.card-title {
+  margin: 0;
+  font-size: var(--fs-fluid-xl);
+  font-weight: var(--fw-semibold);
+
+  a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+}
+
+.card-text {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  @include line-clamp(3);
+}
+
+.card-meta {
+  margin-top: auto;
+  padding-top: var(--space-2xs);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+// ─── Stat / counter ────────────────────────────────────────────────────────
+// Icon, big number with a thin sign, label — hung off a hairline on the
+// inline-start edge. The number is a plain span in the markup; main.js turns
+// `data-count` into rolling digits (see components/_odometer.scss).
+.stat {
+  height: 100%;
+  padding-inline-start: clamp(16px, 2.5vw, 36px);
+  border-inline-start: 1px solid rgb(0 0 0 / 15%);
+
+  &-icon {
+    height: 56px;
+    width: auto;
+    margin-bottom: var(--space-sm);
+  }
+
+  &-value {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--space-2xs);
+    font-size: #{fluid(44, 104)};
+    line-height: 1;
+    color: var(--dark-950);
+    // Stops the number jittering as a counter animates through digits.
+    font-variant-numeric: tabular-nums;
+  }
+
+  &-num {
+    font-weight: var(--fw-semibold);
+  }
+
+  &-sign {
+    font-weight: var(--fw-light);
+  }
+
+  &-label {
+    display: block;
+    font-size: var(--fs-base);
+    font-weight: var(--fw-medium);
+    color: var(--dark-950);
+  }
+}
+
+// ─── News card ─────────────────────────────────────────────────────────────
+// Title and link above the picture, a square date badge hung over the
+// picture's top-right corner. The whole card is one link for a screen
+// reader: the title link is stretched, the "Explore" line is decorative.
+.news-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--dark-950);
+
+  &-title {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-tight);
+    @include line-clamp(3);
+
+    a {
+      color: inherit;
+      @include transEase(color);
+
+      // Stretch the title link over the whole card.
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+    }
+  }
+
+  &-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--space-md);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+
+    i {
+      font-size: 1.4em;
+      @include transEase(transform);
+    }
+  }
+
+  &-media {
+    position: relative;
+    margin-top: auto;
+    overflow: hidden;
+    @include ratio(395, 225);
+
+    img {
+      @include transEase(transform, $duration: var(--transition-slow));
+    }
+  }
+
+  &-date {
+    position: absolute;
+    top: var(--space-sm);
+    inset-inline-end: var(--space-sm);
+    @include flex-center(column);
+    width: 62px;
+    height: 62px;
+    background: #ff6e0e;
+    color: var(--white);
+    line-height: 1;
+    text-align: center;
+
+    .day {
+      font-size: var(--fs-xl);
+      font-weight: var(--fw-semibold);
+    }
+    .month {
+      margin-top: 3px;
+      font-size: var(--fs-xs);
+      font-weight: var(--fw-semibold);
+      text-transform: uppercase;
+    }
+  }
+
+  @include hover {
+    .news-card-title a {
+      color: var(--color-brand);
+    }
+    .news-card-more i {
+      transform: translateX(4px);
+    }
+    .news-card-media img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// ─── Grid helper ───────────────────────────────────────────────────────────
+// Wraps on its own — no breakpoints required.
+.auto-grid {
+  @include auto-grid(280px, var(--space-md));
+
+  &--sm {
+    @include auto-grid(200px, var(--space-md));
+  }
+  &--lg {
+    @include auto-grid(360px, var(--space-lg));
+  }
+}

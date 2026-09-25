@@ -1,0 +1,10 @@
+node_modules/
+
+# Compiled CSS is committed so the site renders straight from a clone /
+# GitHub Pages. Regenerate with `npm run build` after editing scss/.
+assets/css/*.map
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

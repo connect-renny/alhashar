@@ -1,0 +1,197 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Lightbox
+//  The <dialog> main.js › initLightbox builds. It fills the viewport with a
+//  deep navy wash; the photo sits centred with its caption, a counter top
+//  left, close top right, prev/next at the sides. The surround and controls
+//  animate here in CSS; the photo's zoom and slides are Web Animations in JS.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.lightbox {
+  --lb-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgb(6 14 32 / 94%);
+  color: var(--white);
+  overflow: hidden;
+  transition: background-color 0.45s var(--lb-ease);
+
+  &::backdrop {
+    background: transparent;
+  }
+
+  &[open] {
+    animation: lbFadeIn 0.45s var(--lb-ease) both;
+  }
+
+  // Closing: the wash and controls fade while the photo (animated in JS)
+  // flies back onto its thumbnail at full strength, so it lands seamlessly.
+  &.is-closing {
+    background-color: transparent;
+
+    .lightbox-btn,
+    .lightbox-caption,
+    .lightbox-count {
+      opacity: 0;
+      transition: opacity 0.25s var(--lb-ease);
+    }
+  }
+}
+
+.lightbox-stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: #{fluid(64, 96)} #{fluid(16, 120)};
+  touch-action: pan-y;
+}
+
+.lightbox-figure {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+// As large as the view allows at the picture's own proportions (main.js sets
+// --lb-ratio from the loaded file), so small sources still fill the screen.
+.lightbox-img {
+  display: block;
+  width: min(100%, calc((100svh - 220px) * var(--lb-ratio, 1)), 1100px);
+  height: auto;
+  margin-inline: auto;
+  box-shadow: 0 30px 80px rgb(0 0 0 / 45%);
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: transform, opacity;
+}
+
+.lightbox-caption {
+  margin-top: var(--space-sm);
+  font-size: var(--fs-sm);
+  color: rgb(255 255 255 / 75%);
+}
+
+.lightbox-count {
+  position: absolute;
+  top: #{fluid(18, 32)};
+  left: #{fluid(18, 32)};
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  color: rgb(255 255 255 / 75%);
+}
+
+// Round glass buttons. Each drops in on open, one after another.
+.lightbox-btn {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: #{fluid(44, 56)};
+  aspect-ratio: 1;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: var(--radius-circle);
+  background: rgb(255 255 255 / 8%);
+  color: var(--white);
+  font-size: #{fluid(16, 20)};
+  backdrop-filter: blur(6px);
+  transition:
+    background-color 0.3s var(--lb-ease),
+    border-color 0.3s var(--lb-ease),
+    color 0.3s var(--lb-ease),
+    transform 0.4s var(--lb-ease);
+  @include focus-ring(var(--color-accent), 3px);
+
+  @include hover {
+    background: var(--white);
+    border-color: var(--white);
+    color: var(--color-brand);
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+
+  .lightbox[open]:not(.is-closing) & {
+    animation: lbButtonIn 0.6s var(--lb-ease) both;
+  }
+}
+
+.lightbox-close {
+  top: #{fluid(12, 24)};
+  right: #{fluid(12, 24)};
+
+  @include hover {
+    transform: rotate(90deg);
+  }
+
+  .lightbox[open]:not(.is-closing) & {
+    animation-delay: 0.15s;
+  }
+}
+
+.lightbox-prev,
+.lightbox-next {
+  top: 50%;
+  translate: 0 -50%;
+
+  .lightbox[open]:not(.is-closing) & {
+    animation-delay: 0.25s;
+  }
+}
+
+.lightbox-prev {
+  left: #{fluid(8, 32)};
+
+  @include hover {
+    transform: translateX(-4px);
+  }
+}
+
+.lightbox-next {
+  right: #{fluid(8, 32)};
+
+  @include hover {
+    transform: translateX(4px);
+  }
+}
+
+.lightbox.is-single {
+  .lightbox-prev,
+  .lightbox-next,
+  .lightbox-count {
+    display: none;
+  }
+}
+
+@keyframes lbFadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes lbButtonIn {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox * {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+}

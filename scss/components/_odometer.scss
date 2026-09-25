@@ -1,0 +1,60 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Rolling counter
+//  main.js rebuilds a `data-count` element into this: one .odometer-digit per
+//  character, each a 1em-tall window over a strip of 0–9 (twice, so every
+//  digit makes a full spin before landing). Adding `.is-rolled` slides each
+//  strip to its target; the CSS transition does all the motion, staggered
+//  from the last digit backwards via --i.
+//
+//  Non-digit characters (a thousands comma, a decimal point) are static
+//  .odometer-sep spans.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.odometer {
+  display: inline-flex;
+  align-items: flex-start;
+  height: 1em;
+  line-height: 1;
+  overflow: hidden;
+  // Slight overscan so descender-free digits don't clip at the top edge.
+  padding-block: 0.02em;
+  box-sizing: content-box;
+}
+
+.odometer-digit {
+  position: relative;
+  display: block;
+  height: 1em;
+  overflow: hidden;
+}
+
+.odometer-strip {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+  transition: transform 2s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms);
+
+  span {
+    display: block;
+    height: 1em;
+    line-height: 1;
+  }
+}
+
+// One full spin (10 digits) plus the target.
+.is-rolled .odometer-strip {
+  transform: translateY(calc((10 + var(--to, 0)) * -1em));
+}
+
+.odometer-sep {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+
+// With no JS the plain number in the markup simply shows; with reduced
+// motion the strips jump straight to the target (reset's global rule zeroes
+// the transition duration).

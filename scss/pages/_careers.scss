@@ -1,0 +1,439 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Careers
+//  Intro (reuses the About intro), then the open positions — filter pills
+//  over a list of <details> rows — and the application form beside a short
+//  "how it works" column. main.js (initJobs) runs the filters, pre-selects
+//  a role from its "Apply" button, and drives the CV drop zone.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Open positions ────────────────────────────────────────────────────────
+.jobs-count {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+
+  span {
+    font-weight: var(--fw-semibold);
+    color: var(--dark-950);
+  }
+}
+
+// One row of pills; below `md` it scrolls sideways rather than wrapping
+// into a tall stack.
+.jobs-filters {
+  display: flex;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-md);
+  padding-bottom: 2px; // room for the focus ring inside the scroller
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include mq-up("md") {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
+
+.jobs-filter {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--dark-950);
+  background: var(--white);
+  border: 1px solid var(--dark-150);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  @include transEase((color, background-color, border-color));
+  @include focus-ring;
+
+  @include hover {
+    border-color: var(--color-brand);
+  }
+
+  &[aria-pressed="true"] {
+    color: var(--white);
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+  }
+}
+
+.jobs-list {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.jobs-empty {
+  margin: var(--space-md) 0 0;
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-text-muted);
+  background: var(--white);
+  border: 1px dashed var(--dark-150);
+}
+
+// A vacancy: the summary row is the toggle, the body holds the detail.
+.job {
+  background: var(--white);
+  border: 1px solid var(--dark-100);
+  border-inline-start: 3px solid transparent;
+  @include transEase((border-color, box-shadow));
+
+  @include hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  &[open] {
+    border-inline-start-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.job-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "heading chevron"
+    "tag chevron";
+  align-items: center;
+  gap: var(--space-xs) var(--space-sm);
+  padding: var(--space-sm);
+  list-style: none;
+  cursor: pointer;
+  @include focus-ring(var(--color-brand), -3px);
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  @include mq-up("md") {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas: "heading tag chevron";
+    gap: var(--space-md);
+    padding: var(--space-md);
+  }
+}
+
+.job-heading {
+  grid-area: heading;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.job-title {
+  font-size: var(--fs-fluid-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--dark-950);
+}
+
+.job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px var(--space-sm);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bi {
+    color: var(--color-orange);
+  }
+}
+
+.job-tag {
+  grid-area: tag;
+  justify-self: start;
+  padding: 4px 12px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-brand);
+  background: rgba(var(--color-brand-rgb), 0.07);
+  border-radius: var(--radius-pill);
+}
+
+.job-chevron {
+  grid-area: chevron;
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-brand);
+  border: 1px solid var(--dark-150);
+  border-radius: var(--radius-circle);
+  @include transEase((color, background-color, border-color, transform));
+
+  .job[open] & {
+    color: var(--color-accent);
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+    transform: rotate(45deg);
+  }
+}
+
+.job-body {
+  margin-inline: var(--space-sm);
+  padding: var(--space-md) 0;
+  border-top: 1px solid var(--dark-100);
+  color: var(--dark-950);
+
+  @include mq-up("md") {
+    margin-inline: var(--space-md);
+  }
+
+  ul {
+    margin: 0;
+    padding-inline-start: 1.1em;
+    list-style: disc; // the reset strips list markers
+
+    li::marker {
+      color: var(--color-orange);
+    }
+    font-size: var(--fs-sm);
+    line-height: 1.7;
+  }
+}
+
+.job-lead {
+  max-width: 70ch;
+  margin-bottom: var(--space-md);
+}
+
+.job-cols {
+  display: grid;
+  gap: var(--space-md);
+
+  @include mq-up("md") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl);
+  }
+}
+
+.job-subtitle {
+  margin-bottom: var(--space-2xs);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  color: var(--dark-950);
+}
+
+.job-apply {
+  gap: var(--space-2xs);
+  margin-top: var(--space-md);
+}
+
+// ─── Application ───────────────────────────────────────────────────────────
+.apply-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+
+  @include mq-up("lg") {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @include mq-up("xl") {
+    gap: var(--space-3xl);
+  }
+}
+
+.apply-intro {
+  color: var(--dark-950);
+
+  .section-title {
+    margin-bottom: var(--space-md);
+  }
+
+  @include mq-up("lg") {
+    position: sticky;
+    top: 110px; // clear of the fixed header
+  }
+}
+
+.apply-steps {
+  margin: var(--space-lg) 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--dark-100);
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 14px 0;
+    font-weight: var(--fw-medium);
+    border-bottom: 1px solid var(--dark-100);
+  }
+
+  span {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--color-orange);
+  }
+}
+
+.apply-contact {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin: 0;
+  font-weight: var(--fw-semibold);
+  overflow-wrap: anywhere;
+
+  .bi {
+    color: var(--color-orange);
+  }
+
+  a {
+    color: var(--dark-950);
+
+    @include hover {
+      color: var(--color-brand);
+    }
+  }
+}
+
+.apply-card {
+  padding: #{fluid(20, 48)};
+  background: var(--color-surface);
+}
+
+.apply-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-sm) var(--space-md);
+
+  @include mq-up("sm") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .float-field--full,
+  .file-field,
+  .apply-consent,
+  .apply-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+// Selects in floating-label fields: an arrow, and the label only rises once
+// a real option is picked (the blank first option is `disabled`, so an
+// untouched required select is :invalid).
+.float-field--select {
+  select.float-input {
+    appearance: none;
+    padding-inline-end: 28px;
+    cursor: pointer;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23707070' d='M8 11 3 6h10z'/%3E%3C/svg%3E")
+      no-repeat right 4px center / 14px;
+  }
+
+  .float-input:not(:focus):invalid + .float-label {
+    color: var(--dark-950);
+    transform: none;
+  }
+}
+
+.was-validated .float-field--select .float-input:invalid + .float-label {
+  color: var(--color-danger);
+}
+
+// CV upload: the real input is hidden but still focusable; its label is the
+// drop zone. main.js swaps in the file name and handles drag-and-drop.
+.file-field {
+  position: relative;
+  margin-top: var(--space-2xs);
+}
+
+.file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.file-drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-md);
+  text-align: center;
+  color: var(--dark-950);
+  background: var(--white);
+  border: 1.5px dashed var(--dark-200);
+  cursor: pointer;
+  @include transEase((border-color, background-color));
+
+  .bi {
+    font-size: var(--fs-2xl);
+    line-height: 1;
+    color: var(--color-brand);
+  }
+
+  @include hover {
+    border-color: var(--color-brand);
+  }
+
+  .file-field.is-dragover &,
+  .file-field.has-file & {
+    border-color: var(--color-brand);
+    border-style: solid;
+    background: rgba(var(--color-brand-rgb), 0.03);
+  }
+
+  .file-input:focus-visible + & {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  .was-validated .file-input:invalid + & {
+    border-color: var(--color-danger);
+  }
+}
+
+.file-drop-text {
+  font-size: var(--fs-sm);
+  overflow-wrap: anywhere;
+}
+
+.file-drop-hint {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.apply-consent {
+  margin-top: var(--space-2xs);
+  color: var(--dark-950);
+
+  a {
+    color: var(--color-brand);
+    text-decoration: underline;
+  }
+
+  .was-validated & input:invalid {
+    outline: 2px solid var(--color-danger);
+    outline-offset: 2px;
+  }
+}
+
+.apply-actions {
+  margin-top: var(--space-sm);
+
+  .btn {
+    min-width: 220px;
+    font-size: var(--fs-md);
+  }
+}

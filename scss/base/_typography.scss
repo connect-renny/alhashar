@@ -1,0 +1,174 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Typography
+// ═══════════════════════════════════════════════════════════════════════════
+
+body {
+  font-family: var(--body-font);
+  font-weight: var(--fw-normal);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--heading-font);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  color: var(--color-heading);
+  text-wrap: balance; // avoids a single orphaned word on the last line
+}
+
+h1 {
+  font-size: var(--fs-fluid-6xl);
+}
+h2 {
+  font-size: var(--fs-fluid-5xl);
+}
+h3 {
+  font-size: var(--fs-fluid-3xl);
+}
+h4 {
+  font-size: var(--fs-fluid-2xl);
+}
+h5 {
+  font-size: var(--fs-fluid-xl);
+}
+h6 {
+  font-size: var(--fs-fluid-lg);
+}
+
+p {
+  margin: 0 0 var(--space-sm);
+  text-wrap: pretty;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Constrain running text to a comfortable measure.
+.lead {
+  max-width: 68ch;
+  font-size: var(--fs-fluid-lg);
+  color: var(--color-text-muted);
+}
+
+.text-muted {
+  color: var(--color-text-muted) !important;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: var(--space-xs);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  @include transEase(color);
+  @include focus-ring;
+
+  @include hover {
+    color: var(--color-link-hover);
+  }
+}
+
+a,
+button {
+  @include transEase();
+}
+
+button {
+  @include focus-ring;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// Opt back into markers for prose lists.
+.prose {
+  ul,
+  ol {
+    padding-left: 1.25em;
+    margin-bottom: var(--space-sm);
+  }
+
+  ul {
+    list-style: disc;
+  }
+  ol {
+    list-style: decimal;
+  }
+
+  li {
+    margin-bottom: var(--space-3xs);
+  }
+}
+
+blockquote {
+  margin: 0 0 var(--space-md);
+  padding-left: var(--space-md);
+  border-left: 3px solid var(--color-brand);
+  font-size: var(--fs-fluid-lg);
+  font-style: italic;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--mono-font);
+  font-size: 0.9em;
+}
+
+hr {
+  height: 1px;
+  margin: var(--space-lg) 0;
+  border: 0;
+  background: var(--color-border);
+  opacity: 1;
+}
+
+::selection {
+  color: var(--white);
+  background: var(--color-brand);
+}
+
+// ─── Scrollbar ─────────────────────────────────────────────────────────────
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-brand);
+
+  &:window-inactive {
+    background: rgb(var(--color-brand-rgb) / 40%);
+  }
+}

@@ -1,0 +1,223 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  News — latest news cards
+//  Two-up grid. Each card: picture with an orange date badge in its top
+//  right, then an indented title, excerpt and "Explore →". The title's link
+//  is stretched over the whole card, so the card is one target.
+//
+//  Hover / focus: the picture zooms slowly and warms up, a diagonal band of
+//  light sweeps across it once, a thin white frame draws in around its inner
+//  edge, and the date badge lifts. The title turns navy and the arrow
+//  nudges on. Everything runs on one long ease-out.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.news-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: #{fluid(48, 80)} #{fluid(24, 54)};
+
+  @include mq-up("md") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.news-card {
+  --news-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+// ─── Picture ───────────────────────────────────────────────────────────────
+.news-card-media {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface);
+  aspect-ratio: 640 / 325;
+  isolation: isolate;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: 50% 60%;
+    transition:
+      transform 1.4s var(--news-ease),
+      filter 1s var(--news-ease);
+  }
+
+  // Band of light, parked off the left edge until hover sends it across.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 1;
+    width: 45%;
+    background: linear-gradient(
+      100deg,
+      rgb(255 255 255 / 0%) 0%,
+      rgb(255 255 255 / 35%) 50%,
+      rgb(255 255 255 / 0%) 100%
+    );
+    transform: translateX(-120%) skewX(-18deg);
+    pointer-events: none;
+  }
+
+  // Inner frame: starts a little outside and transparent, settles inward.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: #{fluid(10, 18)};
+    z-index: 1;
+    border: 1px solid rgb(255 255 255 / 80%);
+    opacity: 0;
+    transform: scale(1.08);
+    transition:
+      opacity 0.6s var(--news-ease),
+      transform 0.9s var(--news-ease);
+    pointer-events: none;
+  }
+}
+
+// Orange tile: day over month.
+.news-card-date {
+  position: absolute;
+  top: #{fluid(12, 24)};
+  right: #{fluid(12, 32)};
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  min-width: #{fluid(48, 62)};
+  padding: 6px 8px 7px;
+  background: var(--color-orange);
+  color: var(--white);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: 0 0 0 rgb(0 0 0 / 0%);
+  transition:
+    transform 0.6s var(--news-ease),
+    box-shadow 0.6s var(--news-ease);
+
+  span {
+    margin-bottom: 3px;
+    font-size: #{fluid(22, 30)};
+    font-weight: var(--fw-medium);
+  }
+}
+
+// ─── Copy ──────────────────────────────────────────────────────────────────
+.news-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: #{fluid(24, 38)} #{fluid(0, 38)} 0;
+}
+
+.news-card-title {
+  max-width: 17em;
+  margin: 0 0 var(--space-sm);
+  font-size: #{fluid(22, 30)};
+  font-weight: var(--fw-normal);
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--dark-950);
+
+  a {
+    color: inherit;
+    transition: color 0.4s var(--news-ease);
+
+    // Stretched over the whole card.
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+    }
+
+    &:focus-visible {
+      outline: none;
+
+      &::after {
+        outline: 2px solid var(--color-brand);
+        outline-offset: 4px;
+      }
+    }
+  }
+}
+
+.news-card-text {
+  margin: 0 0 var(--space-lg);
+  color: var(--dark-600);
+}
+
+.news-card-more {
+  margin-top: auto;
+  font-weight: var(--fw-semibold);
+  color: var(--dark-950);
+}
+
+// ─── Hover / keyboard focus ────────────────────────────────────────────────
+@mixin news-card-active {
+  .news-card-media {
+    img {
+      transform: scale(1.08);
+      filter: saturate(1.12) brightness(1.04);
+    }
+
+    &::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .news-card-date {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgb(0 0 0 / 25%);
+  }
+
+  .news-card-title a {
+    color: var(--color-brand);
+  }
+
+  .news-card-more i {
+    transform: translateX(6px);
+  }
+}
+
+@include hover {
+  .news-card:hover {
+    @include news-card-active;
+  }
+}
+
+.news-card:focus-within {
+  @include news-card-active;
+}
+
+// The sweep is a one-shot animation per hover, so it replays every time the
+// pointer comes back rather than sliding back out.
+@include motion-ok {
+  @media (hover: hover) and (pointer: fine) {
+    .news-card:hover .news-card-media::before {
+      animation: newsSweep 1.1s var(--news-ease) 0.1s;
+    }
+  }
+}
+
+@keyframes newsSweep {
+  to {
+    transform: translateX(340%) skewX(-18deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-card *,
+  .news-card *::before,
+  .news-card *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

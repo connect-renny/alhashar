@@ -1,0 +1,299 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Automotive — brands
+//  A centred strip of logo tiles (each jumps to its row), then one row per
+//  brand: copy on the left, a picture on the right with a navy "further
+//  details" box hanging off its lower-right corner. main.js › initBrandRows
+//  wipes the picture in and lifts the rest in after it on scroll; without
+//  GSAP (or with reduced motion) everything simply sits in place.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Logo strip ────────────────────────────────────────────────────────────
+.brand-strip {
+  margin-bottom: #{fluid(40, 88)};
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 880px;
+    margin-inline: auto;
+    border-top: 1px solid var(--dark-100);
+    border-inline-start: 1px solid var(--dark-100);
+
+    @include mq-up("md") {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  li {
+    border-bottom: 1px solid var(--dark-100);
+    border-inline-end: 1px solid var(--dark-100);
+  }
+
+  a {
+    display: grid;
+    place-items: center;
+    height: #{fluid(110, 210)};
+    padding: var(--space-sm);
+    background: var(--white);
+    @include transEase(background-color, $duration: 0.5s);
+    @include focus-ring(var(--color-brand), -3px);
+
+    img {
+      width: 100%;
+      max-width: 180px;
+      height: auto;
+      @include transEase(transform, $duration: 0.6s);
+    }
+
+    @include hover {
+      background: var(--color-surface);
+
+      img {
+        transform: scale(1.06);
+      }
+    }
+  }
+}
+
+// ─── Brand rows ────────────────────────────────────────────────────────────
+.brand-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-lg);
+  padding-block: var(--space-lg);
+
+  & + & {
+    border-top: 1px solid var(--color-border);
+  }
+
+  @include mq-up("lg") {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: #{fluid(32, 120)};
+    align-items: center;
+  }
+}
+
+.brand-row-body {
+  max-width: 32rem;
+  color: var(--dark-950);
+}
+
+// A text heading in place of the logo (Construction: "About Company").
+.brand-row-title {
+  margin: 0 0 var(--space-lg);
+  font-size: var(--fs-fluid-3xl);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--dark-950);
+}
+
+.brand-row-logo {
+  margin: 0 0 var(--space-md);
+
+  img {
+    width: auto;
+    height: #{fluid(64, 96)};
+  }
+}
+
+.brand-row-lead {
+  margin: 0 0 var(--space-md);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+}
+
+// When a lead is the last paragraph (Construction has two and no body
+// text), it takes the larger gap before the link.
+.brand-row-lead:has(+ .brand-row-link) {
+  margin-bottom: var(--space-xl);
+}
+
+.brand-row-text {
+  margin: 0 0 var(--space-xl);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--dark-500);
+}
+
+.brand-row-link {
+  font-weight: var(--fw-semibold);
+  color: var(--dark-950);
+
+  @include hover {
+    color: var(--color-brand);
+  }
+}
+
+// Picture plus the details box, which is pulled up over the picture's lower
+// edge and hangs on below it.
+.brand-row-visual {
+  position: relative;
+}
+
+.brand-row-media {
+  overflow: hidden;
+  background: var(--color-surface);
+  // Pages whose picture has other proportions set --media-ratio inline.
+  aspect-ratio: var(--media-ratio, 750 / 540);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // GSAP scales this from 1.25 while the picture wipes in; the origin keeps
+    // the car roughly in place as it settles.
+    transform-origin: 60% 50%;
+  }
+}
+
+.brand-row-details {
+  position: relative;
+  width: calc(100% - var(--space-md));
+  margin: -40px 0 0 auto;
+  padding: #{fluid(20, 32)} #{fluid(20, 40)};
+  background: var(--color-brand);
+  color: var(--white);
+
+  @include mq-up("md") {
+    width: 69%;
+    margin-top: calc(#{fluid(40, 110)} * -1);
+  }
+
+  a {
+    color: var(--white);
+
+    @include hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+.brand-row-details-title {
+  margin: 0 0 var(--space-xs);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  color: #6cc6dc;
+}
+
+.brand-row-mail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-2xs);
+  margin: 0 0 var(--space-md);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-medium);
+
+  i {
+    color: #6cc6dc;
+  }
+
+  a {
+    overflow-wrap: anywhere;
+  }
+}
+
+.brand-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-lg);
+
+  .link-arrow {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Automotive facilities
+//  Centred title, a hairline, three figures split by short vertical rules,
+//  then the model line-up. The picture's ground is #fbfbfb, so the section
+//  uses the same and the picture has no visible edge.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.facilities {
+  background: #fbfbfb;
+}
+
+.facility-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border-top: 1px solid var(--color-border);
+
+  @include mq-up("md") {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-top: #{fluid(32, 60)};
+  }
+}
+
+// Icon beside a two-line title and a short caption. Each figure is centred
+// in its third; below `md` they stack, left-aligned, between hairlines.
+.facility {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  padding-block: var(--space-md);
+
+  & + & {
+    border-top: 1px solid var(--color-border);
+  }
+
+  @include mq-up("md") {
+    justify-content: center;
+    padding: var(--space-2xs) var(--space-md);
+
+    & + & {
+      border-top: 0;
+      border-inline-start: 1px solid var(--color-border);
+    }
+  }
+}
+
+.facility-icon {
+  flex-shrink: 0;
+  width: #{fluid(24, 32)};
+  height: auto;
+  // Sits on the title's first line.
+  margin-top: 0.35em;
+  font-size: #{fluid(24, 40)};
+}
+
+.facility-title {
+  margin: 0 0 var(--space-3xs);
+  font-size: #{fluid(24, 40)};
+  font-weight: var(--fw-normal);
+  line-height: 1.1;
+  letter-spacing: var(--ls-tight);
+  color: var(--dark-950);
+}
+
+// The design breaks the longer titles onto two lines; on a phone they have
+// the room to run on.
+.facility-break {
+  display: none;
+
+  @include mq-up("md") {
+    display: inline;
+  }
+}
+
+.facility-text {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-medium);
+  color: var(--dark-950);
+}
+
+.facilities-media {
+  max-width: 1450px;
+  margin: #{fluid(24, 48)} auto 0;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}

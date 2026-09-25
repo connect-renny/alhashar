@@ -1,0 +1,927 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Home page
+//  Page-specific styles only. Anything reused on a second page belongs in
+//  components/ or layout/ instead.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Hero ──────────────────────────────────────────────────────────────────
+// Full-viewport video with the heading centred vertically and the "Latest
+// Updates" ticker pinned to the bottom-right of the container. The fixed
+// header floats over the top, so the body pads down past it.
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  // svh, not vh — on mobile, 100vh sits behind the browser's address bar
+  // and pushes the content off screen.
+  min-height: 100svh;
+  background: var(--black);
+  color: var(--white);
+  overflow: hidden;
+}
+
+.hero-media {
+  @include cover;
+  z-index: 0;
+
+  video,
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+  }
+}
+
+// Darkens the top edge so the white nav reads over any frame of the video,
+// and the bottom so the ticker does too.
+.hero-scrim {
+  @include cover;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 45%) 0%,
+    rgb(0 0 0 / 0%) 35%,
+    rgb(0 0 0 / 0%) 65%,
+    rgb(0 0 0 / 35%) 100%
+  );
+}
+
+.hero-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+  padding-block: calc(var(--header-height) + var(--space-xl)) var(--space-2xl);
+
+  // A column: the heading floats in the free space, the ticker sits at the
+  // foot. Flow, not absolute positioning, so the two can never overlap on a
+  // short viewport — the hero just grows.
+  > .container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.hero-content {
+  max-width: 46rem;
+  // Centres in the space above the ticker; the extra top padding biases it
+  // a touch below the midline, as in the design.
+  margin-block: auto;
+  padding-top: var(--space-lg);
+}
+
+.hero-title {
+  margin: 0 0 var(--space-lg);
+  font-size: #{fluid(34, 64)};
+  font-weight: var(--fw-normal);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--white);
+  text-wrap: balance;
+
+  // The serif accent words: "Trust." / "Excellence."
+  em {
+    font-family: var(--serif-font);
+    font-style: italic;
+    font-weight: var(--fw-semibold); // the one Abril face shipped
+    letter-spacing: 0;
+  }
+}
+
+// "Explore more about Alhashar Group →" (.link-arrow--plain does the shape).
+.hero-link {
+  color: var(--white);
+
+  @include hover {
+    color: var(--color-accent);
+  }
+}
+
+// ─── Latest updates ticker ─────────────────────────────────────────────────
+.hero-news {
+  width: 100%;
+  max-width: 275px;
+  margin-top: var(--space-2xl);
+  padding-inline-start: var(--space-lg);
+  border-inline-start: 1px solid rgb(255 255 255 / 25%);
+
+  @include mq-up("lg") {
+    align-self: flex-end;
+    margin-top: var(--space-xl);
+    padding-inline-start: 40px;
+  }
+}
+
+.hero-news-title {
+  margin: 0 0 var(--space-2xs);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-medium);
+  color: var(--white);
+}
+
+.hero-news-item {
+  display: block;
+  color: var(--white);
+  @include focus-ring(var(--white));
+
+  .tag {
+    display: inline-block;
+    margin-bottom: 4px;
+    padding: 1px 6px;
+    font-size: 8px;
+    font-weight: var(--fw-semibold);
+    line-height: 1.5;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--color-tag);
+    border-radius: var(--radius-sm);
+  }
+
+  p {
+    margin: 0;
+    font-size: var(--fs-sm);
+    line-height: var(--lh-snug);
+    @include transEase(color);
+  }
+
+  @include hover {
+    p {
+      color: var(--color-accent);
+    }
+  }
+}
+
+// ─── Our founder ───────────────────────────────────────────────────────────
+// Text on the left, portrait on the right.
+// The message can run long, so the text sits in its own scroll area: on
+// desktop it's pinned to the portrait's height (the absolute-inside-a-
+// zero-height-flex-child trick below), on mobile it's a fixed max-height.
+.founder-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+
+  @include mq-up("lg") {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: var(--space-2xl);
+    align-items: stretch;
+  }
+
+  @include mq-up("xl") {
+    gap: var(--space-3xl);
+  }
+}
+
+.founder-text {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-block: var(--space-md);
+
+  .section-head {
+    margin-bottom: var(--space-md);
+  }
+}
+
+// The scroll area. Below `lg` it's a plain box with a max-height; from `lg`
+// the wrapper takes the column's leftover height (flex: 1, min-height: 0
+// so the text can't push the row taller than the portrait) and the inner
+// pane fills it absolutely.
+.founder-scroll-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.founder-scroll {
+  max-height: 340px;
+  padding-inline-end: var(--space-md);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  // Thin grey pill, as drawn in the design — not the brand-coloured
+  // scrollbar the rest of the page uses.
+  scrollbar-width: thin;
+  scrollbar-color: var(--dark-200) transparent;
+  @include focus-ring;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--dark-200);
+    border-radius: var(--radius-pill);
+  }
+
+  @include mq-up("lg") {
+    position: absolute;
+    inset: 0;
+    max-height: none;
+  }
+}
+
+.founder-lead {
+  margin-bottom: var(--space-md);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--dark-950);
+}
+
+.founder-body {
+  color: var(--dark-950);
+
+  p {
+    margin-bottom: var(--space-md);
+  }
+}
+
+// Sits below the scroll pane, outside it, so the name and title stay put
+// while the message scrolls.
+.founder-signature {
+  flex-shrink: 0;
+  margin: var(--space-md) 0 0;
+  font-weight: var(--fw-semibold);
+  color: var(--dark-950);
+
+  .founder-role {
+    display: block;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-normal);
+    color: var(--color-text-muted);
+  }
+}
+
+// The portrait sizes itself (width: 100%, intrinsic ratio) and so sets the
+// grid row's height; the text column stretches to match. Don't give the
+// image height: 100% — that resolves against the text column instead and
+// collapses the row.
+.founder-media {
+  position: relative;
+
+  img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 676 / 705;
+    object-fit: cover;
+  }
+}
+
+// ─── About Al Hashar Group ─────────────────────────────────────────────────
+// A crossfading pair of background shots, inset from the viewport edges,
+// with white copy laid over the top-left. The copy is in normal flow (not
+// absolutely positioned) so the block can never be shorter than its text;
+// on desktop the aspect-ratio keeps it the shape of the photos.
+.about {
+  padding-inline: clamp(16px, 4vw, 64px);
+}
+
+// No overflow: hidden here — it would switch off the automatic minimum
+// height an aspect-ratio box gets from its content, and the copy would spill
+// out instead of growing the block. The slideshow clips itself.
+.about-cover {
+  position: relative;
+  background: var(--color-brand);
+  color: var(--white);
+
+  @include mq-up("lg") {
+    aspect-ratio: 1737 / 683;
+  }
+}
+
+.about-slider {
+  @include cover;
+  z-index: 0;
+
+  .swiper-slide {
+    height: 100%;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Soft scrim behind the copy. The demo's shorter text sat in the empty sky;
+// the approved copy runs down over the building, so it needs a little help.
+.about-scrim {
+  @include cover;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--color-brand-rgb) / 75%) 0%,
+    rgb(var(--color-brand-rgb) / 45%) 45%,
+    rgb(var(--color-brand-rgb) / 0%) 75%
+  );
+}
+
+.about-body {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(40px, 6vw, 90px);
+}
+
+.about-content {
+  max-width: 47rem;
+
+  .section-eyebrow,
+  .section-title,
+  p {
+    color: var(--white);
+  }
+
+  .section-head {
+    margin-bottom: var(--space-md);
+  }
+
+  p {
+    margin-bottom: var(--space-md);
+  }
+}
+
+.about-link {
+  margin-top: var(--space-sm);
+  color: var(--white);
+
+  @include hover {
+    color: var(--color-accent);
+  }
+}
+
+// ─── Our diverse businesses ────────────────────────────────────────────────
+// Seven rows: number · title + link · photo · lead + list, each closed by a
+// hairline. main.js animates every row in with GSAP + ScrollTrigger (the
+// row slides in from the right, the photo wipes open, the hairline draws,
+// the words rise); with reduced motion or no GSAP the rows are simply
+// static, which is what the CSS below is.
+.division-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.division-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "num head"
+    "media media"
+    "info info";
+  gap: var(--space-md) var(--space-xs);
+  padding-block: var(--space-lg);
+
+  // The column gap is kept tight so the number hugs its title; the wider
+  // spacing before the photo and the info column comes from their own
+  // margins (below) instead.
+  @include mq-up("md") {
+    grid-template-columns: auto minmax(0, 3fr) minmax(0, 2fr);
+    grid-template-areas:
+      "num head head"
+      "num media info";
+    column-gap: var(--space-sm);
+  }
+
+  // Four across only from xl — at lg the title and info columns get too
+  // narrow and the titles break a word per line.
+  @include mq-up("xl") {
+    grid-template-columns: auto minmax(0, 4fr) minmax(0, 10fr) minmax(0, 5fr);
+    grid-template-areas: "num head media info";
+    gap: var(--space-xl) var(--space-sm);
+    align-items: center;
+    padding-block: var(--space-md);
+  }
+
+  // The hairline under each row, as its own element so it can be drawn in.
+  .division-rule {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: rgb(0 0 0 / 15%);
+    transform-origin: left center;
+  }
+}
+
+.division-num {
+  grid-area: num;
+  padding-top: 0.45em; // optically level with the title's cap height
+  font-size: var(--fs-base);
+  font-weight: var(--fw-medium);
+  line-height: 1;
+  color: var(--color-orange);
+}
+
+.division-head {
+  grid-area: head;
+}
+
+.division-title {
+  margin: 0 0 var(--space-xs);
+  font-size: #{fluid(22, 30)};
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--dark-950);
+  text-wrap: balance;
+
+  // main.js wraps each word for the rise-in; the outer span is the mask.
+  .word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.08em; // room for descenders inside the mask
+    margin-bottom: -0.08em;
+
+    > span {
+      display: inline-block;
+    }
+  }
+}
+
+.division-link {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--dark-950);
+
+  @include hover {
+    color: var(--color-orange);
+  }
+}
+
+.division-media {
+  grid-area: media;
+  overflow: hidden;
+
+  @include mq-up("xl") {
+    margin-inline-start: var(--space-xl);
+  }
+  aspect-ratio: 585 / 230;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.division-info {
+  grid-area: info;
+
+  @include mq-up("md") {
+    margin-inline-start: var(--space-sm);
+  }
+
+  @include mq-up("xl") {
+    margin-inline-start: var(--space-xl);
+  }
+  font-size: var(--fs-sm);
+  color: var(--dark-950);
+
+  .division-lead {
+    margin-bottom: var(--space-sm);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-snug);
+  }
+
+  ul {
+    line-height: 1.7;
+  }
+}
+
+// ─── Our partners ──────────────────────────────────────────────────────────
+// Business tabs over a horizontally scrolling track of logo cards. Cards in
+// a group share their borders; groups sit apart. Automotive adds a row of
+// sub-tabs. main.js (initPartners) runs the tabs, the prev/next buttons and
+// the sub-tab scroll-spy.
+.partners {
+  --partner-card: 150px;
+
+  @include mq-up("md") {
+    --partner-card: 180px;
+  }
+
+  @include mq-up("xl") {
+    --partner-card: 210px;
+  }
+}
+
+// Tab strip: scrolls sideways when the labels don't fit; the arrow buttons
+// appear only then (main.js toggles `hidden`).
+.partners-tabs-wrap {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--dark-150);
+}
+
+.partners-tabs {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include mq-up("xl") {
+    justify-content: space-between;
+  }
+}
+
+.partners-tab {
+  position: relative;
+  flex-shrink: 0;
+  max-width: 180px;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: 1.3;
+  color: var(--dark-300);
+  text-align: center;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  @include transEase(color);
+  @include focus-ring(var(--color-brand), -3px);
+
+  // Active underline, drawn in from the centre.
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--color-brand);
+    transform: scaleX(0);
+    @include transEase(transform);
+  }
+
+  @include hover {
+    color: var(--dark-950);
+  }
+
+  @include mq-up("md") {
+    max-width: 220px;
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--fs-base);
+  }
+
+  &[aria-selected="true"] {
+    color: var(--dark-950);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.partners-tabs-arrow {
+  @include flex-center;
+  flex-shrink: 0;
+  width: 44px;
+  color: var(--dark-950);
+  font-size: var(--fs-sm);
+  background: var(--white);
+  border: 0;
+  cursor: pointer;
+  @include transEase(color);
+
+  &--prev {
+    border-inline-end: 1px solid var(--dark-100);
+  }
+
+  &--next {
+    border-inline-start: 1px solid var(--dark-100);
+  }
+
+  @include hover {
+    color: var(--color-brand);
+  }
+}
+
+// Automotive's categories.
+.partners-subnav {
+  display: flex;
+  gap: var(--space-2xs) var(--space-lg);
+  margin-bottom: var(--space-md);
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include mq-up("md") {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: visible;
+  }
+}
+
+.partners-sub {
+  flex-shrink: 0;
+  padding: 6px 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--dark-300);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  @include transEase((color, border-color));
+  @include focus-ring;
+
+  @include hover {
+    color: var(--dark-950);
+  }
+
+  &[aria-current="true"] {
+    color: var(--dark-950);
+    border-bottom-color: var(--dark-950);
+  }
+}
+
+.partners-panels {
+  padding-top: var(--space-lg);
+}
+
+.partners-panel {
+  @include motion-ok {
+    &.is-active {
+      animation: partners-in 0.5s var(--ease-out) both;
+    }
+  }
+}
+
+@keyframes partners-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+// The track: groups side by side, scrolled by the prev/next buttons, a
+// swipe, or a sub-tab. `safe center` centres a short row but falls back to
+// start-aligned once it overflows, so nothing is cut off on the left.
+.partners-track {
+  display: flex;
+  justify-content: safe center;
+  gap: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.partner-group {
+  display: flex;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  scroll-snap-align: start;
+}
+
+.partner-card {
+  position: relative;
+  @include flex-center;
+  width: var(--partner-card);
+  aspect-ratio: 1;
+  padding: var(--space-md);
+  background: var(--white);
+  border: 1px solid var(--dark-100);
+  @include transEase((box-shadow, border-color));
+
+  // Neighbours share one hairline.
+  & + & {
+    margin-inline-start: -1px;
+  }
+
+  img {
+    max-width: 78%;
+    max-height: 48%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    @include transEase(transform);
+  }
+
+  @include hover {
+    z-index: 1;
+    border-color: var(--dark-150);
+    box-shadow: var(--shadow-lg);
+
+    img {
+      transform: scale(1.06);
+    }
+  }
+}
+
+// Placeholder wordmarks fill more of the card, like a real logo would.
+.partner-card.is-placeholder img {
+  max-width: 88%;
+}
+
+// "Tyres", "Batteries"… in the corner of a category's cards.
+.partner-cat {
+  position: absolute;
+  top: var(--space-xs);
+  inset-inline-start: var(--space-sm);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--dark-950);
+}
+
+// Prev/next under a hairline, bottom right — as on the news slider.
+.partners-nav {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--dark-400);
+
+  button {
+    @include flex-center;
+    width: 44px;
+    height: 32px;
+    color: var(--dark-950);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    @include transEase((color, opacity));
+    @include focus-ring;
+
+    & + button {
+      border-inline-start: 1px solid var(--dark-150);
+    }
+
+    @include hover {
+      color: var(--color-brand);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+  }
+
+  // Nothing to page through: keep the rule, drop the buttons.
+  &.is-static button {
+    visibility: hidden;
+  }
+}
+
+// ─── Latest news ───────────────────────────────────────────────────────────
+// Card slider (components/_cards.scss has the card). Prev/next sit under a
+// rule at the bottom-right, as drawn.
+.news-slider {
+  // Equal-height cards so the pictures line up along the bottom.
+  .swiper-slide {
+    height: auto;
+  }
+}
+
+.news-slider-nav {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--dark-400);
+
+  button {
+    @include flex-center;
+    width: 48px;
+    height: 30px;
+    color: var(--dark-950);
+    font-size: var(--fs-md);
+    @include transEase(color);
+    @include focus-ring;
+
+    & + button {
+      border-inline-start: 1px solid var(--dark-150);
+    }
+
+    @include hover {
+      color: var(--color-orange);
+    }
+  }
+}
+
+// ─── Head office location ──────────────────────────────────────────────────
+// A full-bleed map with a white address card floated over its left side.
+// Below `lg` the map becomes a short banner and the card tucks up under it
+// in normal flow, as in the demo.
+.office-map {
+  position: relative;
+
+  > img {
+    display: block;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    object-position: 55% 50%;
+
+    @include mq-up("md") {
+      height: 340px;
+    }
+
+    @include mq-up("lg") {
+      height: auto;
+      aspect-ratio: 1920 / 640;
+    }
+  }
+}
+
+.office-overlay {
+  margin-top: -40px;
+
+  @include mq-up("md") {
+    margin-top: -64px;
+  }
+
+  @include mq-up("lg") {
+    @include cover;
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+  }
+}
+
+.office-card {
+  max-width: 582px;
+  padding: clamp(24px, 4vw, 52px);
+  background: var(--white);
+  color: var(--dark-950);
+  box-shadow: var(--shadow-md);
+
+  @include mq-up("lg") {
+    box-shadow: none;
+  }
+
+  .section-head {
+    margin-bottom: var(--space-lg);
+  }
+
+  &-body {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-lg);
+
+    // Too narrow for logo and address side by side on phones.
+    @include mq-down("sm") {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+  }
+
+  &-logo {
+    flex-shrink: 0;
+    width: 120px;
+    height: auto;
+
+    @include mq-down("sm") {
+      width: 88px;
+    }
+  }
+
+  &-title {
+    margin: 0 0 var(--space-2xs);
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-normal);
+    line-height: 1.2;
+    color: var(--dark-950);
+  }
+
+  &-address {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    font-style: normal;
+    line-height: var(--lh-normal);
+  }
+
+  &-link {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--dark-950);
+
+    @include hover {
+      color: var(--color-brand);
+    }
+  }
+}

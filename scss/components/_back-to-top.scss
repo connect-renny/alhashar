@@ -1,0 +1,95 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Back to top
+//  A brand circle with a ring around it that fills as the page is scrolled:
+//  main.js writes --scroll-progress (0–1) and the progress circle's
+//  stroke-dashoffset is derived from it. The arrow bobs gently.
+//
+//  Hidden with visibility, not just opacity, so it isn't an invisible
+//  clickable target in the corner before you've scrolled.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.return-top {
+  // 2πr for r=22 in the 50×50 viewBox.
+  --ring-circumference: 138.23;
+  --scroll-progress: 0;
+
+  @include flex-center;
+  position: fixed;
+  bottom: 1rem;
+  inset-inline-end: 1rem;
+  z-index: var(--z-sticky);
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: 0;
+  background: var(--color-brand);
+  border-radius: var(--radius-circle);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  @include transEase((opacity, visibility, transform, background-color));
+  @include focus-ring;
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  img,
+  svg:not(.return-top-ring) {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    @include transEase(transform);
+
+    @include motion-ok {
+      animation: upBounce 2s infinite;
+    }
+  }
+
+  @include hover {
+    background: var(--color-accent);
+
+    img {
+      animation: none;
+      transform: translateY(-3px);
+    }
+  }
+}
+
+// The ring: track underneath, progress on top, both drawn from 12 o'clock.
+.return-top-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.return-top-track,
+.return-top-progress {
+  fill: none;
+  stroke-width: 2;
+}
+
+.return-top-track {
+  stroke: rgb(255 255 255 / 15%);
+}
+
+.return-top-progress {
+  stroke: var(--white);
+  stroke-linecap: round;
+  // Explicit px: a unitless calc() here is fine in Chrome but not every
+  // engine resolves it for stroke-dashoffset. viewBox units are 1:1 with px.
+  stroke-dasharray: calc(var(--ring-circumference) * 1px);
+  stroke-dashoffset: calc(
+    var(--ring-circumference) * (1 - var(--scroll-progress)) * 1px
+  );
+  transition: stroke-dashoffset 0.1s linear;
+}

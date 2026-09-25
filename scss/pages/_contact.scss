@@ -1,0 +1,140 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Contact
+//  Top: a navy card with the address beside a photo, the same height.
+//  A hairline, then the enquiry form (floating-label fields, two across)
+//  beside a map. Everything stacks below `lg`.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.contact-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-sm);
+
+  // The card gets the larger share on tablets so the email address fits on
+  // one line; the drawn 0.9 : 1 split returns once there's room.
+  @include mq-up("md") {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  @include mq-up("lg") {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  }
+}
+
+.contact-card {
+  padding: #{fluid(32, 56)} #{fluid(24, 84)};
+  background: var(--color-brand);
+  color: var(--white);
+
+  &-title {
+    margin: 0 0 var(--space-lg);
+    font-size: var(--fs-fluid-3xl);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    color: var(--white);
+  }
+
+  &-address {
+    font-size: var(--fs-md);
+    font-style: normal;
+    font-weight: var(--fw-medium);
+    line-height: 1.35;
+
+    p {
+      margin: 0 0 var(--space-md);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // Underline grows in from the left on hover.
+    a {
+      color: var(--white);
+      background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 1px
+        no-repeat;
+      transition:
+        background-size 0.4s var(--ease-out),
+        color 0.3s var(--ease-out);
+      overflow-wrap: anywhere;
+
+      @include hover {
+        color: var(--color-accent);
+        background-size: 100% 1px;
+      }
+    }
+  }
+}
+
+.contact-photo {
+  overflow: hidden;
+  min-height: 240px;
+  background: var(--color-surface);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.contact-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+  margin-top: #{fluid(32, 46)};
+  padding-top: #{fluid(32, 46)};
+  border-top: 1px solid var(--dark-100);
+
+  @include mq-up("lg") {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
+    gap: #{fluid(32, 48)};
+  }
+}
+
+.contact-form-title {
+  margin: #{fluid(0, 24)} 0 var(--space-md);
+  font-weight: var(--fw-medium);
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-sm) var(--space-md);
+
+  @include mq-up("sm") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .float-field--full,
+  .contact-form-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+.contact-form-actions {
+  margin-top: var(--space-md);
+
+  .btn {
+    min-width: 168px;
+    font-size: var(--fs-md);
+  }
+}
+
+.contact-map {
+  overflow: hidden;
+  min-height: 320px;
+  background: var(--color-surface);
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    border: 0;
+  }
+}

@@ -1,0 +1,1529 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <title>Al Hashar Group — Decades of Trust. A Future of Excellence.</title>
+    <meta
+      name="description"
+      content="Al Hashar Group, Oman — 65 years of excellence across automotive, heavy vehicles, electronics, tyres and hospitality."
+    />
+
+    <!-- Social cards. og:image wants 1200×630. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Al Hashar Group" />
+    <meta
+      property="og:description"
+      content="Decades of Trust. A Future of Excellence. 65 years of Al Hashar Group in Oman."
+    />
+    <meta property="og:image" content="assets/images/hero-video-poster.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- One scalable icon covers every size in modern browsers… -->
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
+    <!-- …with raster fallbacks for those that won't take an SVG. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon-192.png" />
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
+
+    <!-- Browser chrome colour. -->
+    <meta name="theme-color" content="#0b1f41" />
+
+    <!-- The two faces on screen at first paint, preloaded so text renders in
+         them straight away. Keep in sync with scss/base/_fonts.scss. -->
+    <link
+      rel="preload"
+      href="assets/fonts/poppins-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/AbrilDisplay-SemiBoldItalic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+    <!-- style.css last — it owns the tokens everything above is themed with. -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         Header / navigation
+         Transparent over the hero; main.js adds .navbar-fixed past 10px of
+         scroll. Below `lg` the .navbar-nav block becomes the off-canvas
+         drawer, driven by the hamburger.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <header class="header">
+      <nav class="navbar-main" aria-label="Main">
+        <div class="navbar-inner">
+          <a class="navbar-brand" href="index.html">
+            <img
+              src="assets/images/alhashar-logo-white.png"
+              alt="Al Hashar Group"
+              width="90"
+              height="72"
+            />
+            <img
+              src="assets/images/65-anniversary.png"
+              alt="Celebrating 65th anniversary"
+              width="90"
+              height="72"
+            />
+          </a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            aria-controls="main-nav"
+            aria-expanded="false"
+            aria-label="Open menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <div class="navbar-nav" id="main-nav">
+            <button class="navbar-close" type="button" aria-label="Close menu">
+              <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+
+            <ul class="navbar-menu">
+              <li>
+                <a class="nav-link nav-link--icon is-active" href="index.html" aria-current="page">
+                  <i class="bi bi-house-door-fill" aria-hidden="true"></i>
+                  <span class="sr-only">Home</span>
+                </a>
+              </li>
+              <li>
+                <a class="nav-link" href="about.html">About us</a>
+              </li>
+              <li class="nav-item has-dropdown">
+                <a class="nav-link" href="businesses.html">Our Businesses</a>
+                <button
+                  class="nav-dropdown-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="nav-businesses"
+                  aria-label="Show Our Businesses menu"
+                >
+                  <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                </button>
+                <ul class="nav-dropdown" id="nav-businesses">
+                  <li>
+                    <a href="automotive.html"
+                      ><i class="bi bi-car-front" aria-hidden="true"></i>Automotive</a
+                    >
+                  </li>
+                  <li>
+                    <a href="businesses.html#heavy-equipment"
+                      ><i class="bi bi-truck" aria-hidden="true"></i>Construction &amp; Heavy
+                      Equipment</a
+                    >
+                  </li>
+                  <li>
+                    <a href="electronics.html"
+                      ><i class="bi bi-tv" aria-hidden="true"></i>Home Appliances &amp;
+                      Electronics</a
+                    >
+                  </li>
+                  <li>
+                    <a href="businesses.html#trading"
+                      ><i class="bi bi-box-seam" aria-hidden="true"></i>Trading</a
+                    >
+                  </li>
+                  <li>
+                    <a href="hospitality.html"
+                      ><i class="bi bi-building" aria-hidden="true"></i>Hospitality</a
+                    >
+                  </li>
+                  <li>
+                    <a href="construction.html"
+                      ><i class="bi bi-bricks" aria-hidden="true"></i>Construction &amp;
+                      Contracting</a
+                    >
+                  </li>
+                  <li>
+                    <a href="businesses.html#engineering"
+                      ><i class="bi bi-gear-wide-connected" aria-hidden="true"></i>Engineering</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li><a class="nav-link" href="careers.html">Careers</a></li>
+              <li><a class="nav-link" href="contact.html">Contact Us</a></li>
+              <li><a class="nav-link" href="news.html">Media center</a></li>
+            </ul>
+
+            <ul class="navbar-tools">
+              <!-- Search — hidden for now.
+              <li>
+                <button class="nav-tool" type="button" aria-label="Search">
+                  <i class="bi bi-search" aria-hidden="true"></i>
+                </button>
+              </li>
+              -->
+              <li>
+                <a
+                  class="nav-tool"
+                  href="ar/index.html"
+                  hreflang="ar"
+                  lang="ar"
+                  aria-label="العربية"
+                >
+                  <i class="bi bi-globe" aria-hidden="true"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="navbar-backdrop"></div>
+    </header>
+
+    <main id="main">
+      <!-- ═════════════════════════════════════════════════════════════════
+           Hero
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" aria-hidden="true">
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="assets/images/hero-video-poster.jpg"
+          >
+            <source src="assets/videos/hero-video.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="hero-scrim" aria-hidden="true"></div>
+
+        <div class="hero-body">
+          <div class="container">
+            <div class="hero-content">
+              <h1 class="hero-title" id="hero-title">
+                Decades of <em>Trust.</em><br />
+                A Future of <em>Excellence.</em>
+              </h1>
+              <a class="link-arrow link-arrow--plain hero-link" href="about.html">
+                Explore more about Alhashar Group
+                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+
+            <aside class="hero-news" aria-labelledby="hero-news-title">
+              <h2 class="hero-news-title" id="hero-news-title">Latest Updates</h2>
+              <div
+                class="swiper js-swiper"
+                data-swiper-name="heroNews"
+                data-swiper='{"loop": true, "speed": 1000, "spaceBetween": 16, "autoplay": {"delay": 5000, "disableOnInteraction": false}, "a11y": {"enabled": true}}'
+              >
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <a class="hero-news-item" href="news.html">
+                      <span class="tag">New</span>
+                      <p>Aston Martin Vantage debuts in Oman</p>
+                    </a>
+                  </div>
+                  <div class="swiper-slide">
+                    <a class="hero-news-item" href="news.html">
+                      <span class="tag">New</span>
+                      <p>Aston Martin Vantage debuts in Oman</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           Group at a glance
+           Numbers roll in via data-count (main.js → components/_odometer).
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="section facts" aria-labelledby="facts-title">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <h2 class="section-title" id="facts-title">Al Hashar Group <em>at a Glance</em></h2>
+          </div>
+
+          <div class="row gy-5">
+            <div class="col-6 col-lg-3" data-reveal data-reveal-delay="0">
+              <div class="stat">
+                <img
+                  class="stat-icon"
+                  src="assets/images/facts-icon-01.png"
+                  alt=""
+                  width="72"
+                  height="72"
+                />
+                <p class="stat-value">
+                  <span class="stat-num" data-count="65">65</span><span class="stat-sign">+</span>
+                </p>
+                <span class="stat-label">Years of Excellence</span>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3" data-reveal data-reveal-delay="100">
+              <div class="stat">
+                <img
+                  class="stat-icon"
+                  src="assets/images/facts-icon-02.png"
+                  alt=""
+                  width="72"
+                  height="72"
+                />
+                <p class="stat-value">
+                  <span class="stat-num" data-count="9">9</span><span class="stat-sign">+</span>
+                </p>
+                <span class="stat-label">Business Divisions</span>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3" data-reveal data-reveal-delay="200">
+              <div class="stat">
+                <img
+                  class="stat-icon"
+                  src="assets/images/facts-icon-03.png"
+                  alt=""
+                  width="72"
+                  height="72"
+                />
+                <p class="stat-value">
+                  <span class="stat-num" data-count="500">500</span><span class="stat-sign">+</span>
+                </p>
+                <span class="stat-label">Team Members</span>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3" data-reveal data-reveal-delay="300">
+              <div class="stat">
+                <img
+                  class="stat-icon"
+                  src="assets/images/facts-icon-04.png"
+                  alt=""
+                  width="72"
+                  height="72"
+                />
+                <p class="stat-value">
+                  <span class="stat-num" data-count="50">50</span><span class="stat-sign">+</span>
+                </p>
+                <span class="stat-label">Global Partners</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           Our founder
+           .founder-scroll is its own scroll pane (the message runs long).
+           data-lenis-prevent keeps the smooth-scroll from hijacking the
+           wheel inside it; tabindex lets keyboard users scroll it.
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="section section--flush-top founder" aria-labelledby="founder-title">
+        <div class="container">
+          <div class="founder-grid">
+            <div class="founder-text" data-reveal>
+              <div class="section-head">
+                <span class="section-eyebrow">Our Founder</span>
+                <h2 class="section-title" id="founder-title">
+                  A Vision That Continues<br />
+                  <em>to Inspire Us</em>
+                </h2>
+              </div>
+
+              <div class="founder-scroll-wrap">
+                <div
+                  class="founder-scroll"
+                  data-lenis-prevent
+                  tabindex="0"
+                  role="region"
+                  aria-label="Founder's message"
+                >
+                  <div class="founder-body">
+                    <p>
+                      Al Hashar Group’s journey has been shaped by the vision of its founder, the
+                      late Sheikh Saeed Bin Nasser Al Hashar. His ambition, foresight and commitment
+                      to serving Oman laid the foundation for what has become one of the Sultanate’s
+                      established and diversified business groups.
+                    </p>
+                    <p>
+                      From the outset, his vision placed customers at the heart of the organization.
+                      Today, this principle continues to guide us as we build lasting relationships
+                      with generations of customers through quality, trust and personalized service.
+                    </p>
+                    <p>
+                      Our progress has also been strengthened by enduring partnerships with leading
+                      international brands and principals. These relationships extend beyond
+                      delivering world-class products and services to the Omani market. They are
+                      built on shared values, mutual success and a long-term commitment to providing
+                      dependable after-sales care.
+                    </p>
+                    <p>
+                      At the heart of Al Hashar Group is our people. Their expertise, dedication and
+                      loyalty—demonstrated by colleagues who have been part of our journey for
+                      decades—continue to drive the Group forward.
+                    </p>
+                    <p>
+                      As we look to the future, we remain guided by the values established by our
+                      founder. Supported by the trust of our customers, the dedication of our
+                      employees and the strength of our partnerships, Al Hashar Group continues to
+                      evolve, innovate and contribute to Oman’s ongoing progress.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p class="founder-signature">
+                Late Sheikh Saeed Bin Nasser Al Hashar
+                <span class="founder-role">Founder, Al Hashar Group</span>
+              </p>
+            </div>
+
+            <div class="founder-media" data-reveal data-reveal-delay="150">
+              <img
+                src="assets/images/founder-pic.jpg"
+                alt="Late Sheikh Saeed Bin Nasser Al Hashar, founder of Al Hashar Group"
+                width="676"
+                height="705"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           About Al Hashar Group
+           Background slideshow is decorative (aria-hidden); the copy sits in
+           flow on top. No vertical padding of its own — the sections either
+           side carry it.
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="about" aria-labelledby="about-title">
+        <div class="about-cover">
+          <div
+            class="swiper js-swiper about-slider"
+            data-swiper-name="about"
+            data-swiper='{"loop": true, "effect": "fade", "speed": 1500, "allowTouchMove": false, "autoplay": {"delay": 2000, "disableOnInteraction": false}}'
+            aria-hidden="true"
+          >
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img
+                  src="assets/images/about-bg-01.jpg"
+                  alt=""
+                  width="1737"
+                  height="683"
+                  loading="lazy"
+                />
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="assets/images/about-bg-02.jpg"
+                  alt=""
+                  width="1737"
+                  height="683"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="about-scrim" aria-hidden="true"></div>
+
+          <div class="about-body">
+            <div class="container">
+              <div class="about-content" data-reveal>
+                <div class="section-head">
+                  <span class="section-eyebrow">About Al Hashar Group</span>
+                  <h2 class="section-title" id="about-title">
+                    Over 50 Years of <em>Excellence</em>
+                  </h2>
+                </div>
+                <p>
+                  For more than five decades, Al Hashar Group has been part of Oman’s journey of
+                  growth and progress. Established through the vision of its founder, the late
+                  Sheikh Saeed Bin Nasser Al Hashar, the Group has evolved into one of the
+                  Sultanate’s established and diversified family-owned business groups.
+                </p>
+                <p>
+                  Today, Al Hashar Group operates across a broad range of sectors, including
+                  automotive, home appliances and electronics, heavy equipment, trading and
+                  services, engineering, hospitality and construction &amp; contracting. Through
+                  these diverse businesses, the Group connects customers and organisations across
+                  Oman with trusted international brands, quality products and dependable services.
+                </p>
+                <a class="link-arrow link-arrow--plain about-link" href="about.html">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           Our diverse businesses
+           Rows animate in with GSAP + ScrollTrigger (main.js) and replay on
+           every pass. .division-rule is the hairline, drawn in by the
+           timeline.
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="section section--flush-bottom diverse" aria-labelledby="diverse-title">
+        <div class="container">
+          <div class="section-head section-head--center" data-reveal>
+            <h2 class="section-title" id="diverse-title">Our Diverse <em>Businesses</em></h2>
+          </div>
+
+          <div class="division-list">
+            <article class="division-item">
+              <span class="division-num" aria-hidden="true">01</span>
+              <div class="division-head">
+                <h3 class="division-title">Alhashar Automotive SAOC</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="businesses.html">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="division-media">
+                <img
+                  src="assets/images/diverse-business-01.jpg"
+                  alt=""
+                  width="585"
+                  height="230"
+                  loading="lazy"
+                />
+              </div>
+              <div class="division-info">
+                <p class="division-lead">
+                  Nissan &amp; Infiniti Sales, Service and Parts Distribution
+                </p>
+                <ul>
+                  <li>New Vehicle Sales</li>
+                  <li>Genuine Parts</li>
+                  <li>After Sales Services</li>
+                  <li>Customer Support</li>
+                </ul>
+              </div>
+              <span class="division-rule" aria-hidden="true"></span>
+            </article>
+            <article class="division-item">
+              <span class="division-num" aria-hidden="true">02</span>
+              <div class="division-head">
+                <h3 class="division-title">Alhashar &amp; Co. LLC</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="businesses.html">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="division-media">
+                <img
+                  src="assets/images/diverse-business-02.jpg"
+                  alt=""
+                  width="585"
+                  height="230"
+                  loading="lazy"
+                />
+              </div>
+              <div class="division-info">
+                <p class="division-lead">Core Trading &amp; Business Management Services</p>
+                <ul>
+                  <li>Trading Operations</li>
+                  <li>Strategic Partnership</li>
+                  <li>After Sales Services</li>
+                  <li>Customer Support</li>
+                </ul>
+              </div>
+              <span class="division-rule" aria-hidden="true"></span>
+            </article>
+            <article class="division-item">
+              <span class="division-num" aria-hidden="true">03</span>
+              <div class="division-head">
+                <h3 class="division-title">Al Hashar Engineering LLC</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="businesses.html">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="division-media">
+                <img
+                  src="assets/images/diverse-business-03.jpg"
+                  alt=""
+                  width="585"
+                  height="230"
+                  loading="lazy"
+                />
+              </div>
+              <div class="division-info">
+                <p class="division-lead">Consultancy services in the following areas</p>
+                <ul>
+                  <li>Project management</li>
+                  <li>Architectural and engineering design</li>
+                  <li>Interior design and execution</li>
+                  <li>Logistics and warehousing</li>
+                </ul>
+              </div>
+              <span class="division-rule" aria-hidden="true"></span>
+            </article>
+            <article class="division-item">
+              <span class="division-num" aria-hidden="true">04</span>
+              <div class="division-head">
+                <h3 class="division-title">Al Hashar Trading Co. LLC</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="businesses.html">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="division-media">
+                <img
+                  src="assets/images/diverse-business-04.jpg"
+                  alt=""
+                  width="585"
+                  height="230"
+                  loading="lazy"
+                />
+              </div>
+              <div class="division-info">
+                <p class="division-lead">Global Car Rental &amp; Leasing</p>
+                <ul>
+                  <li>Car rental and leasing services</li>
+                  <li>Limousine services</li>
+                  <li>Hotel transfers</li>
+                  <li>Chauffeur-driven vehicles</li>
+                </ul>
+              </div>
+              <span class="division-rule" aria-hidden="true"></span>
+            </article>
+            <article class="division-item">
+              <span class="division-num" aria-hidden="true">05</span>
+              <div class="division-head">
+                <h3 class="division-title">Alhashar Electronics LLC</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="businesses.html">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="division-media">
+                <img
+                  src="assets/images/diverse-business-05.jpg"
+                  alt=""
+                  width="585"
+                  height="230"
+                  loading="lazy"
+                />
+              </div>
+              <div class="division-info">
+                <p class="division-lead">Undertakes the Master Distribution of</p>
+                <ul>
+                  <li>Air-conditioning &amp; Refrigeration</li>
+                  <li>Household Appliances</li>
+                  <li>Built-in &amp; Free Standing Kitchens</li>
+                  <li>Televisions</li>
+                </ul>
+              </div>
+              <span class="division-rule" aria-hidden="true"></span>
+            </article>
+            <article class="division-item">
+              <span class="division-num" aria-hidden="true">06</span>
+              <div class="division-head">
+                <h3 class="division-title">Al Hashar Hotels LLC</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="businesses.html">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="division-media">
+                <img
+                  src="assets/images/diverse-business-06.jpg"
+                  alt=""
+                  width="585"
+                  height="230"
+                  loading="lazy"
+                />
+              </div>
+              <div class="division-info">
+                <p class="division-lead">
+                  The Sheraton Oman Hotel, opened in 1985, is a landmark in Muscat
+                </p>
+                <ul>
+                  <li>Tallest building in Muscat</li>
+                  <li>230 stylish rooms</li>
+                  <li>Extensive event facilities</li>
+                  <li>1,200 square meters</li>
+                </ul>
+              </div>
+              <span class="division-rule" aria-hidden="true"></span>
+            </article>
+            <article class="division-item">
+              <span class="division-num" aria-hidden="true">07</span>
+              <div class="division-head">
+                <h3 class="division-title">Construction &amp; Contracting</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="businesses.html">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="division-media">
+                <img
+                  src="assets/images/diverse-business-07.jpg"
+                  alt=""
+                  width="585"
+                  height="230"
+                  loading="lazy"
+                />
+              </div>
+              <div class="division-info">
+                <p class="division-lead">
+                  Oasis Grace L.L.C is a fullservice general contracting firm
+                </p>
+                <ul>
+                  <li>Phase Analysis</li>
+                  <li>Estimation</li>
+                  <li>Design/Build</li>
+                  <li>Construction Management</li>
+                </ul>
+              </div>
+              <span class="division-rule" aria-hidden="true"></span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           Our partners
+           One tab per business; each panel is a horizontally scrolling
+           track of logo cards, with prev/next buttons that page through it
+           when it overflows. Automotive also has sub-tabs that scroll the
+           track to their group and follow along as it scrolls
+           (main.js, initPartners). Logos: assets/images/partners/. The .svg
+           ones are PLACEHOLDER wordmarks (dashed outline) for partners
+           with no artwork yet — replace them with the real logos.
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="section section--flush-bottom partners" aria-labelledby="partners-title">
+        <div class="container">
+          <div class="section-head section-head--center" data-reveal>
+            <h2 class="section-title" id="partners-title">Our <em>Partners</em></h2>
+          </div>
+
+          <div class="partners-tabs-wrap" data-reveal>
+            <button
+              class="partners-tabs-arrow partners-tabs-arrow--prev"
+              type="button"
+              aria-label="Show previous businesses"
+              tabindex="-1"
+              hidden
+            >
+              <i class="bi bi-chevron-left" aria-hidden="true"></i>
+            </button>
+            <div class="partners-tabs" role="tablist" aria-label="Our businesses">
+              <button
+                class="partners-tab"
+                type="button"
+                role="tab"
+                id="partners-tab-automotive"
+                aria-controls="partners-panel-automotive"
+                aria-selected="true"
+              >
+                Automotive
+              </button>
+              <button
+                class="partners-tab"
+                type="button"
+                role="tab"
+                id="partners-tab-heavy"
+                aria-controls="partners-panel-heavy"
+                aria-selected="false"
+                tabindex="-1"
+              >
+                Construction &amp; Heavy Equipment
+              </button>
+              <button
+                class="partners-tab"
+                type="button"
+                role="tab"
+                id="partners-tab-electronics"
+                aria-controls="partners-panel-electronics"
+                aria-selected="false"
+                tabindex="-1"
+              >
+                Home Appliances &amp; Electronics
+              </button>
+              <button
+                class="partners-tab"
+                type="button"
+                role="tab"
+                id="partners-tab-hospitality"
+                aria-controls="partners-panel-hospitality"
+                aria-selected="false"
+                tabindex="-1"
+              >
+                Hospitality
+              </button>
+              <button
+                class="partners-tab"
+                type="button"
+                role="tab"
+                id="partners-tab-trading"
+                aria-controls="partners-panel-trading"
+                aria-selected="false"
+                tabindex="-1"
+              >
+                Trading
+              </button>
+              <button
+                class="partners-tab"
+                type="button"
+                role="tab"
+                id="partners-tab-engineering"
+                aria-controls="partners-panel-engineering"
+                aria-selected="false"
+                tabindex="-1"
+              >
+                Engineering
+              </button>
+              <button
+                class="partners-tab"
+                type="button"
+                role="tab"
+                id="partners-tab-contracting"
+                aria-controls="partners-panel-contracting"
+                aria-selected="false"
+                tabindex="-1"
+              >
+                Construction &amp; Contracting
+              </button>
+            </div>
+            <button
+              class="partners-tabs-arrow partners-tabs-arrow--next"
+              type="button"
+              aria-label="Show more businesses"
+              tabindex="-1"
+              hidden
+            >
+              <i class="bi bi-chevron-right" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="partners-panels" data-reveal>
+            <div
+              class="partners-panel is-active"
+              role="tabpanel"
+              id="partners-panel-automotive"
+              aria-labelledby="partners-tab-automotive"
+              tabindex="0"
+            >
+              <div class="partners-subnav" aria-label="Automotive categories">
+                <button
+                  class="partners-sub"
+                  type="button"
+                  data-target="partners-automotive-luxury"
+                  aria-current="true"
+                >
+                  Luxury Vehicles
+                </button>
+                <button
+                  class="partners-sub"
+                  type="button"
+                  data-target="partners-automotive-passenger"
+                  aria-current="false"
+                >
+                  Passenger Cars
+                </button>
+                <button
+                  class="partners-sub"
+                  type="button"
+                  data-target="partners-automotive-tyres"
+                  aria-current="false"
+                >
+                  Tyres, Batteries &amp; Lubricants
+                </button>
+              </div>
+              <div class="partners-track" data-partners-track>
+                <ul class="partner-group" id="partners-automotive-luxury">
+                  <li class="partner-card">
+                    <img
+                      src="assets/images/partners/aston-martin.png"
+                      alt="Aston Martin"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/infiniti.png" alt="INFINITI" loading="lazy" />
+                  </li>
+                </ul>
+                <ul class="partner-group" id="partners-automotive-passenger">
+                  <li class="partner-card">
+                    <img src="assets/images/partners/nissan.png" alt="Nissan" loading="lazy" />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/peugeot.png" alt="Peugeot" loading="lazy" />
+                  </li>
+                  <li class="partner-card is-placeholder">
+                    <img
+                      src="assets/images/partners/renault.svg"
+                      alt="Renault (placeholder logo)"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+                <ul class="partner-group" id="partners-automotive-tyres">
+                  <li class="partner-card">
+                    <span class="partner-cat">Tyres</span>
+                    <img
+                      src="assets/images/partners/firestone.png"
+                      alt="Firestone"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li class="partner-card is-placeholder">
+                    <span class="partner-cat">Tyres</span>
+                    <img
+                      src="assets/images/partners/goodride.svg"
+                      alt="Goodride (placeholder logo)"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li class="partner-card is-placeholder">
+                    <span class="partner-cat">Tyres</span>
+                    <img
+                      src="assets/images/partners/ascenso.svg"
+                      alt="Ascenso (placeholder logo)"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li class="partner-card">
+                    <span class="partner-cat">Tyres</span>
+                    <img
+                      src="assets/images/partners/roadshine.png"
+                      alt="Roadshine"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+                <ul class="partner-group">
+                  <li class="partner-card is-placeholder">
+                    <span class="partner-cat">Batteries</span>
+                    <img
+                      src="assets/images/partners/k-viron.svg"
+                      alt="K Viron (placeholder logo)"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li class="partner-card is-placeholder">
+                    <span class="partner-cat">Batteries</span>
+                    <img
+                      src="assets/images/partners/powerpack.svg"
+                      alt="Powerpack (placeholder logo)"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+                <ul class="partner-group">
+                  <li class="partner-card">
+                    <span class="partner-cat">Lubricants</span>
+                    <img
+                      src="assets/images/partners/liqui-moly.png"
+                      alt="Liqui Moly"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+              </div>
+              <div class="partners-nav">
+                <button class="partners-prev" type="button" aria-label="Scroll partners left">
+                  <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="partners-next" type="button" aria-label="Scroll partners right">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div
+              class="partners-panel"
+              role="tabpanel"
+              id="partners-panel-heavy"
+              aria-labelledby="partners-tab-heavy"
+              tabindex="0"
+              hidden
+            >
+              <div class="partners-track" data-partners-track>
+                <ul class="partner-group">
+                  <li class="partner-card">
+                    <img src="assets/images/partners/tadano.png" alt="Tadano" loading="lazy" />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/develon.png" alt="Develon" loading="lazy" />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/pm.png" alt="PM" loading="lazy" />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/tailift.png" alt="Tailift" loading="lazy" />
+                  </li>
+                  <li class="partner-card">
+                    <img
+                      src="assets/images/partners/ud-trucks.png"
+                      alt="UD Trucks"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li class="partner-card">
+                    <img
+                      src="assets/images/partners/daewoo-trucks.png"
+                      alt="Daewoo Trucks"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/tata.png" alt="TATA" loading="lazy" />
+                  </li>
+                </ul>
+              </div>
+              <div class="partners-nav">
+                <button class="partners-prev" type="button" aria-label="Scroll partners left">
+                  <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="partners-next" type="button" aria-label="Scroll partners right">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div
+              class="partners-panel"
+              role="tabpanel"
+              id="partners-panel-electronics"
+              aria-labelledby="partners-tab-electronics"
+              tabindex="0"
+              hidden
+            >
+              <div class="partners-track" data-partners-track>
+                <ul class="partner-group">
+                  <li class="partner-card">
+                    <img
+                      src="assets/images/partners/mitsubishi-electric.png"
+                      alt="Mitsubishi Electric"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/sharp.png" alt="Sharp" loading="lazy" />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/ariston.png" alt="Ariston" loading="lazy" />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/rinnai.png" alt="Rinnai" loading="lazy" />
+                  </li>
+                  <li class="partner-card">
+                    <img src="assets/images/partners/voltas.png" alt="Voltas" loading="lazy" />
+                  </li>
+                  <li class="partner-card is-placeholder">
+                    <img
+                      src="assets/images/partners/kardex-remstar.svg"
+                      alt="Kardex Remstar (placeholder logo)"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li class="partner-card is-placeholder">
+                    <img
+                      src="assets/images/partners/ae-general.svg"
+                      alt="AE General (placeholder logo)"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+              </div>
+              <div class="partners-nav">
+                <button class="partners-prev" type="button" aria-label="Scroll partners left">
+                  <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="partners-next" type="button" aria-label="Scroll partners right">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div
+              class="partners-panel"
+              role="tabpanel"
+              id="partners-panel-hospitality"
+              aria-labelledby="partners-tab-hospitality"
+              tabindex="0"
+              hidden
+            >
+              <div class="partners-track" data-partners-track>
+                <ul class="partner-group">
+                  <li class="partner-card">
+                    <img
+                      src="assets/images/partners/sheraton.png"
+                      alt="Sheraton Hotels"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+              </div>
+              <div class="partners-nav">
+                <button class="partners-prev" type="button" aria-label="Scroll partners left">
+                  <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="partners-next" type="button" aria-label="Scroll partners right">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div
+              class="partners-panel"
+              role="tabpanel"
+              id="partners-panel-trading"
+              aria-labelledby="partners-tab-trading"
+              tabindex="0"
+              hidden
+            >
+              <div class="partners-track" data-partners-track>
+                <ul class="partner-group">
+                  <li class="partner-card">
+                    <img
+                      src="assets/images/partners/global-car-rental.png"
+                      alt="Global Car Rental &amp; Leasing"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+              </div>
+              <div class="partners-nav">
+                <button class="partners-prev" type="button" aria-label="Scroll partners left">
+                  <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="partners-next" type="button" aria-label="Scroll partners right">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div
+              class="partners-panel"
+              role="tabpanel"
+              id="partners-panel-engineering"
+              aria-labelledby="partners-tab-engineering"
+              tabindex="0"
+              hidden
+            >
+              <div class="partners-track" data-partners-track>
+                <ul class="partner-group">
+                  <li class="partner-card">
+                    <img
+                      src="assets/images/partners/al-hashar-engineering.png"
+                      alt="Al Hashar Engineering"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+              </div>
+              <div class="partners-nav">
+                <button class="partners-prev" type="button" aria-label="Scroll partners left">
+                  <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="partners-next" type="button" aria-label="Scroll partners right">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div
+              class="partners-panel"
+              role="tabpanel"
+              id="partners-panel-contracting"
+              aria-labelledby="partners-tab-contracting"
+              tabindex="0"
+              hidden
+            >
+              <div class="partners-track" data-partners-track>
+                <ul class="partner-group">
+                  <li class="partner-card">
+                    <img
+                      src="assets/images/partners/oasis-grace.png"
+                      alt="Oasis Grace LLC"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+              </div>
+              <div class="partners-nav">
+                <button class="partners-prev" type="button" aria-label="Scroll partners left">
+                  <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="partners-next" type="button" aria-label="Scroll partners right">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           Latest news
+           The three stories are listed twice: Swiper's loop needs more
+           slides than are visible at once (3-up on desktop) to clone and
+           wrap cleanly. Drop the repeat once there are 4+ real stories.
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="section section--flush-bottom news" aria-labelledby="news-title">
+        <div class="container">
+          <div class="section-head section-head--row" data-reveal>
+            <h2 class="section-title" id="news-title">Latest <em>News</em></h2>
+            <a class="link-arrow link-arrow--plain" href="news.html">
+              Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </a>
+          </div>
+
+          <div
+            class="swiper js-swiper news-slider"
+            data-swiper-name="news"
+            data-swiper='{"loop": true, "speed": 1000, "slidesPerView": 1, "spaceBetween": 24, "autoplay": {"delay": 3500, "disableOnInteraction": false, "pauseOnMouseEnter": true}, "breakpoints": {"768": {"slidesPerView": 2, "spaceBetween": 32}, "1200": {"slidesPerView": 3, "spaceBetween": 60}}, "navigation": {"prevEl": ".news-prev", "nextEl": ".news-next"}, "a11y": {"enabled": true}}'
+            data-reveal
+          >
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <article class="news-card">
+                  <h3 class="news-card-title">
+                    <a href="news.html"
+                      >Al-Hashar Motors to be the official and authorized dealer of the Infiniti
+                      brand in Oman</a
+                    >
+                  </h3>
+                  <span class="news-card-more" aria-hidden="true">
+                    Explore <i class="bi bi-arrow-right"></i>
+                  </span>
+                  <div class="news-card-media">
+                    <img
+                      src="assets/images/news-thumb-01.jpg"
+                      alt=""
+                      width="395"
+                      height="225"
+                      loading="lazy"
+                    />
+                    <time class="news-card-date" datetime="2026-08-02">
+                      <span class="day">02</span>
+                      <span class="month">Aug</span>
+                    </time>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="news-card">
+                  <h3 class="news-card-title">
+                    <a href="news.html"
+                      >Al-Hashar Motors to be the official and authorized dealer of the Infiniti
+                      brand in Oman</a
+                    >
+                  </h3>
+                  <span class="news-card-more" aria-hidden="true">
+                    Explore <i class="bi bi-arrow-right"></i>
+                  </span>
+                  <div class="news-card-media">
+                    <img
+                      src="assets/images/news-thumb-02.jpg"
+                      alt=""
+                      width="395"
+                      height="225"
+                      loading="lazy"
+                    />
+                    <time class="news-card-date" datetime="2026-08-02">
+                      <span class="day">02</span>
+                      <span class="month">Aug</span>
+                    </time>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="news-card">
+                  <h3 class="news-card-title">
+                    <a href="news.html"
+                      >Al-Hashar Motors to be the official and authorized dealer of the Infiniti
+                      brand in Oman</a
+                    >
+                  </h3>
+                  <span class="news-card-more" aria-hidden="true">
+                    Explore <i class="bi bi-arrow-right"></i>
+                  </span>
+                  <div class="news-card-media">
+                    <img
+                      src="assets/images/news-thumb-03.jpg"
+                      alt=""
+                      width="395"
+                      height="225"
+                      loading="lazy"
+                    />
+                    <time class="news-card-date" datetime="2026-08-02">
+                      <span class="day">02</span>
+                      <span class="month">Aug</span>
+                    </time>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="news-card">
+                  <h3 class="news-card-title">
+                    <a href="news.html"
+                      >Al-Hashar Motors to be the official and authorized dealer of the Infiniti
+                      brand in Oman</a
+                    >
+                  </h3>
+                  <span class="news-card-more" aria-hidden="true">
+                    Explore <i class="bi bi-arrow-right"></i>
+                  </span>
+                  <div class="news-card-media">
+                    <img
+                      src="assets/images/news-thumb-01.jpg"
+                      alt=""
+                      width="395"
+                      height="225"
+                      loading="lazy"
+                    />
+                    <time class="news-card-date" datetime="2026-08-02">
+                      <span class="day">02</span>
+                      <span class="month">Aug</span>
+                    </time>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="news-card">
+                  <h3 class="news-card-title">
+                    <a href="news.html"
+                      >Al-Hashar Motors to be the official and authorized dealer of the Infiniti
+                      brand in Oman</a
+                    >
+                  </h3>
+                  <span class="news-card-more" aria-hidden="true">
+                    Explore <i class="bi bi-arrow-right"></i>
+                  </span>
+                  <div class="news-card-media">
+                    <img
+                      src="assets/images/news-thumb-02.jpg"
+                      alt=""
+                      width="395"
+                      height="225"
+                      loading="lazy"
+                    />
+                    <time class="news-card-date" datetime="2026-08-02">
+                      <span class="day">02</span>
+                      <span class="month">Aug</span>
+                    </time>
+                  </div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="news-card">
+                  <h3 class="news-card-title">
+                    <a href="news.html"
+                      >Al-Hashar Motors to be the official and authorized dealer of the Infiniti
+                      brand in Oman</a
+                    >
+                  </h3>
+                  <span class="news-card-more" aria-hidden="true">
+                    Explore <i class="bi bi-arrow-right"></i>
+                  </span>
+                  <div class="news-card-media">
+                    <img
+                      src="assets/images/news-thumb-03.jpg"
+                      alt=""
+                      width="395"
+                      height="225"
+                      loading="lazy"
+                    />
+                    <time class="news-card-date" datetime="2026-08-02">
+                      <span class="day">02</span>
+                      <span class="month">Aug</span>
+                    </time>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div class="news-slider-nav">
+            <button class="news-prev" type="button" aria-label="Previous news">
+              <i class="bi bi-chevron-left" aria-hidden="true"></i>
+            </button>
+            <button class="news-next" type="button" aria-label="Next news">
+              <i class="bi bi-chevron-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           Head office location
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="section section--flush-bottom office" aria-labelledby="office-title">
+        <div class="office-map">
+          <img
+            src="assets/images/location-map.jpg"
+            alt="Map showing Al Hashar Group head office in Al Azaiba, Muscat"
+            width="1920"
+            height="640"
+            loading="lazy"
+          />
+          <div class="office-overlay">
+            <div class="container">
+              <div class="office-card" data-reveal>
+                <div class="section-head">
+                  <h2 class="section-title" id="office-title">Head Office <em>Location</em></h2>
+                </div>
+                <div class="office-card-body">
+                  <img
+                    class="office-card-logo"
+                    src="assets/images/alhashar-logo-dark.png"
+                    alt="Al Hashar Group"
+                    width="145"
+                    height="120"
+                    loading="lazy"
+                  />
+                  <div>
+                    <h3 class="office-card-title">Head Office - Muscat</h3>
+                    <address class="office-card-address">
+                      Al Maardih Street, Al Azaiba,<br />
+                      Muscat 114, Oman
+                    </address>
+                    <a
+                      class="link-arrow link-arrow--plain office-card-link"
+                      href="https://www.google.com/maps/search/?api=1&amp;query=Al+Hashar+Group%2C+Al+Maardih+Street%2C+Al+Azaiba%2C+Muscat+114%2C+Oman"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Get Direction <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                      <span class="sr-only">(opens Google Maps in a new tab)</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         Footer
+         ═══════════════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-cta" data-reveal>
+          <h2 class="section-title">Ready to <em>partner with us?</em></h2>
+          <p>Whether you’re interested in our Automotive Services, Looking for Business</p>
+          <div class="footer-cta-actions">
+            <a class="btn btn--light" href="contact.html">Contact us</a>
+            <a class="btn btn--outline-light" href="contact.html#meeting">Schedule Meeting</a>
+          </div>
+        </div>
+
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img
+              src="assets/images/alhashar-logo-white.png"
+              alt="Al Hashar Group"
+              width="90"
+              height="72"
+              loading="lazy"
+            />
+            <dl>
+              <dt>Call us Now!</dt>
+              <dd><a href="tel:+96824596434">+968-24596434</a></dd>
+              <dt>Mail us Now!</dt>
+              <dd><a href="mailto:ahcgroup@omantel.net.om">ahcgroup@omantel.net.om</a></dd>
+            </dl>
+          </div>
+
+          <nav aria-labelledby="footer-group">
+            <h3 class="footer-title" id="footer-group">Our Group</h3>
+            <ul class="footer-links footer-links--2col">
+              <li><a href="about.html#founder">Our Founder</a></li>
+              <li><a href="about.html#history">Our History</a></li>
+              <li><a href="management.html">Management</a></li>
+              <li><a href="about.html#awards">Awards &amp; Achievement</a></li>
+              <li><a href="about.html#chairman">Chairman’s Message</a></li>
+              <li><a href="csr.html">CSR / Community Impact</a></li>
+              <li><a href="about.html#vision">Our Vision &amp; Mission</a></li>
+              <li><a href="about.html#values">Our Values</a></li>
+            </ul>
+          </nav>
+
+          <nav aria-labelledby="footer-business">
+            <h3 class="footer-title" id="footer-business">Our Business</h3>
+            <ul class="footer-links">
+              <li><a href="businesses.html#automotive">Automotive</a></li>
+              <li><a href="businesses.html#hospitality">Hospitality &amp; Tourism</a></li>
+              <li><a href="businesses.html#electronics">Electronics &amp; Appliances</a></li>
+              <li><a href="businesses.html#construction">Construction &amp; Contracting</a></li>
+              <li><a href="businesses.html#engineering">Engineering &amp; Projects</a></li>
+            </ul>
+          </nav>
+
+          <nav aria-labelledby="footer-quick">
+            <h3 class="footer-title" id="footer-quick">Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="culture.html">Culture</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="careers.html">Careers</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copy">
+            Copyright <span class="year">2026</span> © Al Hashar Group. All rights reserved
+            <small>
+              <a href="privacy.html">Privacy Policy</a> - <a href="terms.html">Terms of Service</a>
+            </small>
+          </p>
+          <ul class="footer-social" aria-label="Social media">
+            <li>
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Facebook"
+              >
+                <i class="bi bi-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                <i class="bi bi-twitter-x" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noopener"
+                aria-label="LinkedIn"
+              >
+                <i class="bi bi-linkedin" aria-hidden="true"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top. The ring fills with scroll progress (main.js sets
+         --scroll-progress); the arrow is the kit's up-icon.svg. -->
+    <button class="return-top" type="button" aria-label="Back to top">
+      <svg class="return-top-ring" viewBox="0 0 50 50" aria-hidden="true">
+        <circle class="return-top-track" cx="25" cy="25" r="22" />
+        <circle class="return-top-progress" cx="25" cy="25" r="22" />
+      </svg>
+      <img src="assets/images/up-icon.svg" alt="" width="20" height="20" />
+    </button>
+
+    <script src="assets/js/bootstrap.bundle.min.js" defer></script>
+    <script src="assets/js/lenis.min.js" defer></script>
+    <script src="assets/js/swiper-bundle.min.js" defer></script>
+    <script src="assets/js/gsap.min.js" defer></script>
+    <script src="assets/js/ScrollTrigger.min.js" defer></script>
+    <!-- main.js last: it reads window.Lenis, window.Swiper and window.gsap at init. -->
+    <script src="assets/js/main.js" defer></script>
+  </body>
+</html>

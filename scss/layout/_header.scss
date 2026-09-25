@@ -1,0 +1,15 @@
+@use "../abstracts" as *;
+
+// The header is a positioning context only — the fixed bar itself is
+// .navbar-main in layout/_navigation.scss. On the home page it floats over
+// the hero, so it takes no space of its own.
+.header {
+  position: relative;
+  z-index: var(--z-header);
+}
+
+// Add to <main> when the page has no hero and the fixed nav would otherwise
+// overlap the first section.
+.has-fixed-header {
+  padding-top: var(--header-height);
+}

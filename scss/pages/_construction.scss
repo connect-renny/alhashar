@@ -1,0 +1,174 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Construction — what they offer
+//  Centred title and intro over a row of six services, each an outline icon
+//  above a short label. Six across on wide screens, three on tablets, two on
+//  phones. On hover the icon lifts on a soft tile.
+// ═══════════════════════════════════════════════════════════════════════════
+
+// The intro is set dark and semibold in the design, not the muted lead.
+.offers-lead {
+  max-width: 50rem;
+  font-weight: var(--fw-semibold);
+  color: var(--dark-950);
+}
+
+.offer-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xl) var(--space-md);
+  max-width: 1320px;
+  margin-inline: auto;
+
+  @include mq-up("md") {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @include mq-up("xl") {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.offer {
+  --offer-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+}
+
+// Holds the icon plus two effect layers: ::before is the disc that pops up
+// behind it, ::after the ring that ripples out once it lands.
+.offer-media {
+  --offer-accent: 43 53 168; // the indigo of the icon line work
+
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 4%;
+    z-index: -1;
+    border-radius: var(--radius-circle);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &::before {
+    background: rgb(var(--offer-accent) / 9%);
+  }
+
+  &::after {
+    border: 1.5px solid rgb(var(--offer-accent) / 45%);
+  }
+}
+
+.offer-icon {
+  // Width includes the hover tile's padding; the drawing itself is ~64px.
+  width: #{fluid(64, 80)};
+  height: auto;
+  padding: var(--space-2xs);
+  border-radius: var(--radius-lg);
+  transition:
+    transform 0.6s var(--offer-ease),
+    background-color 0.4s var(--offer-ease);
+}
+
+.offer-title {
+  margin: 0;
+  font-size: #{fluid(17, 22)};
+  font-weight: var(--fw-semibold);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--dark-950);
+  // "Construction / Management" breaks onto two lines as drawn.
+  max-width: 9em;
+}
+
+@include hover {
+  .offer:hover .offer-icon {
+    background: rgb(var(--color-brand-rgb) / 6%);
+    transform: translateY(-6px);
+  }
+}
+
+// ─── Entrance ──────────────────────────────────────────────────────────────
+// Plays when main.js marks the tile .is-revealed, offset by the tile's own
+// --reveal-delay so the six run in a wave. The disc springs up and fades,
+// the icon builds up from its base, the ring ripples out as it lands. The
+// rise uses `translate`, not `transform`, so the hover lift still works.
+@include motion-ok {
+  .offer.is-revealed .offer-media {
+    --offer-start: calc(var(--reveal-delay, 0ms) + 150ms);
+
+    &::before {
+      animation:
+        offerDisc 0.9s var(--ease-spring) var(--offer-start) both,
+        offerFade 0.8s var(--ease-out) calc(var(--offer-start) + 1.1s) forwards;
+    }
+
+    &::after {
+      // `forwards`, not `both`: the ring must stay hidden through its delay.
+      animation: offerRing 1s var(--ease-out) calc(var(--offer-start) + 0.55s)
+        forwards;
+    }
+
+    .offer-icon {
+      animation: offerBuild 0.9s cubic-bezier(0.22, 1, 0.36, 1)
+        calc(var(--offer-start) + 0.12s) both;
+    }
+  }
+}
+
+@keyframes offerDisc {
+  from {
+    opacity: 1;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes offerFade {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes offerBuild {
+  from {
+    clip-path: inset(100% 0 0 0);
+    translate: 0 14px;
+  }
+
+  to {
+    clip-path: inset(0);
+    translate: 0 0;
+  }
+}
+
+@keyframes offerRing {
+  from {
+    opacity: 0.9;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}

@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <title>Alhashar Electronics LLC — Al Hashar Group</title>
+    <meta
+      name="description"
+      content="Alhashar Electronics LLC — world-class electronics and appliance brands, with 7 stores and 4 service centres across Oman."
+    />
+
+    <!-- Social cards. og:image wants 1200×630. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Alhashar Electronics LLC — Al Hashar Group" />
+    <meta
+      property="og:description"
+      content="World-class electronics and appliance brands, served through 7 stores and 4 service centres across the Sultanate."
+    />
+    <meta property="og:image" content="assets/images/hero-electronics.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- One scalable icon covers every size in modern browsers… -->
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
+    <!-- …with raster fallbacks for those that won't take an SVG. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon-192.png" />
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
+
+    <!-- Browser chrome colour. -->
+    <meta name="theme-color" content="#0b1f41" />
+
+    <!-- The two faces on screen at first paint, preloaded so text renders in
+         them straight away. Keep in sync with scss/base/_fonts.scss. -->
+    <link
+      rel="preload"
+      href="assets/fonts/poppins-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/AbrilDisplay-SemiBoldItalic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+    <!-- style.css last — it owns the tokens everything above is themed with. -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         Header / navigation
+         Transparent over the hero; main.js adds .navbar-fixed past 10px of
+         scroll. Below `lg` the .navbar-nav block becomes the off-canvas
+         drawer, driven by the hamburger.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <header class="header">
+      <nav class="navbar-main" aria-label="Main">
+        <div class="navbar-inner">
+          <a class="navbar-brand" href="index.html">
+            <img
+              src="assets/images/alhashar-logo-white.png"
+              alt="Al Hashar Group"
+              width="90"
+              height="72"
+            />
+            <img
+              src="assets/images/65-anniversary.png"
+              alt="Celebrating 65th anniversary"
+              width="90"
+              height="72"
+            />
+          </a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            aria-controls="main-nav"
+            aria-expanded="false"
+            aria-label="Open menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <div class="navbar-nav" id="main-nav">
+            <button class="navbar-close" type="button" aria-label="Close menu">
+              <i class="bi bi-x-lg" aria-hidden="true"></i>
+            </button>
+
+            <ul class="navbar-menu">
+              <li>
+                <a class="nav-link nav-link--icon" href="index.html">
+                  <i class="bi bi-house-door-fill" aria-hidden="true"></i>
+                  <span class="sr-only">Home</span>
+                </a>
+              </li>
+              <li>
+                <a class="nav-link" href="about.html">About us</a>
+              </li>
+              <li class="nav-item has-dropdown">
+                <a class="nav-link is-active" href="businesses.html">Our Businesses</a>
+                <button
+                  class="nav-dropdown-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="nav-businesses"
+                  aria-label="Show Our Businesses menu"
+                >
+                  <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                </button>
+                <ul class="nav-dropdown" id="nav-businesses">
+                  <li>
+                    <a href="automotive.html"
+                      ><i class="bi bi-car-front" aria-hidden="true"></i>Automotive</a
+                    >
+                  </li>
+                  <li>
+                    <a href="businesses.html#heavy-equipment"
+                      ><i class="bi bi-truck" aria-hidden="true"></i>Construction &amp; Heavy Equipment</a
+                    >
+                  </li>
+                  <li>
+                    <a href="electronics.html" aria-current="page"
+                      ><i class="bi bi-tv" aria-hidden="true"></i>Home Appliances &amp; Electronics</a
+                    >
+                  </li>
+                  <li>
+                    <a href="businesses.html#trading"
+                      ><i class="bi bi-box-seam" aria-hidden="true"></i>Trading</a
+                    >
+                  </li>
+                  <li>
+                    <a href="hospitality.html"
+                      ><i class="bi bi-building" aria-hidden="true"></i>Hospitality</a
+                    >
+                  </li>
+                  <li>
+                    <a href="construction.html"
+                      ><i class="bi bi-bricks" aria-hidden="true"></i>Construction &amp; Contracting</a
+                    >
+                  </li>
+                  <li>
+                    <a href="businesses.html#engineering"
+                      ><i class="bi bi-gear-wide-connected" aria-hidden="true"></i>Engineering</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li><a class="nav-link" href="careers.html">Careers</a></li>
+              <li><a class="nav-link" href="contact.html">Contact Us</a></li>
+              <li><a class="nav-link" href="news.html">Media center</a></li>
+            </ul>
+
+            <ul class="navbar-tools">
+              <!-- Search — hidden for now.
+              <li>
+                <button class="nav-tool" type="button" aria-label="Search">
+                  <i class="bi bi-search" aria-hidden="true"></i>
+                </button>
+              </li>
+              -->
+              <li>
+                <a
+                  class="nav-tool"
+                  href="ar/index.html"
+                  hreflang="ar"
+                  lang="ar"
+                  aria-label="العربية"
+                >
+                  <i class="bi bi-globe" aria-hidden="true"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="navbar-backdrop"></div>
+    </header>
+
+    <main id="main">
+      <!-- ═════════════════════════════════════════════════════════════════
+           Hero — Electronics & Appliances
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="page-hero" aria-labelledby="hero-title">
+        <div class="page-hero-media" aria-hidden="true">
+          <img
+            src="assets/images/hero-electronics.jpg"
+            alt=""
+            width="1920"
+            height="945"
+            fetchpriority="high"
+          />
+        </div>
+
+        <div class="page-hero-body">
+          <div class="container">
+            <div class="page-hero-content">
+              <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+                <ol>
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="businesses.html">Our Business</a></li>
+                  <li aria-current="page">Electronics &amp; Appliances</li>
+                </ol>
+              </nav>
+
+              <h1 class="page-hero-title page-hero-title--nowrap" id="hero-title">
+                Alhashar <em>Electronics LLC</em>
+              </h1>
+              <p class="page-hero-text">
+                Adorned with a plethora of world-class brands, the company serves customers who
+                value the quality, performance and value-for-money from these brands. It has a well
+                spread network of 7 stores and 4 service centres across the Sultanate.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════════════════════════════════════════════════════════════════
+           Consumer Electronics Distribution — accordion
+           One item open at a time (main.js › initAccordions). Panels
+           animate on grid-template-rows, so heights never need measuring.
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="section distribution" aria-labelledby="distribution-title">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <h2 class="section-title" id="distribution-title">
+              Consumer Electronics <em>Distribution.</em>
+            </h2>
+          </div>
+
+          <div class="accordion-list" data-accordion data-reveal>
+            <div class="accordion-item is-open">
+              <h3 class="accordion-heading">
+                <button
+                  class="accordion-trigger"
+                  type="button"
+                  id="acc-ac"
+                  aria-expanded="true"
+                  aria-controls="acc-ac-panel"
+                >
+                  <span class="accordion-icon">
+                    <img src="assets/images/electronic-item-01.png" alt="" width="60" height="60" />
+                  </span>
+                  <span class="accordion-label">Air-conditioning &amp; Refrigeration</span>
+                  <span class="accordion-toggle" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="accordion-panel" id="acc-ac-panel" role="region" aria-labelledby="acc-ac">
+                <div class="accordion-panel-inner">
+                  <ul class="brand-grid">
+                    <li class="brand-card">
+                      <img
+                        class="brand-card-logo"
+                        src="assets/images/consumer-logo-01.jpg"
+                        alt="Mitsubishi Electric"
+                        width="230"
+                        height="70"
+                        loading="lazy"
+                      />
+                      <img
+                        class="brand-card-media"
+                        src="assets/images/ac-refrigeration-01.jpg"
+                        alt=""
+                        width="600"
+                        height="350"
+                        loading="lazy"
+                      />
+                    </li>
+                    <li class="brand-card">
+                      <img
+                        class="brand-card-logo"
+                        src="assets/images/consumer-logo-02.jpg"
+                        alt="Daytek"
+                        width="225"
+                        height="80"
+                        loading="lazy"
+                      />
+                      <img
+                        class="brand-card-media"
+                        src="assets/images/ac-refrigeration-02.jpg"
+                        alt=""
+                        width="600"
+                        height="350"
+                        loading="lazy"
+                      />
+                    </li>
+                    <li class="brand-card">
+                      <img
+                        class="brand-card-logo"
+                        src="assets/images/consumer-logo-03.jpg"
+                        alt="Voltas"
+                        width="200"
+                        height="45"
+                        loading="lazy"
+                      />
+                      <img
+                        class="brand-card-media"
+                        src="assets/images/ac-refrigeration-03.jpg"
+                        alt=""
+                        width="600"
+                        height="350"
+                        loading="lazy"
+                      />
+                    </li>
+                    <li class="brand-card">
+                      <img
+                        class="brand-card-logo"
+                        src="assets/images/consumer-logo-04.jpg"
+                        alt="Lennox"
+                        width="200"
+                        height="60"
+                        loading="lazy"
+                      />
+                      <img
+                        class="brand-card-media"
+                        src="assets/images/ac-refrigeration-04.jpg"
+                        alt=""
+                        width="600"
+                        height="350"
+                        loading="lazy"
+                      />
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-heading">
+                <button
+                  class="accordion-trigger"
+                  type="button"
+                  id="acc-household"
+                  aria-expanded="false"
+                  aria-controls="acc-household-panel"
+                >
+                  <span class="accordion-icon">
+                    <img src="assets/images/electronic-item-02.png" alt="" width="60" height="60" />
+                  </span>
+                  <span class="accordion-label">Household Appliances</span>
+                  <span class="accordion-toggle" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div
+                class="accordion-panel"
+                id="acc-household-panel"
+                role="region"
+                aria-labelledby="acc-household"
+              >
+                <div class="accordion-panel-inner">
+                  <ul class="brand-grid">
+                    <li class="brand-card">
+                      <img
+                        class="brand-card-logo"
+                        src="assets/images/household-logo-01.jpg"
+                        alt="Ariston"
+                        width="295"
+                        height="56"
+                        loading="lazy"
+                      />
+                      <img
+                        class="brand-card-media"
+                        src="assets/images/household-01.jpg"
+                        alt=""
+                        width="600"
+                        height="350"
+                        loading="lazy"
+                      />
+                    </li>
+                    <li class="brand-card">
+                      <img
+                        class="brand-card-logo"
+                        src="assets/images/household-logo-02.jpg"
+                        alt="Daytek"
+                        width="222"
+                        height="90"
+                        loading="lazy"
+                      />
+                      <img
+                        class="brand-card-media"
+                        src="assets/images/household-02.jpg"
+                        alt=""
+                        width="600"
+                        height="350"
+                        loading="lazy"
+                      />
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-heading">
+                <button
+                  class="accordion-trigger"
+                  type="button"
+                  id="acc-kitchens"
+                  aria-expanded="false"
+                  aria-controls="acc-kitchens-panel"
+                >
+                  <span class="accordion-icon">
+                    <img src="assets/images/electronic-item-03.png" alt="" width="60" height="60" />
+                  </span>
+                  <span class="accordion-label">Built-in &amp; Free Standing Kitchens</span>
+                  <span class="accordion-toggle" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div
+                class="accordion-panel"
+                id="acc-kitchens-panel"
+                role="region"
+                aria-labelledby="acc-kitchens"
+              >
+                <div class="accordion-panel-inner">
+                  <ul class="brand-grid">
+                    <li class="brand-card">
+                      <img
+                        class="brand-card-logo"
+                        src="assets/images/kitchen-logo-01.jpg"
+                        alt="Rinnai"
+                        width="255"
+                        height="61"
+                        loading="lazy"
+                      />
+                      <img
+                        class="brand-card-media"
+                        src="assets/images/kitchen-01.jpg"
+                        alt=""
+                        width="600"
+                        height="350"
+                        loading="lazy"
+                      />
+                    </li>
+                    <li class="brand-card">
+                      <img
+                        class="brand-card-logo"
+                        src="assets/images/kitchen-logo-02.jpg"
+                        alt="Ariston"
+                        width="295"
+                        height="56"
+                        loading="lazy"
+                      />
+                      <img
+                        class="brand-card-media"
+                        src="assets/images/kitchen-02.jpg"
+                        alt=""
+                        width="600"
+                        height="350"
+                        loading="lazy"
+                      />
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-heading">
+                <button
+                  class="accordion-trigger"
+                  type="button"
+                  id="acc-tv"
+                  aria-expanded="false"
+                  aria-controls="acc-tv-panel"
+                >
+                  <span class="accordion-icon">
+                    <img src="assets/images/electronic-item-04.png" alt="" width="60" height="60" />
+                  </span>
+                  <span class="accordion-label">Televisions</span>
+                  <span class="accordion-toggle" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="accordion-panel" id="acc-tv-panel" role="region" aria-labelledby="acc-tv">
+                <div class="accordion-panel-inner">
+                  <!-- Brand cards for this category go here, as in the panels above. -->
+                  <p class="accordion-empty">Brand line-up coming soon.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h3 class="accordion-heading">
+                <button
+                  class="accordion-trigger"
+                  type="button"
+                  id="acc-storage"
+                  aria-expanded="false"
+                  aria-controls="acc-storage-panel"
+                >
+                  <span class="accordion-icon">
+                    <img src="assets/images/electronic-item-05.png" alt="" width="60" height="60" />
+                  </span>
+                  <span class="accordion-label">Storage &amp; Material Handling</span>
+                  <span class="accordion-toggle" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div
+                class="accordion-panel"
+                id="acc-storage-panel"
+                role="region"
+                aria-labelledby="acc-storage"
+              >
+                <div class="accordion-panel-inner">
+                  <!-- Brand cards for this category go here, as in the panels above. -->
+                  <p class="accordion-empty">Brand line-up coming soon.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Next sections go here. -->
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         Footer
+         ═══════════════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-cta" data-reveal>
+          <h2 class="section-title">Ready to <em>partner with us?</em></h2>
+          <p>Whether you’re interested in our Automotive Services, Looking for Business</p>
+          <div class="footer-cta-actions">
+            <a class="btn btn--light" href="contact.html">Contact us</a>
+            <a class="btn btn--outline-light" href="contact.html#meeting">Schedule Meeting</a>
+          </div>
+        </div>
+
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img
+              src="assets/images/alhashar-logo-white.png"
+              alt="Al Hashar Group"
+              width="90"
+              height="72"
+              loading="lazy"
+            />
+            <dl>
+              <dt>Call us Now!</dt>
+              <dd><a href="tel:+96824596434">+968-24596434</a></dd>
+              <dt>Mail us Now!</dt>
+              <dd><a href="mailto:ahcgroup@omantel.net.om">ahcgroup@omantel.net.om</a></dd>
+            </dl>
+          </div>
+
+          <nav aria-labelledby="footer-group">
+            <h3 class="footer-title" id="footer-group">Our Group</h3>
+            <ul class="footer-links footer-links--2col">
+              <li><a href="about.html#founder">Our Founder</a></li>
+              <li><a href="about.html#history">Our History</a></li>
+              <li><a href="management.html">Management</a></li>
+              <li><a href="about.html#awards">Awards &amp; Achievement</a></li>
+              <li><a href="about.html#chairman">Chairman’s Message</a></li>
+              <li><a href="csr.html">CSR / Community Impact</a></li>
+              <li><a href="about.html#vision">Our Vision &amp; Mission</a></li>
+              <li><a href="about.html#values">Our Values</a></li>
+            </ul>
+          </nav>
+
+          <nav aria-labelledby="footer-business">
+            <h3 class="footer-title" id="footer-business">Our Business</h3>
+            <ul class="footer-links">
+              <li><a href="businesses.html#automotive">Automotive</a></li>
+              <li><a href="businesses.html#hospitality">Hospitality &amp; Tourism</a></li>
+              <li><a href="businesses.html#electronics">Electronics &amp; Appliances</a></li>
+              <li><a href="businesses.html#construction">Construction &amp; Contracting</a></li>
+              <li><a href="businesses.html#engineering">Engineering &amp; Projects</a></li>
+            </ul>
+          </nav>
+
+          <nav aria-labelledby="footer-quick">
+            <h3 class="footer-title" id="footer-quick">Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="culture.html">Culture</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="careers.html">Careers</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copy">
+            Copyright <span class="year">2026</span> © Al Hashar Group. All rights reserved
+            <small>
+              <a href="privacy.html">Privacy Policy</a> - <a href="terms.html">Terms of Service</a>
+            </small>
+          </p>
+          <ul class="footer-social" aria-label="Social media">
+            <li>
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Facebook"
+              >
+                <i class="bi bi-facebook" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X (Twitter)">
+                <i class="bi bi-twitter-x" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noopener"
+                aria-label="LinkedIn"
+              >
+                <i class="bi bi-linkedin" aria-hidden="true"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top. The ring fills with scroll progress (main.js sets
+         --scroll-progress); the arrow is the kit's up-icon.svg. -->
+    <button class="return-top" type="button" aria-label="Back to top">
+      <svg class="return-top-ring" viewBox="0 0 50 50" aria-hidden="true">
+        <circle class="return-top-track" cx="25" cy="25" r="22" />
+        <circle class="return-top-progress" cx="25" cy="25" r="22" />
+      </svg>
+      <img src="assets/images/up-icon.svg" alt="" width="20" height="20" />
+    </button>
+
+    <script src="assets/js/bootstrap.bundle.min.js" defer></script>
+    <script src="assets/js/lenis.min.js" defer></script>
+    <script src="assets/js/swiper-bundle.min.js" defer></script>
+    <script src="assets/js/gsap.min.js" defer></script>
+    <script src="assets/js/ScrollTrigger.min.js" defer></script>
+    <!-- main.js last: it reads window.Lenis, window.Swiper and window.gsap at init. -->
+    <script src="assets/js/main.js" defer></script>
+  </body>
+</html>

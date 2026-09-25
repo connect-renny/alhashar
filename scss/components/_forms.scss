@@ -1,0 +1,228 @@
+@use "../abstracts" as *;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Forms
+//  Pair every control with a real <label>. Placeholders are not labels —
+//  they vanish on focus and screen readers skip them.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-sm);
+}
+
+.form-label {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-text);
+
+  .required {
+    color: var(--color-danger);
+  }
+}
+
+.form-control,
+.form-select,
+textarea.form-control {
+  width: 100%;
+  padding: 14px 16px;
+  // 16px minimum, otherwise iOS Safari zooms the page on focus.
+  font-size: max(16px, var(--fs-sm));
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-none);
+  @include transEase((border-color, box-shadow));
+
+  &::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px rgb(var(--color-brand-rgb) / 15%);
+  }
+
+  &:disabled {
+    background: var(--color-surface);
+    cursor: not-allowed;
+  }
+
+  // Style from the validity state, but only once the field has been touched
+  // — `:invalid` alone flags empty required fields before the user types.
+  &[aria-invalid="true"],
+  &.is-invalid {
+    border-color: var(--color-danger);
+  }
+}
+
+textarea.form-control {
+  min-height: 140px;
+}
+
+.form-select {
+  appearance: none;
+  padding-inline-end: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23707070' d='M8 11 3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+}
+
+[dir="rtl"] .form-select {
+  background-position: left 16px center;
+}
+
+.form-error {
+  font-size: var(--fs-xs);
+  color: var(--color-danger);
+}
+
+.form-hint {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+// ─── Check / radio ─────────────────────────────────────────────────────────
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: var(--fs-sm);
+
+  input {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    accent-color: var(--color-brand);
+    cursor: pointer;
+  }
+
+  label {
+    cursor: pointer;
+  }
+}
+
+// ─── Floating-label field ──────────────────────────────────────────────────
+// Underlined control whose label sits inside it and rises to a small caption
+// on focus or once filled. Needs `placeholder=" "` on the control so
+// :placeholder-shown can tell empty from filled. A navy line draws across
+// the underline on focus. A field only turns red once the visitor has dealt
+// with it (:user-invalid) or after a failed submit (.was-validated).
+.float-field {
+  --ff-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative;
+  padding-top: 18px;
+
+  // Focus line, drawn from the left over the underline.
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: var(--color-brand);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.6s var(--ff-ease);
+  }
+
+  &:focus-within::after {
+    transform: scaleX(1);
+  }
+}
+
+.float-input {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 2px 12px;
+  border: 0;
+  border-bottom: 1px solid var(--dark-250);
+  border-radius: 0;
+  background: transparent;
+  color: var(--dark-950);
+  font: inherit;
+  font-size: var(--fs-base);
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.3s var(--ff-ease);
+
+  &::placeholder {
+    color: transparent;
+  }
+}
+
+.float-label {
+  position: absolute;
+  top: 30px;
+  left: 2px;
+  color: var(--dark-950);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  pointer-events: none;
+  transform-origin: left top;
+  transition:
+    transform 0.45s var(--ff-ease),
+    color 0.3s var(--ff-ease);
+}
+
+// Raised: focused or holding a value.
+.float-input:focus + .float-label,
+.float-input:not(:placeholder-shown) + .float-label {
+  color: var(--color-text-muted);
+  transform: translateY(-26px) scale(0.86);
+}
+
+.float-input:focus + .float-label {
+  color: var(--color-brand);
+}
+
+.float-input:user-invalid,
+.was-validated .float-input:invalid {
+  border-bottom-color: var(--color-danger);
+
+  + .float-label {
+    color: var(--color-danger);
+  }
+}
+
+// ─── Honeypot ──────────────────────────────────────────────────────────────
+// A bot fills this; a human never sees it. main.js blocks submit if it's set.
+.form-hp {
+  position: absolute !important;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+// ─── Submit feedback ───────────────────────────────────────────────────────
+.form-status {
+  margin-top: var(--space-sm);
+  padding: 12px 16px;
+  font-size: var(--fs-sm);
+  border-inline-start: 3px solid;
+
+  &[data-state="success"] {
+    color: var(--color-success);
+    border-color: var(--color-success);
+    background: rgb(31 138 76 / 8%);
+  }
+
+  &[data-state="error"] {
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+    background: rgb(192 57 43 / 8%);
+  }
+
+  &:empty {
+    display: none;
+  }
+}
