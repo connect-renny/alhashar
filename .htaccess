@@ -1,0 +1,17 @@
+DirectoryIndex index.php
+
+# The site used to be static .html pages. Send old links and bookmarks to the
+# .php page of the same name (only when that page exists).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} ^(.+)\.html$
+  RewriteCond %1.php -f
+  RewriteCond %{REQUEST_URI} ^(.+)\.html$
+  RewriteRule \.html$ %1.php [R=301,L]
+</IfModule>
+
+# Shared templates are included by the pages, never requested directly.
+<IfModule mod_alias.c>
+  RedirectMatch 404 ^/(.*/)?includes/
+</IfModule>

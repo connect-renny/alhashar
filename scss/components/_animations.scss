@@ -22,14 +22,27 @@
   }
 }
 
-// The loader bar sweeps with transform rather than `left`, so it doesn't
-// trigger layout 60 times a second while the page is still loading.
-@keyframes loaderSlide {
-  from {
-    transform: translateX(-100%);
+// "Loading..." dots, typed out on a loop. Frames are padded to three
+// characters with nbsp (U+00A0) — see .loader-dots.
+@keyframes loaderDots {
+  0% {
+    content: "   ";
   }
+  25% {
+    content: ".  ";
+  }
+  50% {
+    content: ".. ";
+  }
+  75% {
+    content: "...";
+  }
+}
+
+// The status dot in the loader's corner tag.
+@keyframes loaderBlink {
   to {
-    transform: translateX(350%);
+    opacity: 0.2;
   }
 }
 
@@ -68,6 +81,33 @@
   }
 }
 
+// Hero copy rising into place once the page is revealed (.is-loaded).
+@keyframes heroTextIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─── Page transitions ──────────────────────────────────────────────────────
+
+@keyframes pageOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
 // ─── Back to top ───────────────────────────────────────────────────────────
 
 // The arrow in `.return-top` bobs upward.
@@ -103,59 +143,98 @@
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-//  Reveal-on-scroll
-//  A dependency-free alternative to AOS. Add `data-reveal` to an element and
-//  main.js sets `.is-revealed` when it enters the viewport. Roughly 200 bytes
-//  against AOS's 16KB — drop the AOS files entirely if this is enough.
+//  Page transitions
+//  Moving between the site's pages crossfades: the old page fades out, the
+//  new one fades and lifts in. Native cross-document View Transitions — no
+//  JavaScript, no delay on the click. Browsers without support just
+//  navigate as usual.
 // ═══════════════════════════════════════════════════════════════════════════
 
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.7s var(--ease-out),
-    transform 0.7s var(--ease-out);
-  transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
-}
-
-[data-reveal="left"] {
-  transform: translateX(-32px);
-}
-
-[data-reveal="right"] {
-  transform: translateX(32px);
-}
-
-[data-reveal="zoom"] {
-  transform: scale(0.94);
-}
-
-[data-reveal="fade"] {
-  transform: none;
-}
-
-// Outranks the variants above (attribute + class), so it lands whichever
-// direction the element came from. `will-change` is released once the
-// element has settled — holding it pins a compositor layer for good.
-[data-reveal].is-revealed {
-  opacity: 1;
-  transform: none;
-  will-change: auto;
-}
-
-// If the browser can't observe intersections, show everything immediately
-// rather than leaving the page blank.
-.no-js [data-reveal] {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-    will-change: auto;
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
   }
+
+  ::view-transition-old(root) {
+    animation: pageOut 0.25s var(--ease-in-out) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: pageIn 0.5s var(--ease-out) 0.1s both;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Hero load-in
+//  The hero copy rises in, one line after another, when the page is
+//  revealed — main.js adds `.is-loaded` to <html> once the preloader has
+//  wiped up, or straight away on later page views. On the first view it
+//  waits a beat longer so the wipe has cleared the text first.
+//
+//  Tabbed heroes (About, Management) already animate their active panel in
+//  (heroPanelIn); it's just held back until the same moment.
+//
+//  Without JavaScript nothing is hidden. With reduced motion the reset
+//  shortens the animation to nothing, so the copy is simply there.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.hero-title,
+.hero-link,
+.hero-news,
+.page-hero-content > :is(
+    .breadcrumb-nav,
+    .page-hero-title,
+    .page-hero-logo,
+    .page-hero-lead,
+    .page-hero-headline,
+    .page-hero-text
+  ) {
+  html:not(.no-js) & {
+    opacity: 0;
+  }
+
+  .is-loaded & {
+    animation: heroTextIn 0.9s var(--ease-out) both;
+    animation-delay: calc(var(--hero-start, 0.1s) + var(--hero-step, 0) * 0.12s);
+  }
+}
+
+html:not(.loader-seen) {
+  --hero-start: 0.45s;
+}
+
+// Order of appearance.
+.page-hero-content > :is(.page-hero-title, .page-hero-logo),
+.hero-link {
+  --hero-step: 1;
+}
+
+.page-hero-content > :is(.page-hero-lead, .page-hero-headline),
+.hero-news {
+  --hero-step: 2;
+}
+
+.page-hero-content > .page-hero-text {
+  --hero-step: 3;
+}
+
+.page-hero-lead + .page-hero-text {
+  --hero-step: 4;
+}
+
+html:not(.no-js, .is-loaded) .page-hero-panel.is-active {
+  opacity: 0;
+  animation: none;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  AOS
+//  Scroll reveals come from AOS (assets/css/aos.css + main.js › initAOS).
+//  aos.css hides every [data-aos] element until AOS shows it — without
+//  JavaScript, show them all rather than leave the page blank.
+// ═══════════════════════════════════════════════════════════════════════════
+
+.no-js [data-aos] {
+  opacity: 1 !important;
+  transform: none !important;
 }

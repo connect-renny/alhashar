@@ -3,9 +3,9 @@
 
    Structure
      1. Config & shared helpers
-     2. Core        — smooth scroll, App.scrollTo, in-page links
+     2. Core        — smooth scroll, preloader, App.scrollTo, in-page links
      3. Navigation  — fixed navbar, mobile drawer
-     4. Components  — sliders, lightbox, forms, reveal-on-scroll, hero tabs, rolling
+     4. Components  — sliders, lightbox, forms, AOS reveals, hero tabs, rolling
                       counters, accordions, division rows and brand rows (GSAP), back-to-top, current year
      5. Boot        — runs the modules in order, fires `app:ready`
 
@@ -13,8 +13,8 @@
    there, so any block of HTML can be removed without breaking the rest.
 
    Load order in the HTML: bootstrap.bundle → lenis → swiper → gsap →
-   ScrollTrigger → main.js (last: it reads window.Lenis, window.Swiper and
-   window.gsap at init).
+   ScrollTrigger → aos → main.js (last: it reads window.Lenis, window.Swiper,
+   window.gsap and window.AOS at init).
 
    Exposes window.App and fires `app:ready` on document once everything has
    booted. Hook page-specific code there rather than on DOMContentLoaded.
@@ -85,6 +85,20 @@
       });
     }, options);
     elements.forEach((el) => io.observe(el));
+  };
+
+  // The page is "revealed" once the preloader has gone (or straight away when
+  // it doesn't play). initLoader calls markLoaded; whenLoaded runs `fn` then,
+  // or immediately if that has already happened.
+  const markLoaded = () => {
+    if (html.classList.contains("is-loaded")) return;
+    html.classList.add("is-loaded");
+    document.dispatchEvent(new CustomEvent("app:loaded"));
+  };
+
+  const whenLoaded = (fn) => {
+    if (html.classList.contains("is-loaded")) fn();
+    else document.addEventListener("app:loaded", fn, { once: true });
   };
 
   // ═══════════════════════════════════════════════════════════════════════
@@ -265,7 +279,8 @@
   }
 
   // Sub-menus (.has-dropdown): the parent link still navigates; the chevron
-  // button beside it opens the list. On desktop CSS also opens it on hover
+  // button beside it opens the list. A parent that's a plain label (a <span>,
+  // no page of its own) opens it too. On desktop CSS also opens it on hover
   // and focus-within; this handles click/tap, Escape and click-outside, and
   // in the mobile drawer the same button expands it in place.
   function initDropdowns() {
@@ -286,6 +301,7 @@
         closeAll(item);
         setOpen(item, on);
       });
+      $("span.nav-link", item)?.addEventListener("click", () => btn?.click());
 
       // Leaving the menu by keyboard closes it on desktop.
       item.addEventListener("focusout", (e) => {
@@ -330,20 +346,44 @@
     });
   }
 
-  // `data-reveal` (optionally "left" | "right" | "zoom" | "fade") fades an
-  // element in the first time it enters the viewport; `data-reveal-delay`
-  // (ms) staggers siblings. The motion is CSS (components/_animations.scss),
-  // so with reduced motion nothing moves.
-  function initReveal() {
-    const elements = $$("[data-reveal]");
-    elements.forEach((el) => {
-      if (el.dataset.revealDelay) {
-        el.style.setProperty("--reveal-delay", `${el.dataset.revealDelay}ms`);
+  // AOS reveals page content on scroll: `data-aos="fade-up"` (or fade-left,
+  // fade-right…), `data-aos-delay` (ms) to stagger siblings. Kept off the
+  // hero (it has its own load-in), the footer, and anything already animated
+  // another way (GSAP rows, the value bands) — AOS takes over an element's
+  // transition and transform, so the two would fight.
+  //
+  // It starts once the page is revealed, so nothing plays out unseen behind
+  // the preloader. With reduced motion AOS strips its attributes and the
+  // content is simply there.
+  function initAOS() {
+    const elements = $$("[data-aos]");
+    if (!elements.length) return;
+
+    // aos.css hides every [data-aos] up front — never leave them hidden.
+    if (!window.AOS) {
+      elements.forEach((el) => el.removeAttribute("data-aos"));
+      return;
+    }
+
+    whenLoaded(() => {
+      window.AOS.init({
+        duration: 800,
+        easing: "ease-out-cubic",
+        offset: 60,
+        once: true,
+        disable: REDUCE_MOTION,
+      });
+
+      // AOS measures where each element sits once. When the page's height
+      // changes later (a job row opening, images and sliders settling) the
+      // reveals further down would fire at the wrong point — re-measure.
+      if ("ResizeObserver" in window && !REDUCE_MOTION) {
+        let timer = 0;
+        new ResizeObserver(() => {
+          clearTimeout(timer);
+          timer = setTimeout(() => window.AOS.refresh(), 150);
+        }).observe(body);
       }
-    });
-    whenVisible(elements, (el) => el.classList.add("is-revealed"), {
-      threshold: 0.15,
-      rootMargin: "0px 0px -8% 0px",
     });
   }
 
@@ -1119,6 +1159,120 @@
     button.addEventListener("click", () => App.scrollTo(0));
   }
 
+  // Preloader (#loader): the counter rolls 000 → 100 over a filling bar,
+  // then the overlay wipes up once `load` has fired AND the counter has
+  // landed (min 2.4s) — or at 5s regardless, so a stalled asset never traps
+  // a visitor. Page scroll is locked while it's up. Plays once per session;
+  // the inline <head> script hides it on later page views.
+  //
+  // Either way the page ends up "revealed": <html> gets `.is-loaded` (the
+  // hero copy animates in off it, see components/_animations.scss) and
+  // `app:loaded` fires. Use whenLoaded() rather than the event — on later
+  // page views it has fired before the other modules boot.
+  function initLoader() {
+    const overlay = $("#loader");
+    if (!overlay) {
+      markLoaded();
+      return;
+    }
+
+    const markSeen = () => {
+      try {
+        sessionStorage.setItem("ah-loader-seen", "1");
+      } catch (e) {
+        /* storage blocked: it just plays again next page */
+      }
+    };
+
+    if (html.classList.contains("loader-seen")) {
+      overlay.remove();
+      markLoaded();
+      return;
+    }
+
+    const num = $("[data-loader-num]", overlay);
+    const bar = $("[data-loader-bar]", overlay);
+    const MIN_SHOW = REDUCE_MOTION ? 0 : 2400;
+    const COUNT_MS = 2000;
+    const FONT_WAIT = 1000; // don't hold the intro on a slow font
+    let start = performance.now();
+    let done = false;
+    let raf = 0;
+
+    body.classList.add("is-locked");
+    App.lenis?.stop();
+
+    const setProgress = (p) => {
+      if (num) num.textContent = String(Math.round(p * 100)).padStart(3, "0");
+      if (bar) bar.style.setProperty("--p", p.toFixed(3));
+    };
+
+    const hide = () => {
+      if (done) return;
+      done = true;
+      cancelAnimationFrame(raf);
+      setProgress(1);
+      markSeen();
+
+      overlay.classList.add("is-hidden");
+      body.classList.remove("is-locked");
+      App.lenis?.start();
+      markLoaded();
+
+      // Drop it from the DOM once the wipe has finished.
+      let removed = false;
+      const remove = () => {
+        if (removed) return;
+        removed = true;
+        overlay.remove();
+      };
+      overlay.addEventListener("transitionend", remove, { once: true });
+      setTimeout(remove, 1200); // in case transitionend never fires
+    };
+
+    // Counter + bar, eased so the last few percent linger before 100.
+    const startCount = () => {
+      if (REDUCE_MOTION) {
+        setProgress(1);
+        return;
+      }
+      const step = (now) => {
+        const p = Math.min((now - start) / COUNT_MS, 1);
+        setProgress(1 - Math.pow(1 - p, 3));
+        if (p < 1 && !done) raf = requestAnimationFrame(step);
+      };
+      raf = requestAnimationFrame(step);
+    };
+
+    // Hold the intro until the fonts are in, so the wordmark and counter
+    // don't paint in the fallback face and jump when the web font swaps in.
+    let readied = false;
+    const ready = () => {
+      if (readied || done) return;
+      readied = true;
+      start = performance.now();
+      overlay.classList.add("is-ready");
+      startCount();
+    };
+    const fontsReady = document.fonts
+      ? Promise.all([
+          document.fonts.load('700 1em "poppins"'),
+          document.fonts.load('600 1em "poppins"'),
+          document.fonts.load('italic 600 1em "Abril Display"'),
+        ])
+      : Promise.resolve();
+    fontsReady.then(ready, ready);
+    setTimeout(ready, FONT_WAIT);
+
+    const hideAfterMin = () => {
+      const remaining = MIN_SHOW - (performance.now() - start);
+      setTimeout(hide, Math.max(300, remaining));
+    };
+    if (document.readyState === "complete") hideAfterMin();
+    else window.addEventListener("load", hideAfterMin, { once: true });
+    setTimeout(hide, 5000);
+  }
+
   // `.year` is filled with the current year — never hard-code a copyright.
   function initYear() {
     const year = new Date().getFullYear();
@@ -1136,6 +1290,7 @@
 
   initScrollbarWidth();
   initSmoothScroll();
+  initLoader();
   initScrollTo();
   initNavbar();
   initDrawer();
@@ -1144,7 +1299,7 @@
   initLightbox();
   initForms();
   initJobs();
-  initReveal();
+  initAOS();
   initHeroTabs();
   initPartners();
   initAccordions();

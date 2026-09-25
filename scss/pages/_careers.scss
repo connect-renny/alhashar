@@ -183,11 +183,38 @@
   }
 }
 
+// Expand/collapse: the <details> content box eases between 0 and its
+// natural height (interpolate-size in the reset lets `auto` animate), and
+// allow-discrete keeps it visible until the close has finished. The body
+// fades and lifts in after it. Browsers without ::details-content just snap.
+.job::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.6s var(--ease-out),
+    content-visibility 0.6s allow-discrete;
+}
+
+.job[open]::details-content {
+  block-size: auto;
+}
+
 .job-body {
   margin-inline: var(--space-sm);
   padding: var(--space-md) 0;
   border-top: 1px solid var(--dark-100);
   color: var(--dark-950);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.4s var(--ease-out),
+    transform 0.5s var(--ease-out);
+
+  .job[open] & {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.1s;
+  }
 
   @include mq-up("md") {
     margin-inline: var(--space-md);

@@ -1,57 +1,226 @@
 @use "../abstracts" as *;
 
 // ═══════════════════════════════════════════════════════════════════════════
-//  Preloader
-//  Only include the markup if you genuinely need it — a preloader always
-//  makes the site feel slower than it is. main.js hides it on `load` and has
-//  a hard 5s failsafe so a stalled image can never trap the visitor behind it.
+//  Preloader — wordmark over a filling bar, counter bottom-right
+//
+//  Lifecycle (driven by initLoader in main.js):
+//    .loader-overlay            → shown, intro animations paused (fonts pending)
+//    .loader-overlay.is-ready   → fonts in: pieces drop in, counter rolls 000 → 100
+//    .loader-overlay.is-hidden  → wipes up off-screen, then removed from DOM
+//
+//  Shown once per browser session: an inline script in the <head> adds
+//  `.loader-seen` to <html> on later page views, and without JavaScript
+//  (`.no-js`) it never shows — nothing would be there to lift it.
 // ═══════════════════════════════════════════════════════════════════════════
+
+.no-js .loader-overlay,
+.loader-seen .loader-overlay {
+  display: none;
+}
 
 .loader-overlay {
   position: fixed;
   inset: 0;
   z-index: var(--z-loader);
-  @include flex-center;
-  background: var(--color-bg);
-  @include transEase(opacity, $duration: var(--transition-slow));
+  overflow: hidden;
+  color: var(--white);
+  background:
+    linear-gradient(to right, rgb(255 255 255 / 3%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 3%) 1px, transparent 1px),
+    radial-gradient(70% 60% at 85% 95%, rgb(227 185 98 / 16%), transparent 100%),
+    radial-gradient(50% 40% at 10% 0%, rgb(255 255 255 / 6%), transparent 100%),
+    var(--color-brand);
+  background-size:
+    48px 48px,
+    48px 48px,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+  transition:
+    transform 0.9s cubic-bezier(0.76, 0, 0.24, 1),
+    visibility 0s linear 0.9s;
+
+  // Intro drops sit at their first frame (opacity 0) until fonts are ready.
+  &:not(.is-ready) {
+    .loader-tag,
+    .loader-mark,
+    .loader-line,
+    .loader-count {
+      animation-play-state: paused;
+    }
+  }
 
   &.is-hidden {
-    opacity: 0;
+    transform: translateY(-100%);
     visibility: hidden;
     pointer-events: none;
   }
 }
 
-.loader {
-  display: flex;
-  flex-direction: column;
+// ─── Corner tag ────────────────────────────────────────────────────────────
+.loader-tag {
+  position: absolute;
+  top: 28px;
+  left: 32px;
+  display: inline-flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
+  margin: 0;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 60%);
+  animation: dropAnim 0.8s var(--ease-out) 0.2s both;
 
-  img {
-    width: 120px;
-    max-width: 40vw;
-    height: auto;
-    animation: dropAnim 0.8s var(--ease-out) both;
+  @include mq-down("md") {
+    top: 18px;
+    left: 18px;
   }
 }
 
-.loader-bar {
-  position: relative;
-  width: 140px;
-  height: 3px;
-  overflow: hidden;
-  background: var(--color-border);
-  border-radius: var(--radius-sm);
+.loader-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 10px var(--color-accent);
+  animation: loaderBlink 1.6s steps(2, start) infinite;
+}
 
-  &::after {
-    content: "";
+// ─── Centre mark ───────────────────────────────────────────────────────────
+.loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2.4vw, 24px);
+  padding-inline: var(--container-gutter);
+  text-align: center;
+}
+
+.loader-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  font-weight: var(--fw-bold);
+  font-size: clamp(2.4rem, 7vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  animation: dropAnim 0.8s var(--ease-out) both;
+
+  &__solid {
+    color: var(--white);
+    text-shadow: 0 0 40px rgb(227 185 98 / 20%);
+  }
+
+  // The serif accent, as in the hero title.
+  &__outline {
+    font-family: var(--serif-font);
+    font-style: italic;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-accent);
+  }
+}
+
+.loader-line {
+  margin: 0;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 60%);
+  animation: dropAnim 0.8s var(--ease-out) 0.35s both;
+}
+
+// "..." typed out on a loop. Every frame is padded to three characters with
+// a literal nbsp (U+00A0) so the box never goes empty — an empty inline-block
+// collapses to zero height and would make the line jitter each cycle.
+.loader-dots::after {
+  content: "   ";
+  display: inline-block;
+  width: 3ch;
+  text-align: left;
+  vertical-align: baseline;
+  animation: loaderDots 1.2s steps(4, end) infinite;
+}
+
+// ─── Counter ───────────────────────────────────────────────────────────────
+.loader-count {
+  position: absolute;
+  right: 32px;
+  bottom: 24px;
+  display: flex;
+  align-items: baseline;
+  gap: 0.05em;
+  margin: 0;
+  font-size: clamp(4.5rem, 12vw, 10rem);
+  font-weight: var(--fw-semibold);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+  animation: dropAnim 0.8s var(--ease-out) 0.1s both;
+
+  &__suffix {
+    font-size: 0.3em;
+    line-height: 1;
+    color: var(--color-accent);
+  }
+
+  @include mq-down("md") {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+// ─── Progress bar ──────────────────────────────────────────────────────────
+// main.js drives `--p` (0 → 1) in step with the counter.
+.loader-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgb(255 255 255 / 10%);
+
+  &__fill {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 40%;
-    background: var(--color-brand);
-    border-radius: var(--radius-sm);
-    animation: loaderSlide 1.2s var(--ease-in-out) infinite;
+    inset: 0;
+    transform-origin: left center;
+    transform: scaleX(var(--p, 0));
+    background: linear-gradient(90deg, #f3dca6, var(--color-accent));
+    box-shadow: 0 0 16px rgb(227 185 98 / 60%);
+  }
+}
+
+// ─── Reduced motion ────────────────────────────────────────────────────────
+// No wipe — a plain fade. main.js also skips the minimum hold.
+@media (prefers-reduced-motion: reduce) {
+  .loader-overlay {
+    transition: opacity 0.3s ease;
+
+    &.is-hidden {
+      transform: none;
+      opacity: 0;
+    }
+  }
+
+  .loader-tag,
+  .loader-mark,
+  .loader-line,
+  .loader-count,
+  .loader-dot,
+  .loader-dots::after {
+    animation: none;
+  }
+
+  .loader-bar__fill {
+    transform: scaleX(1);
   }
 }

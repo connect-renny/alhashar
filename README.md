@@ -1,42 +1,45 @@
-# Ready to HTML — v6.1
+# Al Hashar Group website
 
-A static HTML starter kit. Bootstrap 5.3 for the grid, Swiper 14 for sliders,
+A PHP site built on the Ready to HTML v6.1 kit. Bootstrap 5.3 for the grid, Swiper 14 for sliders,
 Lenis 1.3 for smooth scroll, and an SCSS design-token layer that owns every
 colour, size and easing on the page.
 
 No bundler, no framework, no build step at deploy time. Sass compiles to one
-stylesheet; everything else is plain HTML plus a single `main.js`.
+stylesheet; the pages are plain PHP (shared header/footer includes, plus the
+two form handlers) and a single `main.js`.
 
 **Contents**
 
 1. [Quick start](#quick-start)
 2. [npm scripts](#npm-scripts)
 3. [Project layout](#project-layout)
-4. [How the pieces fit](#how-the-pieces-fit)
-5. [Design tokens](#design-tokens)
-6. [Sass toolbox](#sass-toolbox)
-7. [CSS reference](#css-reference)
-8. [JavaScript](#javascript)
-9. [Accessibility](#accessibility)
-10. [RTL](#rtl)
-11. [Updating a vendored library](#updating-a-vendored-library)
-12. [Deploying](#deploying)
-13. [Troubleshooting](#troubleshooting)
+4. [PHP pages](#php-pages)
+5. [How the pieces fit](#how-the-pieces-fit)
+6. [Design tokens](#design-tokens)
+7. [Sass toolbox](#sass-toolbox)
+8. [CSS reference](#css-reference)
+9. [JavaScript](#javascript)
+10. [Accessibility](#accessibility)
+11. [RTL](#rtl)
+12. [Updating a vendored library](#updating-a-vendored-library)
+13. [Deploying](#deploying)
+14. [Troubleshooting](#troubleshooting)
 
 ---
 
 ## Quick start
 
-Requires Node 20+.
+Requires Node 20+ (for the CSS build) and PHP 8+ — locally, XAMPP's Apache
+serving this folder at http://localhost/alhashar/.
 
 ```bash
 npm install
 npm run vendor   # copy Bootstrap, Swiper, Lenis, icons and the font into assets/
-npm run dev      # Sass --watch + browser-sync on http://localhost:3000
+npm run dev      # Sass --watch + browser-sync proxying localhost/alhashar on :3000
 ```
 
-`npm run dev` recompiles on save and reloads the browser. Open `index.html`,
-put your markup inside `<main>`, and go.
+`npm run dev` recompiles on save and reloads the browser. Apache must be
+running — browser-sync proxies it rather than serving files itself.
 
 Before you ship:
 
@@ -44,19 +47,19 @@ Before you ship:
 npm run build    # expanded + compressed CSS, both autoprefixed
 ```
 
-Then upload the HTML files and `assets/` — see [Deploying](#deploying).
+Then upload the PHP files, `includes/`, `.htaccess` and `assets/` — see [Deploying](#deploying).
 
 ## npm scripts
 
 | Script      | What it does                                                             |
 | ----------- | ------------------------------------------------------------------------ |
-| `dev`       | Watch SCSS and serve with live reload on port 3000                       |
+| `dev`       | Watch SCSS and proxy Apache with live reload on port 3000                |
 | `vendor`    | Copy third-party bundles from `node_modules` into `assets/`              |
 | `build:css` | Compile `style.css` (expanded) and `style.min.css` (compressed)          |
 | `prefix`    | Run Autoprefixer over both compiled files, in place                      |
 | `build`     | `build:css` then `prefix` — run this before deploying                    |
 | `lint:css`  | Stylelint over `scss/` — unknown properties, bad values, duplicate rules |
-| `format`    | Prettier over HTML, SCSS, JS, JSON and Markdown                          |
+| `format`    | Prettier over SCSS, JS, JSON and Markdown (it doesn't parse PHP)         |
 | `clean`     | Delete the compiled CSS and source maps                                  |
 
 Browser support is the `browserslist` field in `package.json`. Change it there
@@ -65,7 +68,13 @@ and Autoprefixer follows; nothing else needs touching.
 ## Project layout
 
 ```
-index.html        blank starter: <head> wired up, skip link, empty <main>
+*.php             one file per page: its $page settings, then its <main>
+includes/
+  config.php      site settings (form recipients, CV limits) and the e() escaper
+  header.php      <!doctype> to </header>: <head>, meta tags, main navigation
+  footer.php      footer, back-to-top button, scripts, </html>
+  forms.php       contact + careers form handlers (validation, mail, CV upload)
+.htaccess         index.php as the directory index; old *.html URLs → *.php
 scss/
   style.scss      the entry point — import order matters, see below
   abstracts/      functions, mixins, Sass variables — emits no CSS
@@ -90,9 +99,52 @@ utilities go last so their `!important` actually applies.
 Compiled CSS (`style.css`, `style.min.css`, `*.map`) is gitignored —
 regenerate it with `npm run build`.
 
+## PHP pages
+
+A page sets `$page`, includes the header, prints its `<main>`, and includes
+the footer:
+
+```php
+<?php
+$page = [
+    'title' => 'About Us — Al Hashar Group',
+    'description' => '…',
+    'og_image' => 'assets/images/hero-about-us.jpg',
+    'nav' => 'about',          // highlights the top-level nav item
+];
+require __DIR__ . '/includes/header.php';
+?>
+    <main id="main">…</main>
+
+<?php require __DIR__ . '/includes/footer.php'; ?>
+```
+
+`$page` keys (defaults in `includes/config.php`): `title`, `description`,
+`og_title` / `og_description` (fall back to title / description), `og_image`,
+`nav` (`home`, `about`, `businesses`, `careers`, `contact`, `news`) and
+`subnav` (the Our Businesses dropdown entry, e.g. `automotive`). Values are
+plain text — `e()` escapes them, so write `&`, not `&amp;`.
+
+The menu itself is the `$businesses` / `$navLinks` arrays at the top of
+`includes/header.php`. To add a page, copy the closest existing one.
+
+### Forms
+
+`contact.php` and `careers.php` post to themselves. `includes/forms.php`
+re-validates everything server side (browser validation is only a courtesy),
+drops honeypot submissions, and mails the result — careers with the CV
+attached (PDF/DOC/DOCX, 5 MB). On success it redirects to `?sent=1`, so a
+refresh can't send twice; errors show in the form's `.form-status`.
+Recipients are `MAIL_ENQUIRY` and `MAIL_CAREERS` in `includes/config.php`.
+
+Mail uses PHP's `mail()`. Stock XAMPP has no mail server, so locally the forms
+report "could not be sent" and log the reason to Apache's `error.log`. On the
+live server, make sure `mail()` can deliver (or configure `SMTP`/`sendmail_path`
+in `php.ini`), and set `MAIL_FROM` to a mailbox on the site's own domain.
+
 ## How the pieces fit
 
-**`index.html`** loads, in order: Bootstrap CSS, Bootstrap Icons, Swiper CSS,
+**`includes/header.php`** loads, in order: Bootstrap CSS, Bootstrap Icons, Swiper CSS,
 then `style.css` last because it owns the tokens the others are themed with. At
 the bottom, `bootstrap.bundle`, `lenis`, `swiper` and finally `main.js`, which reads
 `window.Lenis` and `window.Swiper` at init and therefore must come last.
@@ -157,7 +209,7 @@ don't delete them.
 Poppins 400 and the Abril italic are preloaded in the `<head>` with
 `font-display: swap`. To swap Poppins: install another `@fontsource/*`
 package, add it to `scripts/vendor.mjs`, update `scss/base/_fonts.scss` and
-`--primary-font`, and change the `<link rel="preload">` in `index.html`.
+`--primary-font`, and change the `<link rel="preload">` in `includes/header.php`.
 
 ### Dark theme
 
@@ -300,7 +352,7 @@ Add the attribute, get the behaviour. No JS to write.
 
 | Hook                                  | Effect                                                                                                                             |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `data-reveal`                         | Fades and slides in on scroll. Values: `left`, `right`, `zoom`, `fade`. `data-reveal-delay="120"` (ms) staggers it.                |
+| `data-aos="fade-up"`                  | AOS scroll reveal (also `fade-left`, `fade-right`…). `data-aos-delay="150"` (ms) staggers it. Not on the hero, the footer, or anything GSAP/CSS already animates. |
 | `data-count="500"`                    | Rolls each digit up slot-machine style when scrolled into view (`components/_odometer.scss`). Non-digits in the value stay static. |
 | `.division-item`                      | "Our diverse businesses" row: GSAP + ScrollTrigger wipe/rise-in, replayed on every pass down (see `initDivisionRows`).             |
 | `data-validate` on a `<form>`         | Inline validation on blur, focus to the first invalid field on submit, honeypot check. `data-error` on a field sets its message.   |
@@ -311,13 +363,19 @@ Add the attribute, get the behaviour. No JS to write.
 | `data-lenis-prevent`                  | Opts an inner scroll container out of Lenis (also `-wheel`, `-touch`, `-vertical`, `-horizontal`).                                 |
 | `.year`                               | Filled with the current year. Never hard-code a copyright year.                                                                    |
 
-### Reveal animations vs AOS
+### Motion
 
-`data-reveal` is ~200 bytes of CSS against AOS's 16KB, and it respects
-`prefers-reduced-motion`. AOS is neither loaded nor initialised. Its files
-(`aos.css`, `aos.js`) are still in `assets/` in case a project needs its
-attribute API — add the `<link>`, the `<script>` and an `AOS.init()` call
-yourself, or delete the two files.
+- **Scroll reveals** use AOS (`aos.css` in the head, `aos.js` before
+  main.js, `initAOS`). It starts once the page is revealed, so nothing
+  plays behind the preloader, and is disabled for reduced motion. AOS
+  overrides an element's own `transition` and `transform`, so keep it off
+  elements that already animate (GSAP rows, the About value bands).
+- **Hero copy** rises in line by line when `<html>` gets `.is-loaded`
+  (after the preloader, or at once on later page views). Order is set by
+  `--hero-step` in `components/_animations.scss`.
+- **Page transitions** are native cross-document View Transitions
+  (`@view-transition`): a quick crossfade between the site's pages. Browsers
+  without support simply navigate as usual.
 
 ## Accessibility
 
@@ -377,7 +435,8 @@ there so it can't be forgotten when the kit is copied.
 npm run build
 ```
 
-Upload the HTML files and `assets/`. Nothing else is needed at runtime —
+Upload the PHP files, `includes/`, `.htaccess` and `assets/` to a PHP 8+ host
+with Apache (for `.htaccess`). Nothing else is needed at runtime —
 `scss/`, `scripts/`, `node_modules/` and the config files stay behind.
 
 ## Troubleshooting

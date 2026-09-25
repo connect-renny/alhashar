@@ -148,6 +148,12 @@
   > .nav-link {
     padding-inline-end: 2px;
   }
+
+  // A label with no page of its own; clicking it opens the sub-menu.
+  > span.nav-link {
+    cursor: pointer;
+    user-select: none;
+  }
 }
 
 .nav-dropdown-toggle {
