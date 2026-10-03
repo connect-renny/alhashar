@@ -340,7 +340,7 @@ require __DIR__ . '/includes/header.php';
               <span class="division-num" aria-hidden="true">03</span>
               <div class="division-head">
                 <h3 class="division-title">Engineering</h3>
-                <a class="link-arrow link-arrow--plain division-link" href="#">
+                <a class="link-arrow link-arrow--plain division-link" href="engineering.php">
                   Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
                 </a>
               </div>

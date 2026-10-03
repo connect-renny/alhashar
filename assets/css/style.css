@@ -4676,6 +4676,20 @@ html.lenis body {
   }
 }
 
+@media (width >= 768px) {
+  .offer-list--quad {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (width >= 992px) {
+  .offer-list--quad {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.offer-list--quad .offer-title {
+  max-width: 12em;
+}
+
 .offer {
   --offer-ease: cubic-bezier(0.22, 1, 0.36, 1);
   display: flex;
@@ -4714,6 +4728,15 @@ html.lenis body {
   padding: var(--space-2xs);
   border-radius: var(--radius-lg);
   transition: transform 0.6s var(--offer-ease), background-color 0.4s var(--offer-ease);
+}
+
+.offer-icon--glyph {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  font-size: clamp(2.125rem, 1.84375rem + 0.78vw, 2.625rem);
+  line-height: 1;
+  color: rgb(var(--offer-accent));
 }
 
 .offer-title {

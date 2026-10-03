@@ -53,7 +53,7 @@
               <li><a href="hospitality.php">Hospitality &amp; Tourism</a></li>
               <li><a href="electronics.php">Electronics &amp; Appliances</a></li>
               <li><a href="construction.php">Construction &amp; Contracting</a></li>
-              <li><a href="#">Engineering &amp; Projects</a></li>
+              <li><a href="engineering.php">Engineering &amp; Projects</a></li>
             </ul>
           </nav>
 

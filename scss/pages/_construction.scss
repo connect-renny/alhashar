@@ -30,6 +30,21 @@
   }
 }
 
+// Eight items (Engineering page): two rows of four instead of 6 + 2.
+.offer-list--quad {
+  @include mq-up("md") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include mq-up("lg") {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .offer-title {
+    max-width: 12em;
+  }
+}
+
 .offer {
   --offer-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -79,6 +94,16 @@
   transition:
     transform 0.6s var(--offer-ease),
     background-color 0.4s var(--offer-ease);
+}
+
+// A Bootstrap Icon in place of a drawn PNG, sized and coloured to match.
+.offer-icon--glyph {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  font-size: #{fluid(34, 42)};
+  line-height: 1;
+  color: rgb(var(--offer-accent));
 }
 
 .offer-title {

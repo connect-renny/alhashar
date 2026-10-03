@@ -21,7 +21,7 @@ $businesses = [
     ['key' => 'trading', 'href' => '#', 'icon' => 'bi-box-seam', 'label' => 'Trading'],
     ['key' => 'hospitality', 'href' => 'hospitality.php', 'icon' => 'bi-building', 'label' => 'Hospitality'],
     ['key' => 'construction', 'href' => 'construction.php', 'icon' => 'bi-bricks', 'label' => 'Construction & Contracting'],
-    ['key' => 'engineering', 'href' => '#', 'icon' => 'bi-gear-wide-connected', 'label' => 'Engineering'],
+    ['key' => 'engineering', 'href' => 'engineering.php', 'icon' => 'bi-gear-wide-connected', 'label' => 'Engineering'],
 ];
 
 $navLinks = [
