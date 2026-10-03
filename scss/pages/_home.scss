@@ -156,10 +156,8 @@
 }
 
 // ─── Our founder ───────────────────────────────────────────────────────────
-// Text on the left, portrait on the right.
-// The message can run long, so the text sits in its own scroll area: on
-// desktop it's pinned to the portrait's height (the absolute-inside-a-
-// zero-height-flex-child trick below), on mobile it's a fixed max-height.
+// Text on the left, portrait on the right. The text is a short excerpt
+// with an "Explore more" link, centred against the portrait on desktop.
 .founder-grid {
   display: flex;
   flex-direction: column;
@@ -183,44 +181,12 @@
   min-height: 0;
   padding-block: var(--space-md);
 
+  @include mq-up("lg") {
+    justify-content: center;
+  }
+
   .section-head {
     margin-bottom: var(--space-md);
-  }
-}
-
-// The scroll area. Below `lg` it's a plain box with a max-height; from `lg`
-// the wrapper takes the column's leftover height (flex: 1, min-height: 0
-// so the text can't push the row taller than the portrait) and the inner
-// pane fills it absolutely.
-.founder-scroll-wrap {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-}
-
-.founder-scroll {
-  max-height: 340px;
-  padding-inline-end: var(--space-md);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  // Thin grey pill, as drawn in the design — not the brand-coloured
-  // scrollbar the rest of the page uses.
-  scrollbar-width: thin;
-  scrollbar-color: var(--dark-200) transparent;
-  @include focus-ring;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: var(--dark-200);
-    border-radius: var(--radius-pill);
-  }
-
-  @include mq-up("lg") {
-    position: absolute;
-    inset: 0;
-    max-height: none;
   }
 }
 
@@ -240,11 +206,8 @@
   }
 }
 
-// Sits below the scroll pane, outside it, so the name and title stay put
-// while the message scrolls.
 .founder-signature {
-  flex-shrink: 0;
-  margin: var(--space-md) 0 0;
+  margin: var(--space-sm) 0 0;
   font-weight: var(--fw-semibold);
   color: var(--dark-950);
 
@@ -254,6 +217,12 @@
     font-weight: var(--fw-normal);
     color: var(--color-text-muted);
   }
+}
+
+// align-self keeps the link from stretching across the flex column.
+.founder-link {
+  align-self: flex-start;
+  margin-top: var(--space-lg);
 }
 
 // The portrait sizes itself (width: 100%, intrinsic ratio) and so sets the
@@ -415,6 +384,13 @@
   font-weight: var(--fw-medium);
   line-height: 1;
   color: var(--color-orange);
+}
+
+// Number and title share a top line even when the row centres its
+// photo and info column at xl.
+.division-num,
+.division-head {
+  align-self: start;
 }
 
 .division-head {
@@ -670,8 +646,8 @@
   }
 }
 
-// The track: groups side by side, scrolled by the prev/next buttons, a
-// swipe, or a sub-tab. `safe center` centres a short row but falls back to
+// The track: groups side by side, scrolled by the prev/next buttons or a
+// swipe. `safe center` centres a short row but falls back to
 // start-aligned once it overflows, so nothing is cut off on the left.
 .partners-track {
   display: flex;
@@ -696,6 +672,11 @@
   padding: 0;
   list-style: none;
   scroll-snap-align: start;
+
+  // Sub-tabs filter the track by hiding the other categories' groups.
+  &[hidden] {
+    display: none;
+  }
 }
 
 .partner-card {

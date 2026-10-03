@@ -30,8 +30,8 @@ $page = array_merge(
         'og_title' => null,       // falls back to title
         'og_description' => null, // falls back to description
         'og_image' => 'assets/images/hero-video-poster.jpg',
-        'nav' => '',              // top-level nav key: home, about, businesses, careers, contact, news
-        'subnav' => '',           // Our Businesses dropdown key: automotive, electronics, …
+        'nav' => '',              // top-level nav key: home, group, businesses, careers, contact, news
+        'subnav' => '',           // dropdown item key: about, founder, management, chairman (Our Group); automotive, electronics, … (Our Businesses)
     ],
     $page ?? []
 );

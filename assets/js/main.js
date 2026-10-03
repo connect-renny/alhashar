@@ -69,24 +69,6 @@
     { passive: true }
   );
 
-  // Runs `fn` once when each element first enters the viewport.
-  // Without IntersectionObserver, runs it immediately for all of them.
-  const whenVisible = (elements, fn, options = {}) => {
-    if (!elements.length) return;
-    if (!HAS_IO) {
-      elements.forEach(fn);
-      return;
-    }
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        fn(entry.target);
-        io.unobserve(entry.target);
-      });
-    }, options);
-    elements.forEach((el) => io.observe(el));
-  };
-
   // The page is "revealed" once the preloader has gone (or straight away when
   // it doesn't play). initLoader calls markLoaded; whenLoaded runs `fn` then,
   // or immediately if that has already happened.
@@ -388,7 +370,7 @@
   }
 
   // <span data-count="500">500</span> — the digits become slot-machine
-  // strips that roll up to the target when scrolled into view. Non-digit
+  // strips that roll up to the target each time they're scrolled into view. Non-digit
   // characters (a comma, a point) stay static. The motion lives in
   // components/_odometer.scss; this builds the DOM and flips `.is-rolled`.
   function initCounters() {
@@ -444,11 +426,28 @@
 
     counters.forEach(build);
 
-    if (REDUCE_MOTION) {
+    if (REDUCE_MOTION || !HAS_IO) {
       counters.forEach((el) => el.classList.add("is-rolled"));
       return;
     }
-    whenVisible(counters, (el) => el.classList.add("is-rolled"), { threshold: 0.4 });
+    // Replays on every pass: rolls once 40% visible, and snaps back to zero
+    // (transition off, so it's instant) once fully out of view.
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(({ target: el, isIntersecting, intersectionRatio }) => {
+          if (intersectionRatio >= 0.4) {
+            el.classList.add("is-rolled");
+          } else if (!isIntersecting && el.classList.contains("is-rolled")) {
+            el.classList.add("is-resetting");
+            el.classList.remove("is-rolled");
+            void el.offsetWidth; // commit the reset before transitions return
+            el.classList.remove("is-resetting");
+          }
+        });
+      },
+      { threshold: [0, 0.4] }
+    );
+    counters.forEach((el) => io.observe(el));
   }
 
   // GSAP with ScrollTrigger registered and fed by Lenis — set up once, on
@@ -605,19 +604,18 @@
       nav.classList.toggle("is-static", !overflows(track));
       $(".partners-prev", nav).disabled = atStart(track);
       $(".partners-next", nav).disabled = atEnd(track);
+    };
 
-      // Sub-tab scroll-spy: the last group whose left edge has reached the
-      // track's left edge, or the last group once scrolled to the end.
-      const subs = $$(".partners-sub", panel);
-      if (!subs.length || !overflows(track)) return;
-      const left = track.getBoundingClientRect().left;
-      let current = subs[0];
-      subs.forEach((sub) => {
-        const group = document.getElementById(sub.dataset.target);
-        if (group && group.getBoundingClientRect().left <= left + 40) current = sub;
-      });
-      if (atEnd(track)) current = subs[subs.length - 1];
+    // Sub-tabs filter the track: only the groups whose data-sub matches the
+    // chosen sub-tab stay visible.
+    const showSub = (panel, subs, current) => {
       setSub(subs, current);
+      const track = $("[data-partners-track]", panel);
+      $$(".partner-group[data-sub]", track).forEach((group) => {
+        group.hidden = group.dataset.sub !== current.dataset.sub;
+      });
+      track.scrollLeft = 0;
+      updateTrack(panel);
     };
 
     panels.forEach((panel) => {
@@ -628,15 +626,11 @@
       $(".partners-next", panel)?.addEventListener("click", () => page(1));
       track.addEventListener("scroll", () => updateTrack(panel), { passive: true });
 
-      $$(".partners-sub", panel).forEach((sub, _, subs) =>
-        sub.addEventListener("click", () => {
-          setSub(subs, sub);
-          const group = document.getElementById(sub.dataset.target);
-          if (!group) return;
-          const offset = group.getBoundingClientRect().left - track.getBoundingClientRect().left;
-          track.scrollTo({ left: track.scrollLeft + offset, behavior });
-        })
-      );
+      const subs = $$(".partners-sub", panel);
+      subs.forEach((sub) => sub.addEventListener("click", () => showSub(panel, subs, sub)));
+      if (subs.length) {
+        showSub(panel, subs, subs.find((s) => s.getAttribute("aria-current") === "true") ?? subs[0]);
+      }
     });
 
     // Tabs.

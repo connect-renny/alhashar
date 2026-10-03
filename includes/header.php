@@ -7,6 +7,13 @@
  */
 require_once __DIR__ . '/config.php';
 
+$group = [
+    ['key' => 'about', 'href' => 'about.php', 'icon' => 'bi-info-circle', 'label' => 'About Us'],
+    ['key' => 'founder', 'href' => 'founder.php', 'icon' => 'bi-person', 'label' => 'Our Founder'],
+    ['key' => 'management', 'href' => 'management.php', 'icon' => 'bi-people', 'label' => 'Management'],
+    ['key' => 'chairman', 'href' => 'chairman-message.php', 'icon' => 'bi-chat-quote', 'label' => 'Chairman’s Message'],
+];
+
 $businesses = [
     ['key' => 'automotive', 'href' => 'automotive.php', 'icon' => 'bi-car-front', 'label' => 'Automotive'],
     ['key' => 'heavy-equipment', 'href' => '#', 'icon' => 'bi-truck', 'label' => 'Construction & Heavy Equipment'],
@@ -23,11 +30,12 @@ $navLinks = [
     ['key' => 'news', 'href' => 'news.php', 'label' => 'Media center'],
 ];
 
-/** class + aria-current for a top-level nav link. */
+/** class + aria-current for a top-level nav link. Dropdown parents are
+ *  labels, not pages, so they only get the class. */
 $navState = function (string $key, string $class = 'nav-link') use ($page): string {
     $active = $page['nav'] === $key;
     return 'class="' . $class . ($active ? ' is-active' : '') . '"'
-        . ($active && $key !== 'businesses' ? ' aria-current="page"' : '');
+        . ($active && !in_array($key, ['group', 'businesses'], true) ? ' aria-current="page"' : '');
 };
 ?>
 <!doctype html>
@@ -83,8 +91,9 @@ $navState = function (string $key, string $class = 'nav-link') use ($page): stri
     <link rel="stylesheet" href="assets/css/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="assets/css/aos.css" />
-    <!-- style.css last — it owns the tokens everything above is themed with. -->
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- style.css last — it owns the tokens everything above is themed with.
+         ?v= is the file's modified time, so every rebuild busts the cache. -->
+    <link rel="stylesheet" href="assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>" />
 
     <!-- The preloader plays once per browser session. Runs before first paint
          so later page views never flash it. -->
@@ -133,12 +142,6 @@ $navState = function (string $key, string $class = 'nav-link') use ($page): stri
               width="90"
               height="72"
             />
-            <img
-              src="assets/images/65-anniversary.png"
-              alt="Celebrating 65th anniversary"
-              width="90"
-              height="72"
-            />
           </a>
 
           <button
@@ -165,8 +168,26 @@ $navState = function (string $key, string $class = 'nav-link') use ($page): stri
                   <span class="sr-only">Home</span>
                 </a>
               </li>
-              <li>
-                <a <?= $navState('about') ?> href="about.php">About us</a>
+              <li class="nav-item has-dropdown">
+                <span <?= $navState('group') ?>>Our Group</span>
+                <button
+                  class="nav-dropdown-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="nav-group"
+                  aria-label="Show Our Group menu"
+                >
+                  <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                </button>
+                <ul class="nav-dropdown" id="nav-group">
+<?php foreach ($group as $item): ?>
+                  <li>
+                    <a href="<?= e($item['href']) ?>"<?= $page['subnav'] === $item['key'] ? ' aria-current="page"' : '' ?>
+                      ><i class="bi <?= e($item['icon']) ?>" aria-hidden="true"></i><?= e($item['label']) ?></a
+                    >
+                  </li>
+<?php endforeach; ?>
+                </ul>
               </li>
               <li class="nav-item has-dropdown">
                 <span <?= $navState('businesses') ?>>Our Businesses</span>

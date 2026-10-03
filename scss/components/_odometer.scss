@@ -49,6 +49,12 @@
   transform: translateY(calc((10 + var(--to, 0)) * -1em));
 }
 
+// Set briefly by main.js while off-screen so the strips jump back to 0
+// without animating, ready to roll again on the next pass.
+.is-resetting .odometer-strip {
+  transition: none;
+}
+
 .odometer-sep {
   display: block;
   height: 1em;

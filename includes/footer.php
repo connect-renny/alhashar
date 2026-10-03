@@ -35,11 +35,11 @@
           <nav aria-labelledby="footer-group">
             <h3 class="footer-title" id="footer-group">Our Group</h3>
             <ul class="footer-links footer-links--2col">
-              <li><a href="about.php#founder">Our Founder</a></li>
+              <li><a href="founder.php">Our Founder</a></li>
               <li><a href="about.php#history">Our History</a></li>
               <li><a href="management.php">Management</a></li>
               <li><a href="about.php#awards">Awards &amp; Achievement</a></li>
-              <li><a href="about.php#chairman">Chairman’s Message</a></li>
+              <li><a href="chairman-message.php">Chairman’s Message</a></li>
               <li><a href="csr.php">CSR / Community Impact</a></li>
               <li><a href="about.php#vision">Our Vision &amp; Mission</a></li>
               <li><a href="about.php#values">Our Values</a></li>

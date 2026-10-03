@@ -446,93 +446,158 @@
   color: var(--dark-950);
 }
 
-// ─── Values ────────────────────────────────────────────────────────────────
-// Six full-bleed bands, one per value. At rest the first is open (tall,
-// description showing) and the rest are collapsed to their titles; hovering
-// or focusing a band opens it and closes the first. Pure CSS: the rules at
-// the bottom pick the "open" band (via the value-band-open mixin), and
-// everything animates on one long ease-out so the height, picture, title
-// and copy move as a single gesture.
-// Below `md` there's no hover, so every band is open.
-// The open state of a value band: taller, picture settles in and brightens,
-// title nudges right, description grows in. Shared by `.is-open` and the
-// hover/focus/first-child rules below.
-@mixin value-band-open {
-  min-height: 400px;
+// ─── Vision, mission & values ──────────────────────────────────────────────
+// Three statements on the navy band, side by side from `lg`. Softly tinted
+// cards; on hover a gold line draws across the top (same curve as the hero
+// tab bar) and the card lifts a touch.
+.purpose .section-title em {
+  color: var(--color-accent);
+}
 
-  .value-band-media img {
-    transform: scale(1);
-    filter: brightness(0.7);
-  }
+.purpose-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-lg);
 
-  .value-band-title {
-    transform: translateX(12px);
-  }
-
-  .value-band-text {
-    grid-template-rows: 1fr;
-
-    > p {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.15s;
-    }
+  @include mq-up("lg") {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.values-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.value-band {
-  --band-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --band-duration: 0.9s;
+.purpose-card {
+  --purpose-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 188px;
-  color: var(--white);
-  background: var(--dark-900);
-  overflow: hidden;
-  isolation: isolate;
-  transition: min-height var(--band-duration) var(--band-ease);
-  @include focus-ring(var(--white), -4px);
+  padding: #{fluid(28, 44)};
+  background: rgb(255 255 255 / 3%);
+  transition:
+    background 0.6s var(--purpose-ease),
+    transform 0.6s var(--purpose-ease);
 
-  // Picture, with a tint that lifts slightly when the band opens.
-  &-media {
-    @include cover;
-    z-index: -1;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    inset-inline: 0;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s var(--purpose-ease);
+  }
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.08);
-      transition:
-        transform calc(var(--band-duration) * 1.4) var(--band-ease),
-        filter var(--band-duration) var(--band-ease);
-      filter: brightness(0.55);
+  @include hover {
+    background: rgb(255 255 255 / 6%);
+    transform: translateY(-4px);
+
+    &::before {
+      transform: scaleX(1);
     }
   }
 
-  &-body {
-    width: 100%;
-    padding-block: var(--space-lg);
+  &-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--space-xl);
+    border-radius: var(--radius-md);
+    background: var(--color-accent-deep);
+    color: var(--white);
+    font-size: 28px;
   }
 
   &-title {
-    margin: 0;
-    font-size: #{fluid(26, 44)};
+    margin: 0 0 var(--space-md);
+    font-size: #{fluid(28, 40)};
     font-weight: var(--fw-normal);
-    line-height: 1.15;
+    line-height: 1.1;
     letter-spacing: var(--ls-tight);
     color: var(--white);
-    transform: translateX(0);
-    transition: transform var(--band-duration) var(--band-ease);
 
     em {
+      font-family: var(--serif-font);
+      font-style: italic;
+      font-weight: var(--fw-semibold);
+      letter-spacing: 0;
+      color: var(--color-accent);
+    }
+  }
+
+  &-text {
+    max-width: 32rem;
+    margin: 0;
+    font-size: #{fluid(16, 19)};
+    font-weight: var(--fw-medium);
+    line-height: 1.6;
+    color: rgb(255 255 255 / 85%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .purpose-card,
+  .purpose-card::before {
+    transition: none;
+  }
+}
+
+// ─── Values ────────────────────────────────────────────────────────────────
+// Heading, then six cards, three across from `lg`: a gold icon tile, a two-line title with
+// the serif word beneath, then the description.
+.values-head {
+  margin-bottom: var(--space-2xl);
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2xl) var(--space-xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include mq-up("md") {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include mq-up("lg") {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: var(--space-3xl);
+  }
+}
+
+.value-card {
+  color: var(--dark-950);
+
+  &-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 80px;
+    height: 80px;
+    margin-bottom: var(--space-xl);
+    border-radius: var(--radius-md);
+    background: var(--color-accent-deep);
+    color: var(--white);
+    font-size: 36px;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @include hover {
+    .value-card-icon {
+      transform: translateY(-4px);
+    }
+  }
+
+  &-title {
+    margin: 0 0 var(--space-md);
+    font-size: #{fluid(30, 44)};
+    font-weight: var(--fw-normal);
+    line-height: 1.1;
+    letter-spacing: var(--ls-tight);
+    color: var(--dark-950);
+
+    em {
+      display: block;
       font-family: var(--serif-font);
       font-style: italic;
       font-weight: var(--fw-semibold);
@@ -540,68 +605,17 @@
     }
   }
 
-  // The description sits in a grid row that grows from 0 to its content,
-  // which is what lets height animate without a fixed value.
   &-text {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows var(--band-duration) var(--band-ease);
-
-    > p {
-      max-width: 40rem;
-      margin: 0;
-      padding-top: var(--space-2xl);
-      font-size: var(--fs-base);
-      font-weight: var(--fw-semibold);
-      line-height: var(--lh-normal);
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(12px);
-      transition:
-        opacity calc(var(--band-duration) * 0.6) var(--band-ease),
-        transform var(--band-duration) var(--band-ease);
-    }
-  }
-}
-
-// Which band is open: the hovered/focused one, or — when none is — the
-// first. The .is-open class above carries the styles; these selectors just
-// decide who gets them.
-@include mq-up("md") {
-  .value-band:hover,
-  .value-band:focus-within,
-  .values-list:not(:hover):not(:focus-within) .value-band:first-child {
-    @include value-band-open;
-  }
-}
-
-// No hover on small screens: everything open, tighter.
-@include mq-down("md") {
-  .value-band {
-    min-height: 0;
-
-    .value-band-media img {
-      transform: none;
-      filter: brightness(0.6);
-    }
-
-    .value-band-text {
-      grid-template-rows: 1fr;
-
-      > p {
-        padding-top: var(--space-md);
-        opacity: 1;
-        transform: none;
-      }
-    }
+    max-width: 24rem;
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: var(--lh-normal);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .value-band,
-  .value-band *,
-  .value-band *::before {
-    transition-duration: 0.01ms !important;
+  .value-card-icon {
+    transition: none;
   }
 }
 

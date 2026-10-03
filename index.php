@@ -89,7 +89,7 @@ require __DIR__ . '/includes/header.php';
                   height="72"
                 />
                 <p class="stat-value">
-                  <span class="stat-num" data-count="65">65</span><span class="stat-sign">+</span>
+                  <span class="stat-num" data-count="50">50</span><span class="stat-sign">+</span>
                 </p>
                 <span class="stat-label">Years of Excellence</span>
               </div>
@@ -134,7 +134,7 @@ require __DIR__ . '/includes/header.php';
                   height="72"
                 />
                 <p class="stat-value">
-                  <span class="stat-num" data-count="50">50</span><span class="stat-sign">+</span>
+                  <span class="stat-num" data-count="25">25</span><span class="stat-sign">+</span>
                 </p>
                 <span class="stat-label">Global Partners</span>
               </div>
@@ -145,9 +145,7 @@ require __DIR__ . '/includes/header.php';
 
       <!-- ═════════════════════════════════════════════════════════════════
            Our founder
-           .founder-scroll is its own scroll pane (the message runs long).
-           data-lenis-prevent keeps the smooth-scroll from hijacking the
-           wheel inside it; tabindex lets keyboard users scroll it.
+           A short excerpt; "Explore more" leads to the full story.
            ═════════════════════════════════════════════════════════════════ -->
       <section class="section section--flush-top founder" aria-labelledby="founder-title">
         <div class="container">
@@ -161,52 +159,28 @@ require __DIR__ . '/includes/header.php';
                 </h2>
               </div>
 
-              <div class="founder-scroll-wrap">
-                <div
-                  class="founder-scroll"
-                  data-lenis-prevent
-                  tabindex="0"
-                  role="region"
-                  aria-label="Founder's message"
-                >
-                  <div class="founder-body">
-                    <p>
-                      Al Hashar Group’s journey has been shaped by the vision of its founder, the
-                      late Sheikh Saeed Bin Nasser Al Hashar. His ambition, foresight and commitment
-                      to serving Oman laid the foundation for what has become one of the Sultanate’s
-                      established and diversified business groups.
-                    </p>
-                    <p>
-                      From the outset, his vision placed customers at the heart of the organization.
-                      Today, this principle continues to guide us as we build lasting relationships
-                      with generations of customers through quality, trust and personalized service.
-                    </p>
-                    <p>
-                      Our progress has also been strengthened by enduring partnerships with leading
-                      international brands and principals. These relationships extend beyond
-                      delivering world-class products and services to the Omani market. They are
-                      built on shared values, mutual success and a long-term commitment to providing
-                      dependable after-sales care.
-                    </p>
-                    <p>
-                      At the heart of Al Hashar Group is our people. Their expertise, dedication and
-                      loyalty—demonstrated by colleagues who have been part of our journey for
-                      decades—continue to drive the Group forward.
-                    </p>
-                    <p>
-                      As we look to the future, we remain guided by the values established by our
-                      founder. Supported by the trust of our customers, the dedication of our
-                      employees and the strength of our partnerships, Al Hashar Group continues to
-                      evolve, innovate and contribute to Oman’s ongoing progress.
-                    </p>
-                  </div>
-                </div>
+              <div class="founder-body">
+                <p>
+                  Al Hashar Group’s journey has been shaped by the vision of its founder, the late
+                  Sheikh Saeed Bin Nasser Al Hashar. His ambition, foresight and commitment to
+                  serving Oman laid the foundation for what has become one of the Sultanate’s
+                  established and diversified business groups.
+                </p>
+                <p>
+                  From the outset, his vision placed customers at the heart of the organization.
+                  Today, this principle continues to guide us as we build lasting relationships
+                  with generations of customers through quality, trust and personalized service.
+                </p>
               </div>
 
               <p class="founder-signature">
                 Late Sheikh Saeed Bin Nasser Al Hashar
                 <span class="founder-role">Founder, Al Hashar Group</span>
               </p>
+
+              <a class="link-arrow link-arrow--plain founder-link" href="founder.php">
+                Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </a>
             </div>
 
             <div class="founder-media" data-aos="fade-up" data-aos-delay="150">
@@ -307,7 +281,7 @@ require __DIR__ . '/includes/header.php';
             <article class="division-item">
               <span class="division-num" aria-hidden="true">01</span>
               <div class="division-head">
-                <h3 class="division-title">Alhashar Automotive SAOC</h3>
+                <h3 class="division-title">Automotive</h3>
                 <a class="link-arrow link-arrow--plain division-link" href="automotive.php">
                   Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
                 </a>
@@ -337,7 +311,10 @@ require __DIR__ . '/includes/header.php';
             <article class="division-item">
               <span class="division-num" aria-hidden="true">02</span>
               <div class="division-head">
-                <h3 class="division-title">Alhashar &amp; Co. LLC</h3>
+                <h3 class="division-title">Construction &amp; Heavy Equipment</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="#">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
               </div>
               <div class="division-media">
                 <img
@@ -362,7 +339,10 @@ require __DIR__ . '/includes/header.php';
             <article class="division-item">
               <span class="division-num" aria-hidden="true">03</span>
               <div class="division-head">
-                <h3 class="division-title">Al Hashar Engineering LLC</h3>
+                <h3 class="division-title">Engineering</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="#">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
               </div>
               <div class="division-media">
                 <img
@@ -387,7 +367,10 @@ require __DIR__ . '/includes/header.php';
             <article class="division-item">
               <span class="division-num" aria-hidden="true">04</span>
               <div class="division-head">
-                <h3 class="division-title">Al Hashar Trading Co. LLC</h3>
+                <h3 class="division-title">Trading</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="#">
+                  Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
               </div>
               <div class="division-media">
                 <img
@@ -412,7 +395,7 @@ require __DIR__ . '/includes/header.php';
             <article class="division-item">
               <span class="division-num" aria-hidden="true">05</span>
               <div class="division-head">
-                <h3 class="division-title">Alhashar Electronics LLC</h3>
+                <h3 class="division-title">Home Appliances &amp; Electronics</h3>
                 <a class="link-arrow link-arrow--plain division-link" href="electronics.php">
                   Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
                 </a>
@@ -440,7 +423,7 @@ require __DIR__ . '/includes/header.php';
             <article class="division-item">
               <span class="division-num" aria-hidden="true">06</span>
               <div class="division-head">
-                <h3 class="division-title">Al Hashar Hotels LLC</h3>
+                <h3 class="division-title">Hospitality</h3>
                 <a class="link-arrow link-arrow--plain division-link" href="hospitality.php">
                   Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
                 </a>
@@ -628,7 +611,7 @@ require __DIR__ . '/includes/header.php';
                 <button
                   class="partners-sub"
                   type="button"
-                  data-target="partners-automotive-luxury"
+                  data-sub="luxury"
                   aria-current="true"
                 >
                   Luxury Vehicles
@@ -636,7 +619,7 @@ require __DIR__ . '/includes/header.php';
                 <button
                   class="partners-sub"
                   type="button"
-                  data-target="partners-automotive-passenger"
+                  data-sub="passenger"
                   aria-current="false"
                 >
                   Passenger Cars
@@ -644,14 +627,14 @@ require __DIR__ . '/includes/header.php';
                 <button
                   class="partners-sub"
                   type="button"
-                  data-target="partners-automotive-tyres"
+                  data-sub="tyres"
                   aria-current="false"
                 >
                   Tyres, Batteries &amp; Lubricants
                 </button>
               </div>
               <div class="partners-track" data-partners-track>
-                <ul class="partner-group" id="partners-automotive-luxury">
+                <ul class="partner-group" data-sub="luxury">
                   <li class="partner-card">
                     <img
                       src="assets/images/partners/aston-martin.png"
@@ -663,22 +646,18 @@ require __DIR__ . '/includes/header.php';
                     <img src="assets/images/partners/infiniti.png" alt="INFINITI" loading="lazy" />
                   </li>
                 </ul>
-                <ul class="partner-group" id="partners-automotive-passenger">
+                <ul class="partner-group" data-sub="passenger">
                   <li class="partner-card">
                     <img src="assets/images/partners/nissan.png" alt="Nissan" loading="lazy" />
                   </li>
                   <li class="partner-card">
                     <img src="assets/images/partners/peugeot.png" alt="Peugeot" loading="lazy" />
                   </li>
-                  <li class="partner-card is-placeholder">
-                    <img
-                      src="assets/images/partners/renault.svg"
-                      alt="Renault (placeholder logo)"
-                      loading="lazy"
-                    />
+                  <li class="partner-card">
+                    <img src="assets/images/partners/renault.png" alt="Renault" loading="lazy" />
                   </li>
                 </ul>
-                <ul class="partner-group" id="partners-automotive-tyres">
+                <ul class="partner-group" data-sub="tyres">
                   <li class="partner-card">
                     <span class="partner-cat">Tyres</span>
                     <img
@@ -687,19 +666,19 @@ require __DIR__ . '/includes/header.php';
                       loading="lazy"
                     />
                   </li>
-                  <li class="partner-card is-placeholder">
+                  <li class="partner-card">
                     <span class="partner-cat">Tyres</span>
                     <img
-                      src="assets/images/partners/goodride.svg"
-                      alt="Goodride (placeholder logo)"
+                      src="assets/images/partners/goodride.png"
+                      alt="Goodride"
                       loading="lazy"
                     />
                   </li>
-                  <li class="partner-card is-placeholder">
+                  <li class="partner-card">
                     <span class="partner-cat">Tyres</span>
                     <img
-                      src="assets/images/partners/ascenso.svg"
-                      alt="Ascenso (placeholder logo)"
+                      src="assets/images/partners/ascenso.png"
+                      alt="Ascenso"
                       loading="lazy"
                     />
                   </li>
@@ -711,8 +690,16 @@ require __DIR__ . '/includes/header.php';
                       loading="lazy"
                     />
                   </li>
+                  <li class="partner-card">
+                    <span class="partner-cat">Tyres</span>
+                    <img
+                      src="assets/images/partners/trazano.png"
+                      alt="Trazano"
+                      loading="lazy"
+                    />
+                  </li>
                 </ul>
-                <ul class="partner-group">
+                <ul class="partner-group" data-sub="tyres">
                   <li class="partner-card is-placeholder">
                     <span class="partner-cat">Batteries</span>
                     <img
@@ -730,7 +717,7 @@ require __DIR__ . '/includes/header.php';
                     />
                   </li>
                 </ul>
-                <ul class="partner-group">
+                <ul class="partner-group" data-sub="tyres">
                   <li class="partner-card">
                     <span class="partner-cat">Lubricants</span>
                     <img

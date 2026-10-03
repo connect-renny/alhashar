@@ -1,11 +1,11 @@
 <?php
 $page = [
-    'title' => 'Management Team — Al Hashar Group',
-    'description' => 'The Al Hashar Group management team — proven leadership building on a legacy of trust in Oman.',
-    'og_description' => 'Our dedicated Management Team is the cornerstone of Alhashar Group, uniting proven leadership with a commitment to delivering exceptional value.',
+    'title' => 'Chairman’s Message — Al Hashar Group',
+    'description' => 'A message from Al Muhannad Al Hashar, Chairman of Al Hashar Group.',
+    'og_description' => 'Guided by our values, focused on the future.',
     'og_image' => 'assets/images/hero-management.jpg',
     'nav' => 'group',
-    'subnav' => 'management',
+    'subnav' => 'chairman',
 ];
 require __DIR__ . '/includes/header.php';
 ?>
@@ -31,12 +31,12 @@ require __DIR__ . '/includes/header.php';
                 <ol>
                   <li><a href="index.php">Home</a></li>
                   <li><a href="about.php">Our Group</a></li>
-                  <li aria-current="page">Management</li>
+                  <li aria-current="page">Chairman’s Message</li>
                 </ol>
               </nav>
 
               <h1 class="page-hero-title page-hero-title--bold" id="hero-title">
-                Alhashar Group <em>Management Team.</em>
+                Alhashar Group <em>Chairman’s Message.</em>
               </h1>
             </div>
           </div>
@@ -46,46 +46,49 @@ require __DIR__ . '/includes/header.php';
       </section>
 
       <!-- ═════════════════════════════════════════════════════════════════
-           Group management
+           Chairman's message
+           Reuses the founder layout (pages/_home.scss › .founder-*).
+           TODO: replace the body with the Chairman's full message.
            ═════════════════════════════════════════════════════════════════ -->
-      <section class="section management" aria-labelledby="management-title">
+      <section class="section founder" aria-labelledby="chairman-title">
         <div class="container">
-          <div class="section-head section-head--center" data-aos="fade-up">
-            <h2 class="section-title" id="management-title">Group <em>Management</em></h2>
-          </div>
+          <div class="founder-grid">
+            <div class="founder-text" data-aos="fade-up">
+              <div class="section-head">
+                <span class="section-eyebrow">Chairman’s Message</span>
+                <h2 class="section-title" id="chairman-title">
+                  Guided by Our Values,<br />
+                  <em>Focused on the Future</em>
+                </h2>
+              </div>
 
-          <div class="management-grid">
-            <article class="management-card" data-aos="fade-up">
-              <div class="management-card-media">
-                <img
-                  src="assets/images/chairman-hashar.jpg"
-                  alt="Al Muhannad Al Hashar, Chairman"
-                  width="580"
-                  height="620"
-                  loading="lazy"
-                />
+              <div class="founder-body">
+                <p>
+                  Supported by the trust of our customers, the dedication of our employees and the
+                  strength of our partnerships, Al Hashar Group continues to evolve, innovate and
+                  contribute to Oman’s ongoing progress.
+                </p>
               </div>
-              <h3 class="management-card-name">Al Muhannad Al Hashar</h3>
-              <span class="management-card-role">Chairman</span>
-            </article>
-            <article class="management-card" data-aos="fade-up" data-aos-delay="150">
-              <div class="management-card-media">
-                <img
-                  src="assets/images/director-kharusi.jpg"
-                  alt="Sultan Al Kharusi, Managing Director"
-                  width="580"
-                  height="620"
-                  loading="lazy"
-                />
-              </div>
-              <h3 class="management-card-name">Sultan Al Kharusi</h3>
-              <span class="management-card-role">Managing Director</span>
-            </article>
+
+              <p class="founder-signature">
+                Al Muhannad Al Hashar
+                <span class="founder-role">Chairman, Al Hashar Group</span>
+              </p>
+            </div>
+
+            <div class="founder-media" data-aos="fade-up" data-aos-delay="150">
+              <img
+                src="assets/images/chairman-hashar.jpg"
+                alt="Al Muhannad Al Hashar, Chairman of Al Hashar Group"
+                width="580"
+                height="620"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Next sections go here. -->
     </main>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
