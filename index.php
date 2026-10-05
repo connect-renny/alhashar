@@ -312,7 +312,7 @@ require __DIR__ . '/includes/header.php';
               <span class="division-num" aria-hidden="true">02</span>
               <div class="division-head">
                 <h3 class="division-title">Construction &amp; Heavy Equipment</h3>
-                <a class="link-arrow link-arrow--plain division-link" href="#">
+                <a class="link-arrow link-arrow--plain division-link" href="heavy-equipment.php">
                   Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
                 </a>
               </div>
@@ -368,7 +368,7 @@ require __DIR__ . '/includes/header.php';
               <span class="division-num" aria-hidden="true">04</span>
               <div class="division-head">
                 <h3 class="division-title">Trading</h3>
-                <a class="link-arrow link-arrow--plain division-link" href="#">
+                <a class="link-arrow link-arrow--plain division-link" href="trading.php">
                   Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
                 </a>
               </div>

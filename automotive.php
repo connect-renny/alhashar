@@ -56,9 +56,9 @@ require __DIR__ . '/includes/header.php';
         <nav class="page-hero-tabs page-hero-tabs--clear" aria-label="Automotive companies">
           <div class="container">
             <ul>
-              <li><a class="is-active" href="#al-muhannad-al-hashar">Al Muhannad Al Hashar</a></li>
-              <li><a href="#al-hashar-automotive">Al Hashar Automotive</a></li>
-              <li><a href="#al-hashar-co">Al Hashar &amp; Co</a></li>
+              <li><a class="is-active" href="#al-muhannad-al-hashar">Al Muhannad Al Hashar LLC</a></li>
+              <li><a href="#al-hashar-automotive">Al Hashar Automotive SAOC</a></li>
+              <li><a href="#al-hashar-co">Al Hashar &amp; Co. LLC</a></li>
             </ul>
           </div>
         </nav>
@@ -427,7 +427,7 @@ require __DIR__ . '/includes/header.php';
                 <h3 class="facility-title">
                   Additional <br class="facility-break" />Spare part Outlet
                 </h3>
-                <p class="facility-text">in Wadi Kabir</p>
+                <p class="facility-text">in Wadi Kabir and Barka</p>
               </div>
             </li>
           </ul>

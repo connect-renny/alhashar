@@ -16,9 +16,9 @@ $group = [
 
 $businesses = [
     ['key' => 'automotive', 'href' => 'automotive.php', 'icon' => 'bi-car-front', 'label' => 'Automotive'],
-    ['key' => 'heavy-equipment', 'href' => '#', 'icon' => 'bi-truck', 'label' => 'Construction & Heavy Equipment'],
+    ['key' => 'heavy-equipment', 'href' => 'heavy-equipment.php', 'icon' => 'bi-truck', 'label' => 'Construction & Heavy Equipment'],
     ['key' => 'electronics', 'href' => 'electronics.php', 'icon' => 'bi-tv', 'label' => 'Home Appliances & Electronics'],
-    ['key' => 'trading', 'href' => '#', 'icon' => 'bi-box-seam', 'label' => 'Trading'],
+    ['key' => 'trading', 'href' => 'trading.php', 'icon' => 'bi-box-seam', 'label' => 'Trading'],
     ['key' => 'hospitality', 'href' => 'hospitality.php', 'icon' => 'bi-building', 'label' => 'Hospitality'],
     ['key' => 'construction', 'href' => 'construction.php', 'icon' => 'bi-bricks', 'label' => 'Construction & Contracting'],
     ['key' => 'engineering', 'href' => 'engineering.php', 'icon' => 'bi-gear-wide-connected', 'label' => 'Engineering'],
@@ -110,7 +110,7 @@ $navState = function (string $key, string $class = 'nav-link') use ($page): stri
          main.js (initLoader) wipes it up on `load` (min 2.4s, 5s failsafe).
          ═══════════════════════════════════════════════════════════════════ -->
     <div class="loader-overlay" id="loader" aria-hidden="true">
-      <p class="loader-tag"><span class="loader-dot"></span>Al Hashar Group · 65 Years</p>
+      <p class="loader-tag"><span class="loader-dot"></span>Al Hashar Group</p>
       <div class="loader">
         <p class="loader-mark">
           <span class="loader-mark__solid">Al Hashar</span>

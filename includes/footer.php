@@ -54,6 +54,8 @@
               <li><a href="electronics.php">Electronics &amp; Appliances</a></li>
               <li><a href="construction.php">Construction &amp; Contracting</a></li>
               <li><a href="engineering.php">Engineering &amp; Projects</a></li>
+              <li><a href="heavy-equipment.php">Construction &amp; Heavy Equipment</a></li>
+              <li><a href="trading.php">Trading</a></li>
             </ul>
           </nav>
 
