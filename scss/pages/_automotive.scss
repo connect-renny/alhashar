@@ -16,10 +16,19 @@
   ul {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 880px;
+    max-width: 1100px;
     margin-inline: auto;
     border-top: 1px solid var(--dark-100);
     border-inline-start: 1px solid var(--dark-100);
+
+    @include mq-up("md") {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  // Four brands (Heavy Equipment): one even row, at the original width.
+  &--four ul {
+    max-width: 880px;
 
     @include mq-up("md") {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -147,6 +156,22 @@
     // GSAP scales this from 1.25 while the picture wipes in; the origin keeps
     // the car roughly in place as it settles.
     transform-origin: 60% 50%;
+  }
+}
+
+// Capacity ranges under a brand's copy (Heavy Equipment: Develon).
+.brand-row-text:has(+ .brand-row-specs) {
+  margin-bottom: var(--space-sm);
+}
+
+.brand-row-specs {
+  margin: 0 0 var(--space-xl);
+  padding-inline-start: 1.1em;
+  line-height: 1.6;
+  color: var(--dark-500);
+
+  li::marker {
+    color: var(--color-brand);
   }
 }
 

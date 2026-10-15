@@ -34,37 +34,28 @@
 
           <nav aria-labelledby="footer-group">
             <h3 class="footer-title" id="footer-group">Our Group</h3>
-            <ul class="footer-links footer-links--2col">
-              <li><a href="founder.php">Our Founder</a></li>
-              <li><a href="about.php#history">Our History</a></li>
-              <li><a href="management.php">Management</a></li>
-              <li><a href="about.php#awards">Awards &amp; Achievement</a></li>
-              <li><a href="chairman-message.php">Chairman’s Message</a></li>
-              <li><a href="csr.php">CSR / Community Impact</a></li>
-              <li><a href="about.php#vision">Our Vision &amp; Mission</a></li>
-              <li><a href="about.php#values">Our Values</a></li>
+            <ul class="footer-links">
+<?php foreach ($group as $item): ?>
+              <li><a href="<?= e($item['href']) ?>"><?= e($item['label']) ?></a></li>
+<?php endforeach; ?>
             </ul>
           </nav>
 
           <nav aria-labelledby="footer-business">
-            <h3 class="footer-title" id="footer-business">Our Business</h3>
+            <h3 class="footer-title" id="footer-business">Our Businesses</h3>
             <ul class="footer-links">
-              <li><a href="automotive.php">Automotive</a></li>
-              <li><a href="hospitality.php">Hospitality &amp; Tourism</a></li>
-              <li><a href="electronics.php">Electronics &amp; Appliances</a></li>
-              <li><a href="construction.php">Construction &amp; Contracting</a></li>
-              <li><a href="engineering.php">Engineering &amp; Projects</a></li>
-              <li><a href="heavy-equipment.php">Construction &amp; Heavy Equipment</a></li>
-              <li><a href="trading.php">Trading</a></li>
+<?php foreach ($businesses as $item): ?>
+              <li><a href="<?= e($item['href']) ?>"><?= e($item['label']) ?></a></li>
+<?php endforeach; ?>
             </ul>
           </nav>
 
           <nav aria-labelledby="footer-quick">
             <h3 class="footer-title" id="footer-quick">Quick Links</h3>
             <ul class="footer-links">
-              <li><a href="culture.php">Culture</a></li>
-              <li><a href="contact.php">Contact Us</a></li>
-              <li><a href="careers.php">Careers</a></li>
+<?php foreach ($navLinks as $item): ?>
+              <li><a href="<?= e($item['href']) ?>"><?= e($item['label']) ?></a></li>
+<?php endforeach; ?>
             </ul>
           </nav>
         </div>

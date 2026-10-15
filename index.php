@@ -240,7 +240,8 @@ require __DIR__ . '/includes/header.php';
                 <div class="section-head">
                   <span class="section-eyebrow">About Al Hashar Group</span>
                   <h2 class="section-title" id="about-title">
-                    Over 50 Years of <em>Excellence</em>
+                    Over 50 Years of<br />
+                    <em>Excellence</em>
                   </h2>
                 </div>
                 <p>
@@ -367,8 +368,8 @@ require __DIR__ . '/includes/header.php';
             <article class="division-item">
               <span class="division-num" aria-hidden="true">04</span>
               <div class="division-head">
-                <h3 class="division-title">Trading</h3>
-                <a class="link-arrow link-arrow--plain division-link" href="trading.php">
+                <h3 class="division-title">Car Rental &amp; Leasing</h3>
+                <a class="link-arrow link-arrow--plain division-link" href="car-rental-leasing.php">
                   Explore more <i class="bi bi-arrow-right" aria-hidden="true"></i>
                 </a>
               </div>
@@ -547,6 +548,17 @@ require __DIR__ . '/includes/header.php';
                 class="partners-tab"
                 type="button"
                 role="tab"
+                id="partners-tab-car-rental"
+                aria-controls="partners-panel-car-rental"
+                aria-selected="false"
+                tabindex="-1"
+              >
+                Car Rental &amp; Leasing
+              </button>
+              <button
+                class="partners-tab"
+                type="button"
+                role="tab"
                 id="partners-tab-hospitality"
                 aria-controls="partners-panel-hospitality"
                 aria-selected="false"
@@ -558,12 +570,12 @@ require __DIR__ . '/includes/header.php';
                 class="partners-tab"
                 type="button"
                 role="tab"
-                id="partners-tab-trading"
-                aria-controls="partners-panel-trading"
+                id="partners-tab-contracting"
+                aria-controls="partners-panel-contracting"
                 aria-selected="false"
                 tabindex="-1"
               >
-                Trading
+                Construction &amp; Contracting
               </button>
               <button
                 class="partners-tab"
@@ -575,17 +587,6 @@ require __DIR__ . '/includes/header.php';
                 tabindex="-1"
               >
                 Engineering
-              </button>
-              <button
-                class="partners-tab"
-                type="button"
-                role="tab"
-                id="partners-tab-contracting"
-                aria-controls="partners-panel-contracting"
-                aria-selected="false"
-                tabindex="-1"
-              >
-                Construction &amp; Contracting
               </button>
             </div>
             <button
@@ -700,19 +701,19 @@ require __DIR__ . '/includes/header.php';
                   </li>
                 </ul>
                 <ul class="partner-group" data-sub="tyres">
-                  <li class="partner-card is-placeholder">
+                  <li class="partner-card">
                     <span class="partner-cat">Batteries</span>
                     <img
                       src="assets/images/partners/k-viron.svg"
-                      alt="K Viron (placeholder logo)"
+                      alt="K-Viron Premium SMF Battery"
                       loading="lazy"
                     />
                   </li>
-                  <li class="partner-card is-placeholder">
+                  <li class="partner-card">
                     <span class="partner-cat">Batteries</span>
                     <img
-                      src="assets/images/partners/powerpack.svg"
-                      alt="Powerpack (placeholder logo)"
+                      src="assets/images/partners/powerpack.png"
+                      alt="Powerpack Gold"
                       loading="lazy"
                     />
                   </li>
@@ -844,6 +845,34 @@ require __DIR__ . '/includes/header.php';
             <div
               class="partners-panel"
               role="tabpanel"
+              id="partners-panel-car-rental"
+              aria-labelledby="partners-tab-car-rental"
+              tabindex="0"
+              hidden
+            >
+              <div class="partners-track" data-partners-track>
+                <ul class="partner-group">
+                  <li class="partner-card">
+                    <img
+                      src="assets/images/partners/global-car-rental.png"
+                      alt="Global Car Rental &amp; Leasing"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+              </div>
+              <div class="partners-nav">
+                <button class="partners-prev" type="button" aria-label="Scroll partners left">
+                  <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="partners-next" type="button" aria-label="Scroll partners right">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div
+              class="partners-panel"
+              role="tabpanel"
               id="partners-panel-hospitality"
               aria-labelledby="partners-tab-hospitality"
               tabindex="0"
@@ -872,8 +901,8 @@ require __DIR__ . '/includes/header.php';
             <div
               class="partners-panel"
               role="tabpanel"
-              id="partners-panel-trading"
-              aria-labelledby="partners-tab-trading"
+              id="partners-panel-contracting"
+              aria-labelledby="partners-tab-contracting"
               tabindex="0"
               hidden
             >
@@ -881,8 +910,8 @@ require __DIR__ . '/includes/header.php';
                 <ul class="partner-group">
                   <li class="partner-card">
                     <img
-                      src="assets/images/partners/global-car-rental.png"
-                      alt="Global Car Rental &amp; Leasing"
+                      src="assets/images/partners/oasis-grace.png"
+                      alt="Oasis Grace LLC"
                       loading="lazy"
                     />
                   </li>
@@ -911,34 +940,6 @@ require __DIR__ . '/includes/header.php';
                     <img
                       src="assets/images/partners/al-hashar-engineering.png"
                       alt="Al Hashar Engineering"
-                      loading="lazy"
-                    />
-                  </li>
-                </ul>
-              </div>
-              <div class="partners-nav">
-                <button class="partners-prev" type="button" aria-label="Scroll partners left">
-                  <i class="bi bi-chevron-left" aria-hidden="true"></i>
-                </button>
-                <button class="partners-next" type="button" aria-label="Scroll partners right">
-                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
-            <div
-              class="partners-panel"
-              role="tabpanel"
-              id="partners-panel-contracting"
-              aria-labelledby="partners-tab-contracting"
-              tabindex="0"
-              hidden
-            >
-              <div class="partners-track" data-partners-track>
-                <ul class="partner-group">
-                  <li class="partner-card">
-                    <img
-                      src="assets/images/partners/oasis-grace.png"
-                      alt="Oasis Grace LLC"
                       loading="lazy"
                     />
                   </li>

@@ -61,18 +61,16 @@
   }
 
   @include mq-up("lg") {
-    // brand · our group (two inner columns) · our business · quick links.
-    // The last two size to their content so no heading or link ever spills
-    // past its track; the first two share what's left.
-    // At lg the brand column also hugs its content (the email address is
-    // the widest thing in it) so "Our Group" gets the leftover room.
-    grid-template-columns: max-content minmax(0, 1fr) max-content max-content;
+    // brand · our group · our businesses · quick links.
+    // The three nav columns size to their content so no heading or link
+    // spills past its track and they sit evenly spaced; the brand column
+    // takes whatever is left.
+    grid-template-columns: minmax(max-content, 1fr) repeat(3, max-content);
     gap: var(--space-xl) var(--space-lg);
   }
 
   @include mq-up("xl") {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 8fr) max-content max-content;
-    column-gap: var(--space-xl);
+    column-gap: var(--space-2xl);
   }
 }
 
@@ -111,13 +109,6 @@
   flex-direction: column;
   gap: var(--space-xs);
   font-size: var(--fs-base);
-}
-
-// "Our Group" lists its eight links as two side-by-side columns.
-.footer-links--2col {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-xs) var(--space-md);
 }
 
 // ─── Bottom bar ────────────────────────────────────────────────────────────

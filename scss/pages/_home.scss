@@ -242,7 +242,8 @@
 
 // ─── About Al Hashar Group ─────────────────────────────────────────────────
 // A crossfading pair of background shots, inset from the viewport edges,
-// with white copy laid over the top-left. The copy is in normal flow (not
+// with white copy laid over the top (left on small screens, right-aligned
+// on the right from lg). The copy is in normal flow (not
 // absolutely positioned) so the block can never be shorter than its text;
 // on desktop the aspect-ratio keeps it the shape of the photos.
 .about {
@@ -288,6 +289,16 @@
     rgb(var(--color-brand-rgb) / 45%) 45%,
     rgb(var(--color-brand-rgb) / 0%) 75%
   );
+
+  // From lg the copy moves to the right, so the scrim follows it.
+  @include mq-up("lg") {
+    background: linear-gradient(
+      270deg,
+      rgb(var(--color-brand-rgb) / 75%) 0%,
+      rgb(var(--color-brand-rgb) / 45%) 45%,
+      rgb(var(--color-brand-rgb) / 0%) 75%
+    );
+  }
 }
 
 .about-body {
@@ -298,6 +309,13 @@
 
 .about-content {
   max-width: 47rem;
+
+  // Desktop: copy sits right-aligned against the right edge.
+  @include mq-up("lg") {
+    max-width: 42rem;
+    margin-inline-start: auto;
+    text-align: end;
+  }
 
   .section-eyebrow,
   .section-title,
@@ -517,7 +535,7 @@
 .partners-tab {
   position: relative;
   flex-shrink: 0;
-  max-width: 180px;
+  max-width: 200px;
   padding: var(--space-xs) var(--space-sm);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
@@ -547,7 +565,6 @@
   }
 
   @include mq-up("md") {
-    max-width: 220px;
     padding: var(--space-sm) var(--space-md);
     font-size: var(--fs-base);
   }

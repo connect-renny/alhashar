@@ -115,6 +115,16 @@ require __DIR__ . '/includes/header.php';
                   />
                 </a>
               </li>
+              <li>
+                <a href="#brand-renault">
+                  <img
+                    src="assets/images/automotive-logo-05.png"
+                    alt="Renault"
+                    width="200"
+                    height="100"
+                  />
+                </a>
+              </li>
             </ul>
           </nav>
 
@@ -356,6 +366,65 @@ require __DIR__ . '/includes/header.php';
                     <a
                       class="link-arrow link-arrow--plain"
                       href="https://www.peugeot.com"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Visit Website <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="link-arrow link-arrow--plain" href="contact.php#outlets">
+                      View Sales Outlets <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <!-- Renault: the copy is a placeholder until the client sends theirs. -->
+          <article class="brand-row" id="brand-renault" aria-labelledby="brand-renault-title">
+            <div class="brand-row-body">
+              <h3 class="brand-row-logo" id="brand-renault-title">
+                <img
+                  src="assets/images/automotive-logo-05.png"
+                  alt="Renault"
+                  width="200"
+                  height="100"
+                  loading="lazy"
+                />
+              </h3>
+              <p class="brand-row-lead">
+                Renault brings over a century of French automotive heritage to the roads of Oman.
+              </p>
+              <p class="brand-row-text">
+                From practical city cars to versatile SUVs and dependable commercial vans, Renault
+                combines bold design, smart technology and efficient performance, backed by a
+                growing range of electrified models for everyday driving.
+              </p>
+              <a class="link-arrow link-arrow--plain brand-row-link" href="contact.php">
+                Enquire Now <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                <span class="sr-only">about Renault</span>
+              </a>
+            </div>
+
+            <div class="brand-row-visual">
+              <div class="brand-row-media">
+                <img
+                  src="assets/images/automotive-renault.jpg"
+                  alt="The Renault line-up, from the Renault 5 and Renault 4 to the Scenic, Captur and Megane"
+                  width="750"
+                  height="540"
+                  loading="lazy"
+                />
+              </div>
+              <div class="brand-row-details">
+                <p class="brand-row-details-title">For further details :</p>
+                <ul class="brand-row-actions">
+                  <li>
+                    <a
+                      class="link-arrow link-arrow--plain"
+                      href="https://www.renault.com"
                       target="_blank"
                       rel="noopener"
                     >

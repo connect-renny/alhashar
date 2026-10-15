@@ -10,7 +10,7 @@ require_once __DIR__ . '/config.php';
 $group = [
     ['key' => 'about', 'href' => 'about.php', 'icon' => 'bi-info-circle', 'label' => 'About Us'],
     ['key' => 'founder', 'href' => 'founder.php', 'icon' => 'bi-person', 'label' => 'Our Founder'],
-    ['key' => 'management', 'href' => 'management.php', 'icon' => 'bi-people', 'label' => 'Management'],
+    ['key' => 'management', 'href' => 'management.php', 'icon' => 'bi-people', 'label' => 'Our Leadership'],
     ['key' => 'chairman', 'href' => 'chairman-message.php', 'icon' => 'bi-chat-quote', 'label' => 'Chairman’s Message'],
 ];
 
@@ -18,7 +18,7 @@ $businesses = [
     ['key' => 'automotive', 'href' => 'automotive.php', 'icon' => 'bi-car-front', 'label' => 'Automotive'],
     ['key' => 'heavy-equipment', 'href' => 'heavy-equipment.php', 'icon' => 'bi-truck', 'label' => 'Construction & Heavy Equipment'],
     ['key' => 'electronics', 'href' => 'electronics.php', 'icon' => 'bi-tv', 'label' => 'Home Appliances & Electronics'],
-    ['key' => 'trading', 'href' => 'trading.php', 'icon' => 'bi-box-seam', 'label' => 'Trading'],
+    ['key' => 'car-rental-leasing', 'href' => 'car-rental-leasing.php', 'icon' => 'bi-key', 'label' => 'Car Rental & Leasing'],
     ['key' => 'hospitality', 'href' => 'hospitality.php', 'icon' => 'bi-building', 'label' => 'Hospitality'],
     ['key' => 'construction', 'href' => 'construction.php', 'icon' => 'bi-bricks', 'label' => 'Construction & Contracting'],
     ['key' => 'engineering', 'href' => 'engineering.php', 'icon' => 'bi-gear-wide-connected', 'label' => 'Engineering'],

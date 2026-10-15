@@ -15,3 +15,8 @@ DirectoryIndex index.php
 <IfModule mod_alias.c>
   RedirectMatch 404 ^/(.*/)?includes/
 </IfModule>
+
+# Renamed pages: keep old links and bookmarks working.
+<IfModule mod_alias.c>
+  RedirectMatch 301 ^(.*/)?trading\.php$ $1car-rental-leasing.php
+</IfModule>

@@ -3,7 +3,7 @@ $page = [
     'title' => 'Careers — Al Hashar Group',
     'description' => 'Careers at Al Hashar Group — a collaborative, rewarding place to grow across a diverse range of industries in Oman.',
     'og_description' => 'Join a team built on trust, excellence and a shared commitment to moving forward together.',
-    'og_image' => 'assets/images/about-bg-01.jpg',
+    'og_image' => 'assets/images/hero-careers.jpg',
     'nav' => 'careers',
 ];
 require __DIR__ . '/includes/forms.php';
@@ -17,10 +17,10 @@ require __DIR__ . '/includes/header.php';
       <section class="page-hero" aria-labelledby="hero-title">
         <div class="page-hero-media" aria-hidden="true">
           <img
-            src="assets/images/about-bg-01.jpg"
+            src="assets/images/hero-careers.jpg"
             alt=""
-            width="1737"
-            height="683"
+            width="1920"
+            height="945"
             fetchpriority="high"
           />
         </div>

@@ -1182,15 +1182,14 @@ body.is-locked {
 }
 @media (width >= 992px) {
   .footer-grid {
-    grid-template-columns: max-content minmax(0, 1fr) max-content max-content;
+    grid-template-columns: minmax(max-content, 1fr) repeat(3, max-content);
     gap: var(--space-xl) var(--space-lg);
   }
 }
 @media (width >= 1200px) {
   .footer-grid {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 8fr) max-content max-content;
-    -moz-column-gap: var(--space-xl);
-         column-gap: var(--space-xl);
+    -moz-column-gap: var(--space-2xl);
+         column-gap: var(--space-2xl);
   }
 }
 
@@ -1224,12 +1223,6 @@ body.is-locked {
   flex-direction: column;
   gap: var(--space-xs);
   font-size: var(--fs-base);
-}
-
-.footer-links--2col {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-xs) var(--space-md);
 }
 
 .footer-bottom {
@@ -2680,6 +2673,48 @@ html.lenis body {
     transition-duration: 0.01ms !important;
   }
 }
+.outlets-table-wrap {
+  overflow-x: auto;
+}
+
+.outlets-table {
+  width: 100%;
+  min-width: 26rem;
+  border-collapse: collapse;
+  font-size: var(--fs-md);
+  text-align: left;
+}
+.outlets-table th,
+.outlets-table td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+.outlets-table thead th {
+  font-weight: var(--fw-semibold);
+  color: var(--white);
+  background: var(--color-brand);
+  border-bottom: 0;
+}
+.outlets-table tbody th {
+  font-weight: var(--fw-semibold);
+  color: var(--color-heading);
+}
+.outlets-table tbody td {
+  color: var(--color-text);
+}
+.outlets-table a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .outlets-table a:hover {
+    text-decoration-color: currentcolor;
+  }
+}
+
 .hero {
   position: relative;
   display: flex;
@@ -2931,6 +2966,11 @@ html.lenis body {
   z-index: 1;
   background: linear-gradient(90deg, rgb(var(--color-brand-rgb)/75%) 0%, rgb(var(--color-brand-rgb)/45%) 45%, rgb(var(--color-brand-rgb)/0%) 75%);
 }
+@media (width >= 992px) {
+  .about-scrim {
+    background: linear-gradient(270deg, rgb(var(--color-brand-rgb)/75%) 0%, rgb(var(--color-brand-rgb)/45%) 45%, rgb(var(--color-brand-rgb)/0%) 75%);
+  }
+}
 
 .about-body {
   position: relative;
@@ -2940,6 +2980,13 @@ html.lenis body {
 
 .about-content {
   max-width: 47rem;
+}
+@media (width >= 992px) {
+  .about-content {
+    max-width: 42rem;
+    margin-inline-start: auto;
+    text-align: end;
+  }
 }
 .about-content .section-eyebrow,
 .about-content .section-title,
@@ -3138,7 +3185,7 @@ html.lenis body {
 .partners-tab {
   position: relative;
   flex-shrink: 0;
-  max-width: 180px;
+  max-width: 200px;
   padding: var(--space-xs) var(--space-sm);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
@@ -3172,7 +3219,6 @@ html.lenis body {
 }
 @media (width >= 768px) {
   .partners-tab {
-    max-width: 220px;
     padding: var(--space-sm) var(--space-md);
     font-size: var(--fs-base);
   }
@@ -4392,13 +4438,21 @@ html.lenis body {
 .brand-strip ul {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: 880px;
+  max-width: 1100px;
   margin-inline: auto;
   border-top: 1px solid var(--dark-100);
   border-inline-start: 1px solid var(--dark-100);
 }
 @media (width >= 768px) {
   .brand-strip ul {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+.brand-strip--four ul {
+  max-width: 880px;
+}
+@media (width >= 768px) {
+  .brand-strip--four ul {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
@@ -4516,6 +4570,20 @@ html.lenis body {
   -o-object-fit: cover;
      object-fit: cover;
   transform-origin: 60% 50%;
+}
+
+.brand-row-text:has(+ .brand-row-specs) {
+  margin-bottom: var(--space-sm);
+}
+
+.brand-row-specs {
+  margin: 0 0 var(--space-xl);
+  padding-inline-start: 1.1em;
+  line-height: 1.6;
+  color: var(--dark-500);
+}
+.brand-row-specs li::marker {
+  color: var(--color-brand);
 }
 
 .brand-row-details {
