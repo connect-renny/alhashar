@@ -6,6 +6,7 @@ $page = [
     'og_description' => 'Decades of Trust. A Future of Excellence. 65 years of Al Hashar Group in Oman.',
     'og_image' => 'assets/images/hero-video-poster.jpg',
     'nav' => 'home',
+    'nav_dark' => true, // grey menu text over the light hero video
 ];
 require __DIR__ . '/includes/header.php';
 ?>
@@ -16,30 +17,29 @@ require __DIR__ . '/includes/header.php';
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-media" aria-hidden="true">
           <video
-            autoplay
+            data-hero-video
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="auto"
             poster="assets/images/hero-video-poster.jpg"
           >
             <source src="assets/videos/hero-video.mp4" type="video/mp4" />
           </video>
         </div>
         <div class="hero-scrim" aria-hidden="true"></div>
+        <div class="hero-scroll" aria-hidden="true">
+          <span class="hero-scroll-line"></span>
+          <span class="hero-scroll-text">Scroll</span>
+        </div>
 
         <div class="hero-body">
           <div class="container">
-            <div class="hero-content">
-              <h1 class="hero-title" id="hero-title">
-                Decades of <em>Trust.</em><br />
-                A Future of <em>Excellence.</em>
-              </h1>
-              <a class="link-arrow link-arrow--plain hero-link" href="about.php">
-                Explore more about Alhashar Group
-                <i class="bi bi-arrow-right" aria-hidden="true"></i>
-              </a>
-            </div>
+            <!-- No visible heading: the video carries the brand. Kept for
+                 screen readers, search engines and the section's label. -->
+            <h1 class="sr-only" id="hero-title">
+              Al Hashar Group — Decades of Trust. A Future of Excellence.
+            </h1>
 
             <aside class="hero-news" aria-labelledby="hero-news-title">
               <h2 class="hero-news-title" id="hero-news-title">Latest Updates</h2>
@@ -817,10 +817,10 @@ require __DIR__ . '/includes/header.php';
                   <li class="partner-card">
                     <img src="assets/images/partners/voltas.png" alt="Voltas" loading="lazy" />
                   </li>
-                  <li class="partner-card is-placeholder">
+                  <li class="partner-card partner-card--sm">
                     <img
-                      src="assets/images/partners/kardex-remstar.svg"
-                      alt="Kardex Remstar (placeholder logo)"
+                      src="assets/images/partners/kardex-remstar.png"
+                      alt="Kardex Remstar"
                       loading="lazy"
                     />
                   </li>

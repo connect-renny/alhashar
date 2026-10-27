@@ -677,6 +677,21 @@
     refresh();
   }
 
+  // Home hero video (`[data-hero-video]`): no `autoplay` attribute, so it
+  // doesn't play out unseen behind the preloader — it starts from the top
+  // once the page is revealed. Without JavaScript the poster stays up.
+  function initHeroVideo() {
+    const video = $("[data-hero-video]");
+    if (!video) return;
+
+    whenLoaded(() => {
+      video.currentTime = 0;
+      video.play().catch(() => {
+        /* autoplay blocked (e.g. iOS Low Power Mode): the poster stays */
+      });
+    });
+  }
+
   // Inner-page hero tabs (`[data-hero-tabs]`): each [role="tab"] shows the
   // panel its aria-controls points at and hides the others. Arrow keys move
   // between tabs, as the ARIA tabs pattern expects.
@@ -1294,6 +1309,7 @@
   initForms();
   initJobs();
   initAOS();
+  initHeroVideo();
   initHeroTabs();
   initPartners();
   initAccordions();

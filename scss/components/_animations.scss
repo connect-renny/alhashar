@@ -48,22 +48,14 @@
 
 // ─── Hero ──────────────────────────────────────────────────────────────────
 
-// Scroll cue nudge. `.hero-scroll` centres itself with the standalone
-// `translate` property, which composes with this `transform` instead of
-// being overwritten by it.
-@keyframes downBounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0);
+// Scroll cue: the dark segment runs down .hero-scroll-line's faint track,
+// leaves out the bottom, and comes round again from the top.
+@keyframes scrollLine {
+  from {
+    transform: translateY(-100%);
   }
-  40% {
-    transform: translateY(10px);
-  }
-  60% {
-    transform: translateY(5px);
+  to {
+    transform: translateY(100%);
   }
 }
 
@@ -178,8 +170,6 @@
 //  shortens the animation to nothing, so the copy is simply there.
 // ═══════════════════════════════════════════════════════════════════════════
 
-.hero-title,
-.hero-link,
 .hero-news,
 .page-hero-content > :is(
     .breadcrumb-nav,
@@ -204,8 +194,7 @@ html:not(.loader-seen) {
 }
 
 // Order of appearance.
-.page-hero-content > :is(.page-hero-title, .page-hero-logo),
-.hero-link {
+.page-hero-content > :is(.page-hero-title, .page-hero-logo) {
   --hero-step: 1;
 }
 

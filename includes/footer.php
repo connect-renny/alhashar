@@ -115,6 +115,6 @@
     <script src="assets/js/ScrollTrigger.min.js" defer></script>
     <script src="assets/js/aos.js" defer></script>
     <!-- main.js last: it reads window.Lenis, window.Swiper, window.gsap and window.AOS at init. -->
-    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/main.js?v=<?= filemtime(__DIR__ . '/../assets/js/main.js') ?>" defer></script>
   </body>
 </html>

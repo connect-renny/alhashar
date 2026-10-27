@@ -16,6 +16,7 @@
   --color-brand: #0b1f41;
   --color-brand-rgb: 11, 31, 65; // for rgb(var(--color-brand-rgb) / 12%)
   --color-accent: #e3b962; // the gold of the 65th badge
+  --color-logo-blue: #00529c; // the blue of the colour logo
   --color-accent-deep: #c9982b; // icon tiles — dark enough for a white glyph
   --color-tag: #f12f34; // "New" badge on the hero news ticker
   --color-orange: #ee5e10; // row numbers in "Our Diverse Businesses"
@@ -153,7 +154,9 @@
   --shadow-sm: 0 1px 2px rgb(var(--color-brand-rgb) / 8%);
   --shadow-md: 0 2px 8px rgb(var(--color-brand-rgb) / 12%);
   --shadow-lg: 0 12px 32px rgb(var(--color-brand-rgb) / 16%);
-  --shadow-header: 0 2px 8px rgb(99 99 99 / 20%);
+  // The fixed navbar: a tight contact shadow plus a soft navy-tinted spread.
+  --shadow-header:
+    0 1px 3px rgb(11 31 65 / 12%), 0 10px 30px -6px rgb(11 31 65 / 28%);
 
   // ─── Motion ──────────────────────────────────────────────────────────────
   --transition-duration: 0.3s;

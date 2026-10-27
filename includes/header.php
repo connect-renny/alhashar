@@ -133,15 +133,24 @@ $navState = function (string $key, string $class = 'nav-link') use ($page): stri
          drawer, driven by the hamburger.
          ═══════════════════════════════════════════════════════════════════ -->
     <header class="header">
-      <nav class="navbar-main" aria-label="Main">
+      <nav class="navbar-main<?= !empty($page['nav_dark']) ? ' navbar-main--dark' : '' ?>" aria-label="Main">
         <div class="navbar-inner">
           <a class="navbar-brand" href="index.php">
+            <?php if (!empty($page['nav_dark'])): ?>
+            <img
+              src="assets/images/alhashar-logo-dark.png"
+              alt="Al Hashar Group"
+              width="87"
+              height="72"
+            />
+            <?php else: ?>
             <img
               src="assets/images/alhashar-logo-white.png"
               alt="Al Hashar Group"
               width="90"
               height="72"
             />
+            <?php endif; ?>
           </a>
 
           <button

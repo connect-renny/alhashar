@@ -31,22 +31,80 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.85;
+    opacity: 1;
   }
 }
 
 // Darkens the top edge so the white nav reads over any frame of the video,
-// and the bottom so the ticker does too.
+// and the bottom so the ticker does too. Switched off (opacity: 0) for the
+// light logo video, which shows at full strength.
 .hero-scrim {
   @include cover;
   z-index: 1;
+  opacity: 0;
   background: linear-gradient(
     180deg,
-    rgb(0 0 0 / 50%) 0%,
-    rgb(0 0 0 / 40%) 35%,
-    rgb(0 0 0 / 40%) 65%,
-    rgb(0 0 0 / 50%) 100%
+    rgb(0 0 0 / 8%) 0%,
+    rgb(0 0 0 / 4%) 35%,
+    rgb(0 0 0 / 4%) 65%,
+    rgb(0 0 0 / 8%) 100%
   );
+}
+
+// ─── Scroll cue ────────────────────────────────────────────────────────────
+// Bottom-left: a short rule with "Scroll" beneath it, reading bottom-to-top.
+// Dark to match the home navbar and news ticker over the light video.
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  inset-inline-start: 42px;
+  z-index: 3;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  color: var(--dark-950);
+  pointer-events: none;
+
+  // From `lg`: below it the news ticker sits bottom-left, right where this goes.
+  @include mq-up("lg") {
+    display: flex;
+  }
+
+  @include mq-up("xxl") {
+    inset-inline-start: 66px;
+  }
+}
+
+// A faint track with a solid segment running down it (scrollLine). With
+// reduced motion the segment just sits still and fills the track.
+.hero-scroll-line {
+  position: relative;
+  width: 1px;
+  height: 56px;
+  overflow: hidden;
+  background: rgb(10 10 10 / 15%);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: currentcolor;
+  }
+
+  @include motion-ok {
+    &::after {
+      animation: scrollLine 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+  }
+}
+
+.hero-scroll-text {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg); // reads bottom-to-top (sideways-lr is Firefox-only)
 }
 
 .hero-body {
@@ -56,47 +114,10 @@
   flex: 1;
   padding-block: calc(var(--header-height) + var(--space-xl)) var(--space-2xl);
 
-  // A column: the heading floats in the free space, the ticker sits at the
-  // foot. Flow, not absolute positioning, so the two can never overlap on a
-  // short viewport — the hero just grows.
+  // A column with the ticker pushed to the foot (.hero-news margin-top: auto).
   > .container {
     display: flex;
     flex-direction: column;
-  }
-}
-
-.hero-content {
-  max-width: 46rem;
-  // Centres in the space above the ticker; the extra top padding biases it
-  // a touch below the midline, as in the design.
-  margin-block: auto;
-  padding-top: var(--space-lg);
-}
-
-.hero-title {
-  margin: 0 0 var(--space-lg);
-  font-size: #{fluid(34, 64)};
-  font-weight: var(--fw-normal);
-  line-height: 1.15;
-  letter-spacing: var(--ls-tight);
-  color: var(--white);
-  text-wrap: balance;
-
-  // The serif accent words: "Trust." / "Excellence."
-  em {
-    font-family: var(--serif-font);
-    font-style: italic;
-    font-weight: var(--fw-semibold); // the one Abril face shipped
-    letter-spacing: 0;
-  }
-}
-
-// "Explore more about Alhashar Group →" (.link-arrow--plain does the shape).
-.hero-link {
-  color: var(--white);
-
-  @include hover {
-    color: var(--color-accent);
   }
 }
 
@@ -104,13 +125,12 @@
 .hero-news {
   width: 100%;
   max-width: 275px;
-  margin-top: var(--space-2xl);
+  margin-top: auto;
   padding-inline-start: var(--space-lg);
-  border-inline-start: 1px solid rgb(255 255 255 / 25%);
+  border-inline-start: 1px solid rgb(0 0 0 / 15%);
 
   @include mq-up("lg") {
     align-self: flex-end;
-    margin-top: var(--space-xl);
     padding-inline-start: 40px;
   }
 }
@@ -119,13 +139,14 @@
   margin: 0 0 var(--space-2xs);
   font-size: var(--fs-base);
   font-weight: var(--fw-medium);
-  color: var(--white);
+  color: var(--dark-950);
 }
 
+// Dark on the light hero video, like the home navbar (.navbar-main--dark).
 .hero-news-item {
   display: block;
-  color: var(--white);
-  @include focus-ring(var(--white));
+  color: var(--dark-950);
+  @include focus-ring(var(--color-brand));
 
   .tag {
     display: inline-block;
@@ -150,7 +171,7 @@
 
   @include hover {
     p {
-      color: var(--color-accent);
+      color: var(--color-brand);
     }
   }
 }
@@ -734,6 +755,11 @@
 // Placeholder wordmarks fill more of the card, like a real logo would.
 .partner-card.is-placeholder img {
   max-width: 88%;
+}
+
+// Chunky stacked logos (Kardex Remstar) look oversized at the full height.
+.partner-card--sm img {
+  max-height: 32%;
 }
 
 // "Tyres", "Batteries"… in the corner of a category's cards.

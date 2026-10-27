@@ -30,8 +30,39 @@
     width: 100%;
     padding-inline: var(--space-xs);
     padding-bottom: var(--space-md);
-    border-bottom: 1px solid rgb(255 255 255 / 25%);
+    border-bottom: 1px solid var(--dark-150);
     @include transEase((padding, border-color));
+  }
+
+  // Pages with a light hero ($page['nav_dark']): dark items over it, back to
+  // white once .navbar-fixed puts them on navy. Only the items in the bar —
+  // below `lg` the links live in the navy drawer, so just the hamburger.
+  &--dark:not(.navbar-fixed) {
+    .navbar-toggler {
+      color: var(--dark-950);
+    }
+
+    @include mq-up("lg") {
+      .nav-link,
+      .nav-dropdown-toggle,
+      .nav-tool {
+        color: var(--dark-950);
+
+        // Gold is too faint on white; use the brand navy.
+        @include hover {
+          color: var(--color-brand);
+        }
+      }
+
+      .nav-link--icon {
+        color: var(--color-logo-blue);
+      }
+    }
+  }
+
+  // The blue logo (alhashar-logo-dark.png) turns white on the navy bar.
+  &--dark.navbar-fixed .navbar-brand img {
+    filter: brightness(0) invert(1);
   }
 
   // main.js adds this past 10px of scroll.
@@ -42,7 +73,7 @@
 
     .navbar-inner {
       padding-block: var(--space-2xs);
-      border-color: transparent;
+      border-color: var(--color-brand);
     }
 
     .navbar-brand img {
@@ -71,7 +102,7 @@
   img {
     height: 72px;
     width: auto;
-    @include transEase(height);
+    @include transEase((height, filter));
   }
 
   @include mq-down("sm") {
