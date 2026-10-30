@@ -491,9 +491,7 @@ require __DIR__ . '/includes/header.php';
            track of logo cards, with prev/next buttons that page through it
            when it overflows. Automotive also has sub-tabs that scroll the
            track to their group and follow along as it scrolls
-           (main.js, initPartners). Logos: assets/images/partners/. The .svg
-           ones are PLACEHOLDER wordmarks (dashed outline) for partners
-           with no artwork yet — replace them with the real logos.
+           (main.js, initPartners). Logos: assets/images/partners/.
            ═════════════════════════════════════════════════════════════════ -->
       <section class="section section--flush-bottom partners" aria-labelledby="partners-title">
         <div class="container">
@@ -824,10 +822,10 @@ require __DIR__ . '/includes/header.php';
                       loading="lazy"
                     />
                   </li>
-                  <li class="partner-card is-placeholder">
+                  <li class="partner-card">
                     <img
-                      src="assets/images/partners/ae-general.svg"
-                      alt="AE General (placeholder logo)"
+                      src="assets/images/partners/ae-general.png"
+                      alt="AE General"
                       loading="lazy"
                     />
                   </li>
